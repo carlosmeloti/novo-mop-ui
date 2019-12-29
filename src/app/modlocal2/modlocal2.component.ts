@@ -69,7 +69,7 @@ export class Modlocal2Component  {
   pesquisarModlocal1() {
 
     const filtro: Modlocal2Filtro = {
-      cdLocal1: this.cdLocal1,
+      cdLocal1: this.modLocal2Salvar.cdLocal1.cdLocal1,
       nmLocal2: this.nmLocal2
     }
     this.modLocal2Service.pesquisarModlocal1(filtro)

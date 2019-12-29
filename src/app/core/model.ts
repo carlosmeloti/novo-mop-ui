@@ -87,8 +87,8 @@ export class Modlocal1 {
 
 export class Modlocal2 {
   cdLocal2: number;
-  cdEmpresa = new Cadempresa();
   cdLocal1 = new Modlocal1();
+  cdEmpresa = new Cadempresa();
   nmLocal2: string;
 }
 

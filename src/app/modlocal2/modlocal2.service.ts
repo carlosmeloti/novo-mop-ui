@@ -28,8 +28,8 @@ export class Modlocal2Service {
     const headers = new Headers;
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
 
-    if (filtro.nmLocal2) {
-      params.set('cdLocal1', filtro.nmLocal2);
+    if (filtro.cdLocal1) {
+      params.set('cdLocal1', filtro.cdLocal1);
     }
 
     return this.http.get(`${this.modlocal2URL}`, { headers, search: filtro })

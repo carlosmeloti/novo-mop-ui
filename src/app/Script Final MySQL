@@ -1,7 +1,7 @@
-﻿-------------- CadEmpresa -------------------------
+-------------- CadEmpresa -------------------------
 
 CREATE TABLE d24_empresa (
-	d24_cdempresa BIGSERIAL,
+	d24_cdempresa BIGINT(20) AUTO_INCREMENT,
 	d24_nmempresa VARCHAR(100),
 	d24_nmabreviado VARCHAR(20),
 	d24_nrtelefone VARCHAR(100),
@@ -18,10 +18,11 @@ CONSTRAINT  empresa_pk PRIMARY KEY (d24_cdempresa)
 
 INSERT INTO d24_empresa (d24_cdempresa,d24_nmempresa, d24_nmabreviado, d24_nrtelefone, d24_enderecocompleto, d24_txpessoacontato, d24_cnpjempresa, d24_diretorioarquivos) VALUES (1,'EMPRESA EXEMPLO','EXEMPLO','','','','','databases');
 
+
 --------------- TipoDeVerificador -------------------------
 
 CREATE TABLE d02_tipo_verificador (
-	d02_cdtipoverificador BIGSERIAL,
+	d02_cdtipoverificador BIGINT(20) AUTO_INCREMENT,
 	d02_nmtipoverificador VARCHAR(200),
 	d02_nrniveis INTEGER,
 	d02_rotulonivel1 VARCHAR(200),
@@ -39,11 +40,12 @@ INSERT INTO d02_tipo_verificador (d02_cdtipoverificador, d02_nmtipoverificador, 
 INSERT INTO d02_tipo_verificador (d02_cdtipoverificador, d02_nmtipoverificador, d02_nrniveis, d02_rotulonivel1, d02_rotulonivel2, d02_rotulonivel3, d02_rotulonivel4, d02_rotulonivel5) VALUES ('4','Certificação Florestal','4','-','ETAPA','ITEM','SUBITEM','VERIFICADOR');
 INSERT INTO d02_tipo_verificador (d02_cdtipoverificador, d02_nmtipoverificador, d02_nrniveis, d02_rotulonivel1, d02_rotulonivel2, d02_rotulonivel3, d02_rotulonivel4, d02_rotulonivel5) VALUES ('5','Avaliação de sustentabilidade (pesquisa)','5','ASSUNTO','ETAPA','ITEM','SUBITEM','VERIFICADOR');
 
+
 ---------------------- Categoria de Avaliação --------------------------------------
 
 CREATE TABLE d20_nivel_avaliacao (
 
-	d20_cdnivelavaliacao BIGSERIAL,
+	d20_cdnivelavaliacao  BIGINT(20) AUTO_INCREMENT,
 	d20_nmnivelavaliacao VARCHAR(50),
 	d20_sigla VARCHAR(20),
 	d20_txdescricao VARCHAR(255),
@@ -62,10 +64,11 @@ INSERT INTO d20_nivel_avaliacao (d20_nmnivelavaliacao, d20_sigla, d20_txdescrica
 INSERT INTO d20_nivel_avaliacao (d20_nmnivelavaliacao, d20_sigla, d20_txdescricao ) VALUES ('Não se aplica / Não avaliado','NA', 'O verificador não se aplica, no momento da vistoria, ou não foi avaliado.');
 
 
+
 -------------------------- Cad Amostragem ---------------------------------------------------------
 
 CREATE TABLE d06_amostragem_m(
-	d06_cdamostragem BIGSERIAL,
+	d06_cdamostragem BIGINT(20) AUTO_INCREMENT,
 	d06_cdempresa BIGINT,
 	d06_nmamostragem VARCHAR(200),
 
@@ -85,15 +88,13 @@ INSERT INTO d06_amostragem_m (d06_cdempresa, d06_nmamostragem) VALUES('1', 'Trê
 INSERT INTO d06_amostragem_m (d06_cdempresa, d06_nmamostragem) VALUES('1', 'Quatro ou mais observações em campo');
 
 
------------------------------Cad Frequencia ------------------------------------------------------
-
 CREATE TABLE d08_frequencia_m(
 	d08_cdfrequencia BIGINT(20) AUTO_INCREMENT,
 	d08_cdempresa BIGINT,
 	d08_nmfrequencia VARCHAR(200),
 
-PRIMARY KEY (d08_cdfrequencia), 
-CONSTRAINT empresa_fk FOREIGN KEY (d08_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
+PRIMARY KEY (d08_cdfrequencia),
+CONSTRAINT empresa_frequencia_fk FOREIGN KEY (d08_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
 );
 
 INSERT INTO d08_frequencia_m (d08_cdempresa, d08_nmfrequencia) VALUES('1', 'Uma vez por ano, na época da safra');
@@ -109,12 +110,12 @@ INSERT INTO d08_frequencia_m (d08_cdempresa, d08_nmfrequencia) VALUES('1', 'Alea
 --------------------------------Cad Tipo de Metodo------------------------------------------------------------------
 
 CREATE TABLE d07_tipo_metodo_m(
-	d07_cdtipometodo BIGSERIAL,
+	d07_cdtipometodo BIGINT(20) AUTO_INCREMENT,
 	d07_cdempresa BIGINT,
 	d07_nmtipometodo VARCHAR(200),
 
 PRIMARY KEY (d07_cdtipometodo),
-CONSTRAINT empresa_fk FOREIGN KEY (d07_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
+CONSTRAINT empresa_tipodemetodo_fk FOREIGN KEY (d07_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
 );
 
 
@@ -130,12 +131,12 @@ INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo) VALUES('1', 'Obs
 ------------------------------------Cad Material ---------------------------------------------------------------------
 
 CREATE TABLE d09_material_m(
-	d09_cdmaterial BIGSERIAL,
+	d09_cdmaterial BIGINT(20) AUTO_INCREMENT,
 	d09_cdempresa BIGINT,
 	d09_nmmaterial VARCHAR(200),
 
 PRIMARY KEY(d09_cdmaterial),
-CONSTRAINT empresa_fk FOREIGN KEY (d09_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
+CONSTRAINT empresa_material_fk FOREIGN KEY (d09_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
 
 );
 
@@ -164,10 +165,8 @@ INSERT INTO d09_material_m (d09_cdempresa, d09_nmmaterial) VALUES('1', 'Legisla�
 INSERT INTO d09_material_m (d09_cdempresa, d09_nmmaterial) VALUES('1', 'Cronograma de atividades');
 
 
-----------------------------Verificador_m -----------------------------------------------------------
-
 CREATE TABLE p01_verificador_m (
-	p01_id_Verificador_m BIGSERIAL,
+	p01_id_Verificador_m BIGINT(20) AUTO_INCREMENT,
 	p01_cdempresa BIGINT,
 	p01_cdverificador BIGINT,
 	p01_cdtipoverificador BIGINT,
@@ -179,7 +178,7 @@ CREATE TABLE p01_verificador_m (
 
 PRIMARY KEY(p01_id_Verificador_m),
 
-CONSTRAINT empresa_fk FOREIGN KEY (p01_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
+CONSTRAINT empresa_verificador_fk FOREIGN KEY (p01_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
 CONSTRAINT tipoverificador_fk FOREIGN KEY (p01_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador),
 CONSTRAINT nivelavaliacao_fk FOREIGN KEY (p01_cdnivelavaliacao) REFERENCES d20_nivel_avaliacao(d20_cdnivelavaliacao)
 );
@@ -1869,15 +1868,16 @@ INSERT INTO p01_verificador_m (p01_cdempresa, p01_cdverificador, p01_cdtipoverif
 INSERT INTO p01_verificador_m (p01_cdempresa, p01_cdverificador, p01_cdtipoverificador, p01_codalfa, p01_cdnivelavaliacao, p01_nmverificador, p01_limiar, p01_graco)     VALUES('1','694','5','V694','1','A qualidade d’água para beber para os trabalhadores e atores locais é adequada.','.','100.0000');
 
 
+
 -------------------------------------------Local 1 --------------------------------------
 
 CREATE TABLE d03_local1_m(
-	d03_cdlocal1 BIGSERIAL,
+	d03_cdlocal1 BIGINT AUTO_INCREMENT,
 	d03_cdempresa BIGINT,
 	d03_nmlocal1 VARCHAR(200),
 
 PRIMARY KEY(d03_cdlocal1),
-CONSTRAINT empresa_fk FOREIGN KEY (d03_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
+CONSTRAINT empresa_local1_fk FOREIGN KEY (d03_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
 );
 
 INSERT INTO d03_local1_m ( d03_cdempresa, d03_cdlocal1,d03_nmlocal1)   VALUES ('1','1','Sítio em operações de derruba');
@@ -1891,17 +1891,18 @@ INSERT INTO d03_local1_m ( d03_cdempresa, d03_cdlocal1,d03_nmlocal1)   VALUES ('
 INSERT INTO d03_local1_m ( d03_cdempresa, d03_cdlocal1,d03_nmlocal1) VALUES ('1','9','Entornos UMF');
 
 
+
 -------------------------------------------Local 2 --------------------------------------
 
 CREATE TABLE d04_local2_m(
-	d04_cdlocal2 BIGSERIAL,
+	d04_cdlocal2 BIGINT AUTO_INCREMENT,
 	d04_cdempresa BIGINT,
 	d04_cdlocal1 BIGINT,
 	d04_nmlocal2 VARCHAR(200),
 
 PRIMARY KEY(d04_cdlocal2),
 CONSTRAINT local1_fk FOREIGN KEY (d04_cdlocal1) REFERENCES d03_local1_m(d03_cdlocal1),
-CONSTRAINT local1_empresa_fk FOREIGN KEY (d04_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
+CONSTRAINT local2_empresa_fk FOREIGN KEY (d04_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
 );
 
 INSERT INTO d04_local2_m ( d04_cdempresa, d04_cdlocal1, d04_nmlocal2)   VALUES ('1','1','Em todos os locais');
@@ -1939,11 +1940,11 @@ CREATE TABLE d05_local3_m(
 	d05_cdempresa BIGINT,
 	d05_cdlocal1 BIGINT,
 	d05_cdlocal2 BIGINT,
-	d05_cdlocal3 BIGSERIAL,
+	d05_cdlocal3 BIGINT AUTO_INCREMENT,
 	d05_nmlocal3 VARCHAR(200),
 
 PRIMARY KEY (d05_cdlocal3),
-CONSTRAINT local1_fk FOREIGN KEY (d05_cdlocal1) REFERENCES d03_local1_m(d03_cdlocal1),
+CONSTRAINT local1_local3_fk FOREIGN KEY (d05_cdlocal1) REFERENCES d03_local1_m(d03_cdlocal1),
 CONSTRAINT local3_empresa_fk FOREIGN KEY (d05_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
 CONSTRAINT local2_fk FOREIGN KEY (d05_cdlocal2) REFERENCES d04_local2_m(d04_cdlocal2)
 );
@@ -2086,12 +2087,12 @@ INSERT INTO d05_local3_m ( d05_cdempresa, d05_cdlocal1, d05_cdlocal2,  d05_nmloc
 -------------------------- Nivel 1 --------------------------------------
 
 CREATE TABLE d10_nivel1_m(
-	d10_cdnivel1 BIGSERIAL,
+	d10_cdnivel1 BIGINT AUTO_INCREMENT,
 	d10_cdempresa BIGINT,
 	d10_nmnivel1 VARCHAR(200),
 
 PRIMARY KEY(d10_cdnivel1),
-CONSTRAINT empresa_fk FOREIGN KEY (d10_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
+CONSTRAINT empresa_nivel1_fk FOREIGN KEY (d10_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
 );
 
 INSERT INTO d10_nivel1_m ( d10_cdempresa, d10_cdnivel1, d10_nmnivel1)   VALUES ('1','1','Somente Etapa / Item / Subitem');
@@ -2106,12 +2107,12 @@ INSERT INTO d10_nivel1_m ( d10_cdempresa, d10_cdnivel1, d10_nmnivel1)   VALUES (
 CREATE TABLE d11_nivel2_m(
 	d11_cdempresa BIGINT,
 	d11_cdnivel1 BIGINT,
-	d11_cdnivel2 BIGSERIAL,
+	d11_cdnivel2 BIGINT AUTO_INCREMENT,
 	d11_nmnivel2 VARCHAR(200),
 
 
 PRIMARY KEY (d11_cdnivel2),
-CONSTRAINT nivel1_empresa_fk FOREIGN KEY (d11_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
+CONSTRAINT nivel2_empresa_fk FOREIGN KEY (d11_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
 CONSTRAINT nivel1_fk FOREIGN KEY (d11_cdnivel1) REFERENCES d10_nivel1_m(d10_cdnivel1)
 
 );
@@ -2129,20 +2130,21 @@ INSERT INTO d11_nivel2_m ( d11_cdempresa, d11_cdnivel1,  d11_nmnivel2)   VALUES 
 INSERT INTO d11_nivel2_m ( d11_cdempresa, d11_cdnivel1,  d11_nmnivel2)   VALUES ('1','6','O funcionamento do ecossistema');
 INSERT INTO d11_nivel2_m ( d11_cdempresa, d11_cdnivel1,  d11_nmnivel2)   VALUES ('1','6','Os resultados sócio-econômicos');
 
+
 -------------------------- Nivel 3 --------------------------------------
 
 CREATE TABLE d12_nivel3_m(
 	d12_cdempresa BIGINT,
 	d12_cdnivel1 BIGINT,
 	d12_cdnivel2 BIGINT,
-	d12_cdnivel3 BIGSERIAL,
+	d12_cdnivel3 BIGINT AUTO_INCREMENT,
 	d12_nmnivel3 VARCHAR(200),
 
 
 PRIMARY KEY (d12_cdnivel3),
-CONSTRAINT nivel1_empresa_fk FOREIGN KEY (d12_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
-CONSTRAINT nivel1_fk FOREIGN KEY (d12_cdnivel1) REFERENCES d10_nivel1_m(d10_cdnivel1),
-CONSTRAINT nivel2_fk FOREIGN KEY (d12_cdnivel2) REFERENCES d11_nivel2_m(d11_cdnivel2)
+CONSTRAINT nivel3_empresa_fk FOREIGN KEY (d12_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
+CONSTRAINT nivel1_nivel3_fk FOREIGN KEY (d12_cdnivel1) REFERENCES d10_nivel1_m(d10_cdnivel1),
+CONSTRAINT nivel2_nivel3_fk FOREIGN KEY (d12_cdnivel2) REFERENCES d11_nivel2_m(d11_cdnivel2)
 
 );
 
@@ -2215,15 +2217,15 @@ CREATE TABLE d13_nivel4_m(
 	d13_cdnivel1 BIGINT,
 	d13_cdnivel2 BIGINT,
 	d13_cdnivel3 BIGINT,
-	d13_cdnivel4 BIGSERIAL,
+	d13_cdnivel4 BIGINT AUTO_INCREMENT,
 	d13_nmnivel4 VARCHAR(200),
 
 
 PRIMARY KEY (d13_cdnivel4),
-CONSTRAINT nivel1_empresa_fk FOREIGN KEY (d13_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
-CONSTRAINT nivel1_fk FOREIGN KEY (d13_cdnivel1) REFERENCES d10_nivel1_m(d10_cdnivel1),
-CONSTRAINT nivel2_fk FOREIGN KEY (d13_cdnivel2) REFERENCES d11_nivel2_m(d11_cdnivel2),
-CONSTRAINT nivel3_fk FOREIGN KEY (d13_cdnivel3) REFERENCES d12_nivel3_m(d12_cdnivel3)
+CONSTRAINT nivel4_empresa_fk FOREIGN KEY (d13_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
+CONSTRAINT nivel1_nivel4_fk FOREIGN KEY (d13_cdnivel1) REFERENCES d10_nivel1_m(d10_cdnivel1),
+CONSTRAINT nivel2_nivel4_fk FOREIGN KEY (d13_cdnivel2) REFERENCES d11_nivel2_m(d11_cdnivel2),
+CONSTRAINT nivel3_nivel4_fk FOREIGN KEY (d13_cdnivel3) REFERENCES d12_nivel3_m(d12_cdnivel3)
 
 );
 
@@ -2429,11 +2431,12 @@ INSERT INTO d13_nivel4_m ( d13_cdempresa, d13_cdnivel1, d13_cdnivel2, d13_cdnive
 INSERT INTO d13_nivel4_m ( d13_cdempresa, d13_cdnivel1, d13_cdnivel2, d13_cdnivel3, d13_nmnivel4)   VALUES ('1','6','12','44','Custos e benefícios.');
 INSERT INTO d13_nivel4_m ( d13_cdempresa, d13_cdnivel1, d13_cdnivel2, d13_cdnivel3, d13_nmnivel4)   VALUES ('1','6','12','44','Acidentes (Saúde).');
 
+
 ------------------------------ Verificador Local M ----------------------------------------
 
 
 CREATE TABLE r15_verificador_local_m (
-	r15_id_verificador_local BIGSERIAL,
+	r15_id_verificador_local BIGINT AUTO_INCREMENT,
 	r15_cdempresa BIGINT,
 	r15_id_Verificador_m BIGINT,
 	r15_cdtipoverificador BIGINT,
@@ -2465,11 +2468,10 @@ CONSTRAINT material3_fk FOREIGN KEY (r15_cdmaterial3) REFERENCES d09_material_m(
 
 );
 
-
 ---------------------------------- App Monitoramento ---------------------
 
 CREATE TABLE d18_monitoramento (
-	d18_cdmonitoramento BIGSERIAL,
+	d18_cdmonitoramento BIGINT AUTO_INCREMENT,
 	d18_cdempresa BIGINT,
 	d18_nmmonitoramento VARCHAR(200),
 	d18_cdtipoverificador BIGINT,
@@ -2480,19 +2482,19 @@ CREATE TABLE d18_monitoramento (
 PRIMARY KEY(d18_cdmonitoramento),
 
 CONSTRAINT empresa_monit_fk FOREIGN KEY (d18_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
-CONSTRAINT tipoverificador_fk FOREIGN KEY (d18_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador)
+CONSTRAINT tipoverificador_monitoramento_fk FOREIGN KEY (d18_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador)
 );
 
 
 ---------------------------------- Mod Modelo Template ---------------------
 
 CREATE TABLE d14_template(
-	d14_cdtemplate BIGSERIAL,
+	d14_cdtemplate BIGINT AUTO_INCREMENT,
 	d14_nmtemplate VARCHAR(200),
 	d14_cdtipoverificador BIGINT,
 
 PRIMARY KEY(d14_cdtemplate),
-CONSTRAINT tipodeverificador_fk FOREIGN KEY (d14_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador)
+CONSTRAINT tipodeverificador_template_fk FOREIGN KEY (d14_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador)
 );
 
 INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO DE VISTORIA DE PMFS','3');
@@ -2504,7 +2506,7 @@ INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO D
 -------------------------------- Mod Verificadores do modelo ------------------------------------
 
 CREATE TABLE r17_verificador_template_m (
-	r17_cdverimod BIGSERIAL,
+	r17_cdverimod BIGINT AUTO_INCREMENT,
 	r17_cdempresa BIGINT,
 	r17_cdverificador BIGINT,
 	r17_cdtipoverificador BIGINT,
@@ -2542,7 +2544,7 @@ INSERT INTO r17_verificador_template_m(
 -------------------------------- App Verificadores do modelo ------------------------------------
 
 CREATE TABLE r17_verificador_monitoramento (
-	r17_cdverimod BIGSERIAL,
+	r17_cdverimod BIGINT AUTO_INCREMENT,
 	r17_cdempresa BIGINT,
 	r17_cdverificador BIGINT,
 	r17_cdtipoverificador BIGINT,
@@ -2561,35 +2563,9 @@ CREATE TABLE r17_verificador_monitoramento (
 
 	CONSTRAINT empresa_verif_monit_fk FOREIGN KEY (r17_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
 	CONSTRAINT verifi_fk FOREIGN KEY (r17_cdverificador) REFERENCES p01_verificador_m(p01_id_Verificador_m),
-	CONSTRAINT tipoverificador_fk FOREIGN KEY (r17_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador),
+	CONSTRAINT tipoverificador_verimonitora_fk FOREIGN KEY (r17_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador),
 	CONSTRAINT appmonitoramento_fk FOREIGN KEY (r17_cdmonitoramento) REFERENCES d18_monitoramento(d18_cdmonitoramento)
-
-
-
-
 );
-
--------------- App Monitoramento -----
-
-
-CREATE TABLE d18_monitoramento (
-	d18_cdmonitoramento BIGSERIAL,
-	d18_cdtemplate BIGINT,
-	d18_cdempresa BIGINT,
-	d18_nmmonitoramento VARCHAR(200),
-	d18_cdtipoverificador BIGINT,
-	d18_dtcriacao DATE,
-	d18_txlocal VARCHAR(1000),
-
-
-PRIMARY KEY(d18_cdmonitoramento),
-
-CONSTRAINT empresa_monit_fk FOREIGN KEY (d18_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
-CONSTRAINT tipoverificador_fk FOREIGN KEY (d18_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador)
-);
-
-
-INSERT INTO d18_monitoramento (d18_cdtemplate, d18_cdempresa, d18_nmmonitoramento, d18_cdtipoverificador, d18_dtcriacao, d18_txlocal) VALUES (1, 1, 'Monitoramento de MINHA BENGA', 1, '12/09/2019', 'Embrapa');
 
 
 
@@ -2598,7 +2574,7 @@ INSERT INTO d18_monitoramento (d18_cdtemplate, d18_cdempresa, d18_nmmonitorament
 
 CREATE TABLE d19_avaliacao (
 
-	d19_cdavaliacao BIGSERIAL,
+	d19_cdavaliacao BIGINT AUTO_INCREMENT,
 	d19_cdmonitoramento BIGINT,
 	d19_cdempresa BIGINT,
 	d19_nmavaliacao VARCHAR(200),
@@ -2611,26 +2587,26 @@ CONSTRAINT empresa_avaliacao_fk FOREIGN KEY (d19_cdempresa) REFERENCES d24_empre
 CONSTRAINT monitoramento_fk FOREIGN KEY (d19_cdmonitoramento) REFERENCES d18_monitoramento(d18_cdmonitoramento)
 );
 
-insert into d19_avaliacao (d19_cdmonitoramento, d19_cdempresa, d19_nmavaliacao, d19_dtinicio, d19_dtfim) VALUES (1 , 1, 'Vasco','28/09/2019','28/09/2019');
+insert into d19_avaliacao (d19_cdmonitoramento, d19_cdempresa, d19_nmavaliacao, d19_dtinicio, d19_dtfim) VALUES (1 , 1, 'Vasco','2019-09-28','2019-09-28');
 
 
 
 ---------------- Usuariso e Permissões ------------------------
 
 CREATE TABLE usuario (
-	codigo BIGSERIAL PRIMARY KEY,
+	codigo BIGINT AUTO_INCREMENT PRIMARY KEY,
 	nome VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	senha VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE permissao (
-	codigo BIGSERIAL PRIMARY KEY,
+	codigo BIGINT AUTO_INCREMENT PRIMARY KEY,
 	descricao VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE usuario_permissao (
-	codigo_usuario BIGSERIAL NOT NULL,
+	codigo_usuario BIGINT NOT NULL,
 	codigo_permissao BIGINT NOT NULL,
 	PRIMARY KEY (codigo_usuario, codigo_permissao),
 	FOREIGN KEY (codigo_usuario) REFERENCES usuario(codigo),
@@ -2697,5 +2673,8 @@ INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 8);
 INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 11);
 INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 14);
 INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 17);
+
+
+
 
 

@@ -1,0 +1,42 @@
+<div class="container">
+  <p-card  [style]="{width: 'px'}" styleClass="ui-card-shadow">
+    <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+    <div class="ui-g">
+        <div class="ui-g-12">
+          <h2>Coleta de Dados</h2>
+        </div>
+        <div class="ui-g-6 ui-fluid">
+          <label style="display: block">Monitoramento: </label>
+          <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate" placeholder="Selecione" [style]="{'width':'500px'}"></p-dropdown>
+        </div>
+        <div class="ui-g-6 ui-fluid">
+          <label style="display: block">Avaliação: </label>
+          <p-dropdown [options]="cadtipodeverificador" name="cadtipodeverificador" placeholder="Selecione"  [style]="{'width':'500px'}"></p-dropdown>
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+          <label style="display: block">N° de Observações: </label>
+          <input type="text" name="codigo" [readonly]="true" pInputText style="width: 100px" />
+        </div>
+        <div class="ui-g-12 ui-fluid">
+          <label style="display: block">N° de Não Conformidades: </label>
+          <input type="text" name="codigo" [readonly]="true" pInputText style="width: 100px" />
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+          <label style="display: block">Observação do Verificador desta Coleta: </label>
+          <textarea name="obscoleta" pInputTextarea ></textarea>
+        </div>
+
+        <div class="ui-g-6">
+          <br />
+          <button pButton type="submit" label="Definir" class="ui-button-raised ui-button-success" [style]="{'width':'100px'}"></button>
+        </div>
+        
+    </div>
+    </form>
+
+    
+
+  </p-card>
+</div>

@@ -1,0 +1,42 @@
+<div class="container">
+  <p-card [style]="{width: 'px'}" styleClass="ui-card-shadow">
+
+  <div class="ui-g">
+      <div class="ui-g-12">
+
+          <p-table [value]="verificadordomodelo" [paginator]="true" [rows]="filtro.size"  [responsive]="true"
+            [lazy]="true" [totalRecords]="tatalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th style=" width: 40px">Id</th>
+                <th style=" width: 150px">Alfanumérico</th>
+                <th style=" width: 90px">Cat. Avaliação</th>
+                <th>Verificador</th>
+              </tr>
+            </ng-template>
+              <ng-template pTemplate="body" let-vermodelo>
+                <tr>
+                  <th>{{vermodelo.cdVeriMod}}</th>
+                  <th style="text-align: left">{{vermodelo.cdVerificador.codalfa}}</th>
+                  <th style="text-align: left">{{vermodelo.cdVerificador.cadNivelDeAvaliacao.sigla}}</th>
+                  <th style="text-align: left">{{vermodelo.cdVerificador.nmverificador}}</th>
+
+                  <th>
+
+                      <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top" [routerLink]="['/modverificadoresmonitoramentotemplate', vermodelo.cdEmpresa]"></a>
+                      <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Empresa" tooltipPosition="top" (click)="confirmarExclusao(empresa)"></button>
+
+                  </th>
+                </tr>
+              </ng-template>
+            </p-table>
+
+
+          </div>
+
+        </div>
+
+
+</p-card>
+</div>

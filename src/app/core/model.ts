@@ -23,7 +23,7 @@ export class Cadfrequencia {
 
 export class Cadtipodemetodo {
   cdTipoDeMetodo: number;
-  cdEmpresa = new menu();
+  cdEmpresa = new Cadempresa();
   nmTipoDeMetodo: string;
 }
 

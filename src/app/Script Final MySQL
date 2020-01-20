@@ -1,4 +1,8 @@
--------------- CadEmpresa -------------------------
+Drop database if exists mopapi;
+CREATE database mopapi;
+USE mopapi;
+
+-- CadEmpresa -------------------------
 
 CREATE TABLE d24_empresa (
 	d24_cdempresa BIGINT(20) AUTO_INCREMENT,
@@ -19,7 +23,7 @@ CONSTRAINT  empresa_pk PRIMARY KEY (d24_cdempresa)
 INSERT INTO d24_empresa (d24_cdempresa,d24_nmempresa, d24_nmabreviado, d24_nrtelefone, d24_enderecocompleto, d24_txpessoacontato, d24_cnpjempresa, d24_diretorioarquivos) VALUES (1,'EMPRESA EXEMPLO','EXEMPLO','','','','','databases');
 
 
---------------- TipoDeVerificador -------------------------
+-- TipoDeVerificador -------------------------
 
 CREATE TABLE d02_tipo_verificador (
 	d02_cdtipoverificador BIGINT(20) AUTO_INCREMENT,
@@ -41,7 +45,7 @@ INSERT INTO d02_tipo_verificador (d02_cdtipoverificador, d02_nmtipoverificador, 
 INSERT INTO d02_tipo_verificador (d02_cdtipoverificador, d02_nmtipoverificador, d02_nrniveis, d02_rotulonivel1, d02_rotulonivel2, d02_rotulonivel3, d02_rotulonivel4, d02_rotulonivel5) VALUES ('5','Avaliação de sustentabilidade (pesquisa)','5','ASSUNTO','ETAPA','ITEM','SUBITEM','VERIFICADOR');
 
 
----------------------- Categoria de Avaliação --------------------------------------
+-- Categoria de Avaliação --------------------------------------
 
 CREATE TABLE d20_nivel_avaliacao (
 
@@ -65,7 +69,7 @@ INSERT INTO d20_nivel_avaliacao (d20_nmnivelavaliacao, d20_sigla, d20_txdescrica
 
 
 
--------------------------- Cad Amostragem ---------------------------------------------------------
+-- Cad Amostragem ---------------------------------------------------------
 
 CREATE TABLE d06_amostragem_m(
 	d06_cdamostragem BIGINT(20) AUTO_INCREMENT,
@@ -107,28 +111,29 @@ INSERT INTO d08_frequencia_m (d08_cdempresa, d08_nmfrequencia) VALUES('1', 'Seme
 INSERT INTO d08_frequencia_m (d08_cdempresa, d08_nmfrequencia) VALUES('1', 'Aleatória, por demanda ou exigência da legislação');
 
 
---------------------------------Cad Tipo de Metodo------------------------------------------------------------------
+-- Cad Tipo de Metodo------------------------------------------------------------------
 
 CREATE TABLE d07_tipo_metodo_m(
 	d07_cdtipometodo BIGINT(20) AUTO_INCREMENT,
 	d07_cdempresa BIGINT,
 	d07_nmtipometodo VARCHAR(200),
+	d07_default boolean,
 
 PRIMARY KEY (d07_cdtipometodo),
 CONSTRAINT empresa_tipodemetodo_fk FOREIGN KEY (d07_cdempresa) REFERENCES d24_empresa(d24_cdempresa)
 );
 
 
-INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo) VALUES('1', 'Análise de mapas e/ou documentação no campo');
-INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo) VALUES('1', 'Análise de mapas e/ou documentação no escritório');
-INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo) VALUES('1', 'Entrevistas com funcionários');
-INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo) VALUES('1', 'Medição em campo');
-INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo) VALUES('1', 'Medição no acampamento');
-INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo) VALUES('1', 'Observação em campo');
-INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo) VALUES('1', 'Observação no acampamento');
+INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo, d07_default) VALUES('1', 'Análise de mapas e/ou documentação no campo', true);
+INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo, d07_default) VALUES('1', 'Análise de mapas e/ou documentação no escritório', true);
+INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo, d07_default) VALUES('1', 'Entrevistas com funcionários', true);
+INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo, d07_default) VALUES('1', 'Medição em campo', true);
+INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo, d07_default) VALUES('1', 'Medição no acampamento', true);
+INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo, d07_default) VALUES('1', 'Observação em campo', true);
+INSERT INTO d07_tipo_metodo_m (d07_cdempresa, d07_nmtipometodo, d07_default) VALUES('1', 'Observação no acampamento', true);
 
 
-------------------------------------Cad Material ---------------------------------------------------------------------
+-- Cad Material ---------------------------------------------------------------------
 
 CREATE TABLE d09_material_m(
 	d09_cdmaterial BIGINT(20) AUTO_INCREMENT,
@@ -1869,7 +1874,7 @@ INSERT INTO p01_verificador_m (p01_cdempresa, p01_cdverificador, p01_cdtipoverif
 
 
 
--------------------------------------------Local 1 --------------------------------------
+-- -Local 1 --------------------------------------
 
 CREATE TABLE d03_local1_m(
 	d03_cdlocal1 BIGINT AUTO_INCREMENT,
@@ -1892,7 +1897,7 @@ INSERT INTO d03_local1_m ( d03_cdempresa, d03_cdlocal1,d03_nmlocal1) VALUES ('1'
 
 
 
--------------------------------------------Local 2 --------------------------------------
+-- Local 2 --------------------------------------
 
 CREATE TABLE d04_local2_m(
 	d04_cdlocal2 BIGINT AUTO_INCREMENT,
@@ -1934,7 +1939,7 @@ INSERT INTO d04_local2_m ( d04_cdempresa, d04_cdlocal1, d04_nmlocal2)   VALUES (
 
 
 
--------------------------------------------Local 3 --------------------------------------
+-- Local 3 --------------------------------------
 
 CREATE TABLE d05_local3_m(
 	d05_cdempresa BIGINT,
@@ -2084,7 +2089,7 @@ INSERT INTO d05_local3_m ( d05_cdempresa, d05_cdlocal1, d05_cdlocal2,  d05_nmloc
 INSERT INTO d05_local3_m ( d05_cdempresa, d05_cdlocal1, d05_cdlocal2,  d05_nmlocal3)   VALUES ('1','9','26','Ecologia regional');
 
 
--------------------------- Nivel 1 --------------------------------------
+-- Nivel 1 --------------------------------------
 
 CREATE TABLE d10_nivel1_m(
 	d10_cdnivel1 BIGINT AUTO_INCREMENT,
@@ -2102,7 +2107,7 @@ INSERT INTO d10_nivel1_m ( d10_cdempresa, d10_cdnivel1, d10_nmnivel1)   VALUES (
 INSERT INTO d10_nivel1_m ( d10_cdempresa, d10_cdnivel1, d10_nmnivel1)   VALUES ('1','5','Sobre a realização das operações florestais');
 INSERT INTO d10_nivel1_m ( d10_cdempresa, d10_cdnivel1, d10_nmnivel1)   VALUES ('1','6','As atividades empresarias têm os impactos desejados (são eficientes)');
 
--------------------------- Nivel 2 --------------------------------------
+-- Nivel 2 --------------------------------------
 
 CREATE TABLE d11_nivel2_m(
 	d11_cdempresa BIGINT,
@@ -2131,7 +2136,7 @@ INSERT INTO d11_nivel2_m ( d11_cdempresa, d11_cdnivel1,  d11_nmnivel2)   VALUES 
 INSERT INTO d11_nivel2_m ( d11_cdempresa, d11_cdnivel1,  d11_nmnivel2)   VALUES ('1','6','Os resultados sócio-econômicos');
 
 
--------------------------- Nivel 3 --------------------------------------
+-- Nivel 3 --------------------------------------
 
 CREATE TABLE d12_nivel3_m(
 	d12_cdempresa BIGINT,
@@ -2210,7 +2215,7 @@ INSERT INTO d12_nivel3_m ( d12_cdempresa, d12_cdnivel1, d12_cdnivel2  ,d12_nmniv
 INSERT INTO d12_nivel3_m ( d12_cdempresa, d12_cdnivel1, d12_cdnivel2  ,d12_nmnivel3)    VALUES ('1','6','12','Lista dos resultados socioecon');
 
 
--------------------------- Nivel 4 --------------------------------------
+-- Nivel 4 --------------------------------------
 
 CREATE TABLE d13_nivel4_m(
 	d13_cdempresa BIGINT,
@@ -2432,7 +2437,7 @@ INSERT INTO d13_nivel4_m ( d13_cdempresa, d13_cdnivel1, d13_cdnivel2, d13_cdnive
 INSERT INTO d13_nivel4_m ( d13_cdempresa, d13_cdnivel1, d13_cdnivel2, d13_cdnivel3, d13_nmnivel4)   VALUES ('1','6','12','44','Acidentes (Saúde).');
 
 
------------------------------- Verificador Local M ----------------------------------------
+-- Verificador Local M ----------------------------------------
 
 
 CREATE TABLE r15_verificador_local_m (
@@ -2468,7 +2473,7 @@ CONSTRAINT material3_fk FOREIGN KEY (r15_cdmaterial3) REFERENCES d09_material_m(
 
 );
 
----------------------------------- App Monitoramento ---------------------
+-- App Monitoramento ---------------------
 
 CREATE TABLE d18_monitoramento (
 	d18_cdmonitoramento BIGINT AUTO_INCREMENT,
@@ -2486,7 +2491,7 @@ CONSTRAINT tipoverificador_monitoramento_fk FOREIGN KEY (d18_cdtipoverificador) 
 );
 
 
----------------------------------- Mod Modelo Template ---------------------
+-- Mod Modelo Template ---------------------
 
 CREATE TABLE d14_template(
 	d14_cdtemplate BIGINT AUTO_INCREMENT,
@@ -2503,7 +2508,7 @@ INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO D
 INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO DE AVALIAÇÃO DE SUSTENTABILIDADE','5');
 INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO DE AVALIAÇÃO DE IMPACTOS','2');
 
--------------------------------- Mod Verificadores do modelo ------------------------------------
+-- Mod Verificadores do modelo ------------------------------------
 
 CREATE TABLE r17_verificador_template_m (
 	r17_cdverimod BIGINT AUTO_INCREMENT,
@@ -2541,7 +2546,7 @@ INSERT INTO r17_verificador_template_m(
             TRUE, FALSE, 'Teste', 'Teste');
 
 
--------------------------------- App Verificadores do modelo ------------------------------------
+-- App Verificadores do modelo ------------------------------------
 
 CREATE TABLE r17_verificador_monitoramento (
 	r17_cdverimod BIGINT AUTO_INCREMENT,
@@ -2569,7 +2574,7 @@ CREATE TABLE r17_verificador_monitoramento (
 
 
 
---------- App Avaliação -------------------
+-- App Avaliação -------------------
 
 
 CREATE TABLE d19_avaliacao (
@@ -2587,11 +2592,11 @@ CONSTRAINT empresa_avaliacao_fk FOREIGN KEY (d19_cdempresa) REFERENCES d24_empre
 CONSTRAINT monitoramento_fk FOREIGN KEY (d19_cdmonitoramento) REFERENCES d18_monitoramento(d18_cdmonitoramento)
 );
 
-insert into d19_avaliacao (d19_cdmonitoramento, d19_cdempresa, d19_nmavaliacao, d19_dtinicio, d19_dtfim) VALUES (1 , 1, 'Vasco','2019-09-28','2019-09-28');
+-- insert into d19_avaliacao (d19_cdmonitoramento, d19_cdempresa, d19_nmavaliacao, d19_dtinicio, d19_dtfim) VALUES (1 , 1, 'Vasco','2019-09-28','2019-09-28');
 
 
 
----------------- Usuariso e Permissões ------------------------
+-- Usuariso e Permissões ------------------------
 
 CREATE TABLE usuario (
 	codigo BIGINT AUTO_INCREMENT PRIMARY KEY,

@@ -1,8 +1,14 @@
 <div class="menu">
+  
 <p-menubar [model]="items" [autoDisplay]="false">
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
   <div>
+    
+      <p-dropdown name="empresa" [options]="empresas" [autoWidth]="false" placeholder= "Selecione a empresa" 
+      [(ngModel)]="menuSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>
 
-      <button pButton label="Fechar" icon="fa fa-sign-out" style="margin-left:.25em"></button>
+      
   </div>
+</form>
 </p-menubar>
 </div>

@@ -4,9 +4,10 @@ import { Http, Headers } from '@angular/http';
 import { URLSearchParams } from '@angular/http';
 
 export class CadfrequenciaFiltro{
-  nmFrequencia : string;
-  page = 0;
-  size = 5;
+  //nmFrequencia : string;
+  cdEmpresa:any;
+  //page = 0;
+  //size = 5;
 }
 
 @Injectable()
@@ -19,31 +20,20 @@ export class CadfrequenciaService {
 
   pesquisar(filtro: CadfrequenciaFiltro): Promise<any> {
 
+    
     const params = new URLSearchParams;
     const headers = new Headers;
-
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
 
-    if (filtro.nmFrequencia){
-      params.set('nmFrequencia', filtro.nmFrequencia);
+    if (filtro.cdEmpresa) {
+      params.set('cdEmpresa', filtro.cdEmpresa);
+    }
+    return this.http.get(`${this.cadfrequenciaURL}`, { headers, search: filtro })
+    .toPromise()
+    .then(response => response.json().content)
 
   }
 
-    return this.http.get(`${this.cadfrequenciaURL}?resumo`, {  headers, search: filtro })
-    .toPromise()
-      .then(response => {
-
-          const responseJson = response.json();
-          const cadfrequencia = responseJson.content;
-
-          const resultado = {
-            cadfrequencia,
-            total: responseJson.totalElements
-          };
-          return resultado;
-    })
-
-    };
     excluir(codigo: number): Promise<void> {
       const headers = new Headers;
       headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');

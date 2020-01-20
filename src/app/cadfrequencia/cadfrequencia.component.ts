@@ -4,7 +4,7 @@ import { CadfrequenciaFiltro, CadfrequenciaService } from './cadfrequencia.servi
 import { LazyLoadEvent } from 'src/primeng/api';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
-import { Cadfrequencia } from '../core/model';
+import { Cadfrequencia, menu } from '../core/model';
 import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
@@ -19,27 +19,46 @@ export class CadfrequenciaComponent {
 
   tatalRegistros = 0;
   filtro = new CadfrequenciaFiltro();
+  teste = new menu();
   nmFrequencia: string;
-
   frequenciaSalvar = new Cadfrequencia();
-  empresas = [];
+
+  
+ 
+  
+ 
+
+ // teste2 = this.teste.cdEmpresa;
+  
+
+  
+  /*empresas = [
+    {
+      label: this.teste2.nmEmpresa,
+      value: this.teste2.cdEmpresa
+    }
+  ];*/
   @ViewChild('tabela') grid;
 
   cadfrequencia=[]
+  
 
   constructor(
     private cadEmpresaService: CadempresaService,
     private cadfrequenciaService: CadfrequenciaService,
+    
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
+    
+    
   ){}
 
   ngOnInit() {
     //console.log(this.route.snapshot.params['codigo']);
 
-    this.carregarEmpresas();
+    //this.carregarEmpresas();
 
     const codigoFrequencia = this.route.snapshot.params['codigo'];
 
@@ -62,21 +81,28 @@ export class CadfrequenciaComponent {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  pesquisar(page = 0){
+  pesquisar(){
 
-    this.filtro.page = page;
-
-    this.cadfrequenciaService.pesquisar(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.cadfrequencia = resultado.cadfrequencia;
-
-      })
+    const filtro: CadfrequenciaFiltro = {
+      cdEmpresa: this.frequenciaSalvar.cdEmpresa.cdEmpresa,
+      }
+    this.cadfrequenciaService.pesquisar(filtro)
+      .then(frequencia => this.cadfrequencia = frequencia)
       .catch(erro => this.errorHandler.handle(erro));
+
+   // this.filtro.page = page;
+
+   // this.cadfrequenciaService.pesquisar(this.filtro)
+   //   .then(resultado => {
+   //     this.tatalRegistros = resultado.total;
+   //     this.cadfrequencia = resultado.cadfrequencia;
+
+  //    })
+  //    .catch(erro => this.errorHandler.handle(erro));
   }
-  aoMudarPagina(event: LazyLoadEvent){
+  aoMudarPagina(event: LazyLoadEvent) {
     const page = event.first / event.rows;
-    this.pesquisar(page);
+
   }
 
   confirmarExclusao(frequencia: any) {
@@ -154,13 +180,13 @@ export class CadfrequenciaComponent {
       .catch(erro => this.errorHandler.handle(erro));
       }
 
-      carregarEmpresas() {
+    /*  carregarEmpresas() {
         return this.cadEmpresaService.listarTodas()
           .then(empresas => {
             this.empresas = empresas.map(c => ({ label: c.cdEmpresa + " - " + c.nmEmpresa, value: c.cdEmpresa }));
           })
           .catch(erro => this.errorHandler.handle(erro));
-      }
+      }*/
 
 
 

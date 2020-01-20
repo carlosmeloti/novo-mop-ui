@@ -6,9 +6,11 @@ import { Cadamostragem } from '../core/model';
 
 
 export class CadamostragemFiltro {
-  nmAmostragem: string;
-  page = 0;
-  size = 5;
+  //nmAmostragem: string;
+  //page = 0;
+  //size = 5;
+
+  cdEmpresa:any;
 }
 
 @Injectable()
@@ -24,22 +26,13 @@ export class CadamostragemService {
     const headers = new Headers;
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
 
-    if (filtro.nmAmostragem) {
-      params.set('nmAmostragem', filtro.nmAmostragem);
+    if (filtro.cdEmpresa) {
+      params.set('cdEmpresa', filtro.cdEmpresa);
     }
+    return this.http.get(`${this.cadamostragemurl}`, { headers, search: filtro })
+    .toPromise()
+    .then(response => response.json().content)
 
-    return this.http.get(`${this.cadamostragemurl}?resumo`, { headers, search: filtro })
-      .toPromise()
-      .then(response => {
-        const responseJson = response.json();
-        const cadamostragem = responseJson.content;
-
-        const resultado = {
-          cadamostragem,
-          total: responseJson.totalElements
-        };
-        return resultado;
-      })
 
   };
 

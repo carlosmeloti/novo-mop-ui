@@ -20,6 +20,7 @@ export class CadamostragemComponent {
   tatalRegistros = 0;
   filtro = new CadamostragemFiltro();
   nmAmostragem: string;
+  cdEmpresa: number;
 
   amostragemSalvar = new Cadamostragem();
   cadamostragem = [];
@@ -64,21 +65,27 @@ export class CadamostragemComponent {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  pesquisar(page = 0) {
+  pesquisar() {
 
-    this.filtro.page = page;
-
-    this.cadamostragemService.pesquisar(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.cadamostragem = resultado.cadamostragem;
-
-      })
+    const filtro: CadamostragemFiltro = {
+      cdEmpresa: this.amostragemSalvar.cdEmpresa.cdEmpresa,
+      }
+    this.cadamostragemService.pesquisar(filtro)
+      .then(amostragem => this.cadamostragem = amostragem)
       .catch(erro => this.errorHandler.handle(erro));
+   
+
+    //this.cadamostragemService.pesquisar(this.filtro)
+     // .then(resultado => {
+      //  this.tatalRegistros = resultado.total;
+      //  this.cadamostragem = resultado.cadamostragem;
+
+      //})
+      //.catch(erro => this.errorHandler.handle(erro));
   }
   aoMudarPagina(event: LazyLoadEvent) {
     const page = event.first / event.rows;
-    this.pesquisar(page);
+
   }
 
   confirmarExclusao(amostragem: any) {

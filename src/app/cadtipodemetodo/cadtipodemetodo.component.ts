@@ -19,6 +19,7 @@ export class CadtipodemetodoComponent {
   tatalRegistros = 0;
   filtro = new CadtipodemetodoFiltro();
   nmFrequencia: string;
+  cdEmpresa: number;
 
   tipodemetodoSalvar = new Cadtipodemetodo();
   empresas = [];
@@ -62,21 +63,27 @@ export class CadtipodemetodoComponent {
   }
 
 
-  pesquisar(page = 0) {
+  pesquisar() {
 
-    this.filtro.page = page;
-
-    this.cadtipodemetodoService.pesquisar(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.cadtipodemetodo = resultado.cadtipodemetodo;
-
-      })
+    const filtro: CadtipodemetodoFiltro = {
+      cdEmpresa: this.tipodemetodoSalvar.cdEmpresa.cdEmpresa,
+      }
+    this.cadtipodemetodoService.pesquisar(filtro)
+      .then(tipometodo => this.cadtipodemetodo = tipometodo)
       .catch(erro => this.errorHandler.handle(erro));
+   
+
+    //this.cadamostragemService.pesquisar(this.filtro)
+     // .then(resultado => {
+      //  this.tatalRegistros = resultado.total;
+      //  this.cadamostragem = resultado.cadamostragem;
+
+      //})
+      //.catch(erro => this.errorHandler.handle(erro));
   }
   aoMudarPagina(event: LazyLoadEvent) {
     const page = event.first / event.rows;
-    this.pesquisar(page);
+
   }
 
   confirmarExclusao(tipodemetodo: any) {

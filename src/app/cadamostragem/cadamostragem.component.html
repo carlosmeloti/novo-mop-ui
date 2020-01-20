@@ -12,10 +12,16 @@
         </div>
         <div class="ui-g-3 ui-fluid">
           <label>Empresa</label>
-          <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
+          <p-dropdown name="empresa" [options]="empresas" [autoWidth]="false" placeholder= "Selecione a empresa" 
+          [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>
 
-          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa">
-          </p-selectButton>
+      
+        </div>
+        <div class="ui-g-2 ui-fluid">
+          <br />
+          <button type="button" style="width: 200px" pButton label="Buscar Amostragem"
+            (click)="pesquisar()"></button>
+
         </div>
         <div class="ui-g-12 ui-fluid">
           <label style="display: block">Amostragem: </label>
@@ -34,24 +40,16 @@
         </div>
       </div>
     </form>
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <form autocomplete="off" (ngSubmit)="pesquisar()">
-          <div class="ui-g-12 ui-fluid">
-            <label style="display: block">Pesquisar Amostragem: </label>
-            <input type="text" pInputText name="nmAmostragem" [(ngModel)]="filtro.nmAmostragem">
-          </div>
-        </form>
-      </div>
-    </div>
+    
 
     <div class="ui-g">
       <div class="ui-g-12">
-        <p-table [value]="cadamostragem" [paginator]="true" [rows]="filtro.size" [responsive]="true" [lazy]="true"
+        <p-table [value]="cadamostragem" [paginator]="true" [rows]=100 [responsive]="true" [lazy]="true"
           [totalRecords]="tatalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 120px">Codigo</th>
+              <th>Empresa</th>
               <th>Amostragem</th>
               <th style=" width: 140px"></th>
             </tr>
@@ -59,6 +57,7 @@
           <ng-template pTemplate="body" let-amostragem>
             <tr>
               <th>{{amostragem.cdAmostragem}}</th>
+              <th style="text-align: left">{{amostragem.cdEmpresa.nmEmpresa}}</th>
               <th style="text-align: left">{{amostragem.nmAmostragem}}</th>
               <th>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Amostragem" tooltipPosition="top"

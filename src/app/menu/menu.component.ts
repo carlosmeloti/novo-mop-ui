@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'src/primeng/components/common/menuitem';
 import { RouterLink } from '@angular/router';
+import { CadempresaService } from '../cadempresa/cadempresa.service';
+import { menu } from '../core/model';
 
 @Component({
   selector: 'app-menu',
@@ -9,10 +11,18 @@ import { RouterLink } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  cdEmpresa: number;
+
+  empresas = [];
+
+  constructor(
+    private cadEmpresaService: CadempresaService,
+  ) { }
   items: MenuItem[];
+  menuSalvar = new menu();
 
   ngOnInit() {
+    this.carregarEmpresas();
     this.items = [
       {
           label: 'Cadastro Geral',
@@ -145,6 +155,14 @@ export class MenuComponent implements OnInit {
           routerLink:'/inicio'
       }
   ];
+  }
+
+  carregarEmpresas() {
+    return this.cadEmpresaService.listarTodas()
+      .then(empresas => {
+        this.empresas = empresas.map(c => ({ label: c.cdEmpresa + " - " + c.nmEmpresa, value: c.cdEmpresa }));
+      })
+      //.catch(erro => this.errorHandler.handle(erro));
   }
 
 }

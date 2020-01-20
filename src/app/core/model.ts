@@ -23,7 +23,7 @@ export class Cadfrequencia {
 
 export class Cadtipodemetodo {
   cdTipoDeMetodo: number;
-  cdEmpresa = new Cadempresa();
+  cdEmpresa = new menu();
   nmTipoDeMetodo: string;
 }
 
@@ -181,8 +181,11 @@ export class Modverificadoresdomodelo {
   lgDadosAgrupados: boolean;
   txColetaAnalitica: string;
   txColetaAgrupada: string;
+}
 
-
+export class menu {
+  cdEmpresa = new Cadempresa();
+  teste = this.cdEmpresa;
 }
 
 

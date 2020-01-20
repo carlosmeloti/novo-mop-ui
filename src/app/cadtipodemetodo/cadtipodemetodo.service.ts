@@ -4,9 +4,7 @@ import { Http, Headers } from '@angular/http';
 import { URLSearchParams } from '@angular/http';
 
 export class CadtipodemetodoFiltro{
-  tipometodo : string;
-  page = 0;
-  size = 5;
+  cdEmpresa:any;
 }
 
 @Injectable()
@@ -20,29 +18,17 @@ export class CadtipodemetodoService {
 
     const params = new URLSearchParams;
     const headers = new Headers;
-
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
 
-    if (filtro.tipometodo){
-      params.set('tipometodo', filtro.tipometodo);
-
-  }
-
-    return this.http.get(`${this.cadtipodemetodoURL}?resumo`, {  headers, search: filtro })
+    if (filtro.cdEmpresa) {
+      params.set('cdEmpresa', filtro.cdEmpresa);
+    }
+    return this.http.get(`${this.cadtipodemetodoURL}`, { headers, search: filtro })
     .toPromise()
-      .then(response => {
-
-          const responseJson = response.json();
-          const cadtipodemetodo = responseJson.content;
-
-          const resultado = {
-            cadtipodemetodo,
-            total: responseJson.totalElements
-          };
-          return resultado;
-    })
+    .then(response => response.json().content)
 
     };
+
     excluir(codigo: number): Promise<void> {
       const headers = new Headers;
       headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');

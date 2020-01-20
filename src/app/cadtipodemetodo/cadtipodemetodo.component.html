@@ -12,10 +12,16 @@
         </div>
         <div class="ui-g-3 ui-fluid">
           <label>Empresa</label>
-          <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
+          <p-dropdown name="empresa" [options]="empresas" [autoWidth]="false" placeholder= "Selecione a empresa" 
+          [(ngModel)]="tipodemetodoSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>
 
-          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="tipodemetodoSalvar.cdEmpresa.cdEmpresa">
-          </p-selectButton>
+      
+        </div>
+        <div class="ui-g-2 ui-fluid">
+          <br />
+          <button type="button" style="width: 200px" pButton label="Buscar Tipos de Método"
+            (click)="pesquisar()"></button>
+
         </div>
         <div class="ui-g-12 ui-fluid">
           <label style="display: block">Tipo de Método: </label>
@@ -47,12 +53,13 @@
     <div class="ui-g">
       <div class="ui-g-12">
 
-        <p-table [value]="cadtipodemetodo" [paginator]="true" [rows]="filtro.size" [responsive]="true" [lazy]="true"
+        <p-table [value]="cadtipodemetodo" [paginator]="true" [rows]="100" [responsive]="true" [lazy]="true"
           [totalRecords]="tatalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
 
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 70px">Codigo</th>
+              <th>Empresa</th>
               <th>Tipo de Método</th>
               <th style=" width: 140px"></th>
             </tr>
@@ -60,6 +67,7 @@
           <ng-template pTemplate="body" let-tipodemetodo>
             <tr>
               <th>{{tipodemetodo.cdTipoDeMetodo}}</th>
+              <th>{{tipodemetodo.cdEmpresa.nmEmpresa}}</th>
               <th style="text-align: left">{{tipodemetodo.nmTipoDeMetodo}}</th>
               <th>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Tipo de Metodo" tooltipPosition="top"

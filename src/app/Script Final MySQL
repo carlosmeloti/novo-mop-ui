@@ -22,6 +22,14 @@ CONSTRAINT  empresa_pk PRIMARY KEY (d24_cdempresa)
 
 INSERT INTO d24_empresa (d24_cdempresa,d24_nmempresa, d24_nmabreviado, d24_nrtelefone, d24_enderecocompleto, d24_txpessoacontato, d24_cnpjempresa, d24_diretorioarquivos) VALUES (1,'EMPRESA EXEMPLO','EXEMPLO','','','','','databases');
 
+--menu-empresa
+CREATE TABLE menu_empresa (
+	cdempresa BIGINT(20) AUTO_INCREMENT,
+	nmempresa VARCHAR(100),
+CONSTRAINT  menuempresapk PRIMARY KEY (cdempresa)
+);
+
+INSERT INTO menu_empresa (cdempresa,nmempresa) VALUES (1,'EMPRESA EXEMPLO');
 
 -- TipoDeVerificador -------------------------
 
@@ -2679,7 +2687,136 @@ INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 11);
 INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 14);
 INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 17);
 
+-- // empresatipodemetodo // --
+  
+  DELIMITER $$
+  CREATE PROCEDURE mopapi.empresatipodemetodo ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmtipometodo varchar(200);
+  DECLARE cursorInsereEmpresTipoMetodo CURSOR FOR select d07_nmtipometodo from d07_tipo_metodo_m where d07_cdempresa =1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresTipoMetodo;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresTipoMetodo INTO nmtipometodo;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d07_tipo_metodo_m (`d07_cdempresa`,`d07_nmtipometodo`) VALUES(idEmpresa, nmtipometodo);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+--  CALL empresatipodemetodo();
 
 
+-- // empresaamostragem // --
+  
+  DELIMITER $$
+  CREATE PROCEDURE mopapi.empresaamostragem ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmamostragem varchar(200);
+  DECLARE cursorInsereEmpresaAmostragem  CURSOR FOR select d06_nmamostragem from d06_amostragem_m where d06_cdempresa =1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaAmostragem;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaAmostragem INTO nmamostragem;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d06_amostragem_m (`d06_cdempresa`,`d06_nmamostragem`) VALUES(idEmpresa, nmamostragem);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+--  CALL empresaamostragem();
+
+-- // empresafrequencia // --
+  
+  DELIMITER $$
+  CREATE PROCEDURE mopapi.empresafrequencia ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmfrequencia varchar(200);
+  DECLARE cursorInsereEmpresaFrequencia  CURSOR FOR select d08_nmfrequencia from d08_frequencia_m where d08_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaFrequencia;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaFrequencia INTO nmfrequencia;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d08_frequencia_m (`d08_cdempresa`,`d08_nmfrequencia`) VALUES(idEmpresa, nmfrequencia);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+--  CALL empresafrequencia();
 
 
+-- // empresamaterial // --
+  
+  DELIMITER $$
+  CREATE PROCEDURE mopapi.empresamaterial ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmmaterial varchar(200);
+  DECLARE cursorInsereEmpresaMaterial  CURSOR FOR select d09_nmmaterial from d09_material_m where d09_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaMaterial;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaMaterial INTO nmmaterial;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d09_material_m (`d09_cdempresa`,`d09_nmmaterial`) VALUES(idEmpresa, nmmaterial);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+--  CALL empresamaterial();
+
+
+-- // empresap01verificador // --
+  
+  DELIMITER $$
+  CREATE PROCEDURE mopapi.empresap01verificador ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmverificador varchar(200);
+  DECLARE cursorInsereEmpresap01verificador  CURSOR FOR select p01_nmverificador from p01_verificador_m where p01_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresap01verificador;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresap01verificador INTO nmverificador;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d09_material_m (`d09_cdempresa`,`d09_nmmaterial`) VALUES(idEmpresa, nmmaterial);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS Tgr_d24_empresa_populaparaempresa;
+DELIMITER $
+CREATE TRIGGER Tgr_d24_empresa_populaparaempresa AFTER INSERT
+ON d24_empresa
+FOR EACH ROW
+BEGIN
+  CALL empresatipodemetodo();
+  CALL empresaamostragem();
+  CALL empresafrequencia();
+  CALL empresamaterial();
+END$

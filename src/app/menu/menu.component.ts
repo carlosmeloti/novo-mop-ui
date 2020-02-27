@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'src/primeng/components/common/menuitem';
 import { RouterLink } from '@angular/router';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
-import { menu } from '../core/model';
+import { MenuEmpresa } from '../core/model';
+import { MenuempresaService } from '../menuempresa/menuempresa.service';
+
 
 @Component({
   selector: 'app-menu',
@@ -16,10 +18,10 @@ export class MenuComponent implements OnInit {
   empresas = [];
 
   constructor(
-    private cadEmpresaService: CadempresaService,
+    private menuempresaService: MenuempresaService,
   ) { }
   items: MenuItem[];
-  menuSalvar = new menu();
+  menuSalvar = new MenuEmpresa();
 
   ngOnInit() {
     this.carregarEmpresas();
@@ -158,7 +160,7 @@ export class MenuComponent implements OnInit {
   }
 
   carregarEmpresas() {
-    return this.cadEmpresaService.listarTodas()
+    return this.menuempresaService.listarTodas()
       .then(empresas => {
         this.empresas = empresas.map(c => ({ label: c.cdEmpresa + " - " + c.nmEmpresa, value: c.cdEmpresa }));
       })

@@ -74,10 +74,12 @@
           </ng-template>
           <ng-template pTemplate="body" let-appmonitoramento>
             <tr>
-              
+              <th>{{appmonitoramento.cdTemplate.cdTipoDeVerificador.nmTipoDeVerificador}}</th>
+              <th>{{appmonitoramento.cdTipoDeVerificador.nmTipoDeVerificador}}</th>
               <th>{{appmonitoramento.nmMonitoramento}}</th>
               <th>{{appmonitoramento.txLocal}}</th>
               <th>{{appmonitoramento.dtCriacao}}</th>
+              
               <!--<th style="text-align: left">{{material.nmMaterial}}</th>-->
               <th>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Material" tooltipPosition="top"

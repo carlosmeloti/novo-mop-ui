@@ -2484,7 +2484,8 @@ CONSTRAINT material3_fk FOREIGN KEY (r15_cdmaterial3) REFERENCES d09_material_m(
 -- App Monitoramento ---------------------
 
 CREATE TABLE d18_monitoramento (
-	d18_cdmonitoramento BIGINT AUTO_INCREMENT,
+	d18_cdappmonitoramento BIGINT AUTO_INCREMENT,
+	d18_cdtemplate BIGINT,
 	d18_cdempresa BIGINT,
 	d18_nmmonitoramento VARCHAR(200),
 	d18_cdtipoverificador BIGINT,
@@ -2495,6 +2496,7 @@ CREATE TABLE d18_monitoramento (
 PRIMARY KEY(d18_cdmonitoramento),
 
 CONSTRAINT empresa_monit_fk FOREIGN KEY (d18_cdempresa) REFERENCES d24_empresa(d24_cdempresa),
+CONSTRAINT template_appmonitoramento_fk FOREIGN KEY (d18_cdtemplate) REFERENCES d14_template(d14_cdtemplate),
 CONSTRAINT tipoverificador_monitoramento_fk FOREIGN KEY (d18_cdtipoverificador) REFERENCES d02_tipo_verificador(d02_cdtipoverificador)
 );
 

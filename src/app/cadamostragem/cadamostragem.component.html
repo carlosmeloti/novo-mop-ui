@@ -10,12 +10,17 @@
           <input type="text" [readonly]="true" name="cdAmostragem" pInputText style="width: 50px"
             [(ngModel)]="amostragemSalvar.cdAmostragem" />
         </div>
+
+
+        <div
+        *ngIf="menuempresaSalvar.cdEmpresa == 1"
+        class="ui-g-3 ui-fluid" style="padding-top:10px ">
         <div class="ui-g-3 ui-fluid">
           <label>Empresa</label>
           <p-dropdown name="empresa" [options]="empresas" [autoWidth]="false" placeholder= "Selecione a empresa" 
           [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>
 
-      
+      </div>
         </div>
         <div class="ui-g-2 ui-fluid">
           <br />

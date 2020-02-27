@@ -15,6 +15,13 @@ export class Cadamostragem {
   nmAmostragem: string;
 }
 
+
+
+export class MenuEmpresa {
+  cdEmpresa: number;
+  nmEmpresa: string;
+}
+
 export class Cadfrequencia {
   cdFrequencia: number;
   cdEmpresa = new Cadempresa();
@@ -183,10 +190,7 @@ export class Modverificadoresdomodelo {
   txColetaAgrupada: string;
 }
 
-export class menu {
-  cdEmpresa = new Cadempresa();
-  teste = this.cdEmpresa;
-}
+
 
 
 

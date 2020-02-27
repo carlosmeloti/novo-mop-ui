@@ -90,6 +90,8 @@ import { AppmonitoramentoService } from './appmonitoramento/appmonitoramento.ser
 import { AppformulariocoletaComponent } from './appformulariocoleta/appformulariocoleta.component';
 import { ColetadedadosComponent } from './coletadedados/coletadedados.component';
 import { AppcoletadedadosComponent } from './appcoletadedados/appcoletadedados.component';
+import { MenuempresaComponent } from './menuempresa/menuempresa.component';
+import { MenuempresaService } from './menuempresa/menuempresa.service';
 
 
 
@@ -177,6 +179,7 @@ const routes: Routes = [
     AppformulariocoletaComponent,
     ColetadedadosComponent,
     AppcoletadedadosComponent,
+    MenuempresaComponent,
 
 
 
@@ -224,6 +227,7 @@ const routes: Routes = [
     Modlocal1Service,
     Modlocal2Service,
     UnidadelocalsublocalService,
+    MenuempresaService,
     Modnivel1Service,
     Modnivel2Service,
     Modnivel3Service,

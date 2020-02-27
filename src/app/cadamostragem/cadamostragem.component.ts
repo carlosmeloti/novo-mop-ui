@@ -1,4 +1,4 @@
-import { Cadempresa } from './../core/model';
+import { Cadempresa, MenuEmpresa } from './../core/model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CadamostragemService, CadamostragemFiltro } from './cadamostragem.service';
 import { LazyLoadEvent } from 'src/primeng/api';
@@ -16,13 +16,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./cadamostragem.component.css']
 })
 export class CadamostragemComponent {
-
-  tatalRegistros = 0;
+tatalRegistros = 0;
   filtro = new CadamostragemFiltro();
   nmAmostragem: string;
   cdEmpresa: number;
+  input(){
 
+    this.cdEmpresa = this.menuempresaSalvar.cdEmpresa;
+  } 
   amostragemSalvar = new Cadamostragem();
+  menuempresaSalvar = new MenuEmpresa();
   cadamostragem = [];
 
   empresas = [];

@@ -4,7 +4,7 @@ import { CadfrequenciaFiltro, CadfrequenciaService } from './cadfrequencia.servi
 import { LazyLoadEvent } from 'src/primeng/api';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
-import { Cadfrequencia, menu } from '../core/model';
+import { Cadfrequencia } from '../core/model';
 import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +19,6 @@ export class CadfrequenciaComponent {
 
   tatalRegistros = 0;
   filtro = new CadfrequenciaFiltro();
-  teste = new menu();
   nmFrequencia: string;
   frequenciaSalvar = new Cadfrequencia();
 

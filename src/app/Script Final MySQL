@@ -2488,7 +2488,7 @@ CREATE TABLE d18_monitoramento (
 	d18_cdtemplate BIGINT,
 	d18_cdempresa BIGINT,
 	d18_nmmonitoramento VARCHAR(200),
-	d18_cdtipoverificador BIGINT,
+	d18_cdtipoverificador BIGINT, 
 	d18_dtcriacao DATE,
 	d18_txlocal VARCHAR(1000),
 

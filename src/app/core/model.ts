@@ -152,7 +152,7 @@ export class ModMonitoramentoTemplate {
   cdTemplate: number;
   mmTemplate: string;
   cdTipoDeVerificador = new Cadtipodeverificador();
-}
+} 
 
 export class AppMonitoramento {
   cdMonitoramento: number;

@@ -92,6 +92,7 @@ import { ColetadedadosComponent } from './coletadedados/coletadedados.component'
 import { AppcoletadedadosComponent } from './appcoletadedados/appcoletadedados.component';
 import { MenuempresaComponent } from './menuempresa/menuempresa.component';
 import { MenuempresaService } from './menuempresa/menuempresa.service';
+import { AddverificadormodeloComponent } from './addverificadormodelo/addverificadormodelo.component';
 
 
 
@@ -143,6 +144,8 @@ const routes: Routes = [
   { path: 'appformulariocoleta/:codigo', component:AppformulariocoletaComponent},
   { path: 'appcoletadedados', component:AppcoletadedadosComponent},
   { path: 'appcoletadedados/:codigo', component:AppcoletadedadosComponent},
+  { path: 'addverificadoresmodelo', component:AddverificadormodeloComponent},
+  { path: 'addverificadoresmodelo/:codigo', component:AddverificadormodeloComponent},
 
   
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
@@ -180,6 +183,7 @@ const routes: Routes = [
     ColetadedadosComponent,
     AppcoletadedadosComponent,
     MenuempresaComponent,
+    AddverificadormodeloComponent,
 
 
 

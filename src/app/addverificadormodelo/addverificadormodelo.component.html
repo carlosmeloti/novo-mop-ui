@@ -1,0 +1,102 @@
+<div class="container">
+  <p-card [style]="{width: 'px'}" styleClass="ui-card-shadow">
+      <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+          <div class="ui-g">
+              <div class="ui-g-12">
+                  <h2>Adicionar Verificador ao Modelo</h2>
+              </div>
+
+              <div class="ui-g-4 ui-fluid">
+                <label style="display: block">Escolha um modelo de Monitoramento: </label>
+                <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate" placeholder="Selecione" [style]="{'width':'370px'}"></p-dropdown>
+              </div>
+              <div class="ui-g-8 ">
+                <br />
+                <button type="button" style="width: 200px" pButton
+                  label="Buscar Verificadores" ></button>
+              </div>
+             
+              <div class="ui-g-3 ui-fluid">
+                <label style="display: block">Código Alfanumérico: </label>
+                <input name="codalfa" type="text" pInputText />
+            </div>
+
+              <div class="ui-g-1 ui-fluid">
+                  <label style="display: block">Código: </label>
+                  <input name="codigo" type="text" pInputText />
+              </div>
+              
+
+              <div class="ui-g-4 ui-fluid">
+                  <label style="display: block">Categoria de Avaliação: </label>
+                  <input name="nmNivelAvaliacao" type="text" pInputText />
+              </div>
+              <div class="ui-g" style="width:250px;margin-bottom:10px">
+                  <p-checkbox name="cdanalitico"value="Coleta Analítica" label="Coleta Analítica"></p-checkbox>
+                  <p-checkbox name="cdagrupados" value="Coleta Agrupada" label="Coleta Agrupada"></p-checkbox>
+              </div>
+              
+                  
+              
+              <div class="ui-g-12 ui-fluid">
+                  <label style="display: block">Verificador: </label>
+                  <textarea name="nmverificador" pInputTextarea autoResize="autoResize"></textarea>
+              </div>
+
+
+
+
+
+              <div class="ui-g-2 ui-fluid">
+                  <br />
+                  <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-success"></button>
+              </div>
+             
+
+              <div class="ui-g-2 ui-fluid">
+                  <br />
+                  <button pButton type="button" label="Adicionar" routerLink="/addverificadoresmodelo"></button>
+              </div>
+
+              <div *ngIf="editando" class="ui-g-2 ui-fluid ">
+                  <br />
+                  <h3><strong><a routerLink="/verificador_m">Sair da edição</a></strong></h3>
+              </div>
+          </div>
+      </form>
+
+      <div class="ui-g">
+          <div class="ui-g-12">
+
+              <p-table [value]="verificadorm" [paginator]="true" [rows]="10" [responsive]="true"
+                  [totalRecords]="totalRecords">
+
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th style="width: 70px">Cód. Ver.</th>
+                          <th style="width: 70px">Cód. Alf.</th>
+                          <th style="width: 70px">Graco. co. </th>
+                          <th>Verificador</th>
+                          <th style=" width: 140px"></th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-verificador>
+                      <tr>
+                          <th>{{verificador.cdVerificador}}</th>
+                          <th>{{verificador.codalfa}}</th>
+                          <th>{{verificador.p01_graco}}</th>
+                          <th style="text-align: left">{{verificador.nmverificador}}</th>
+                          <th>
+                              <a pButton icon="pi pi-pencil" pTooltip="Editar Verificador" tooltipPosition="top"
+                                  [routerLink]="['/verificador_m', verificador.codigo]"></a>
+                              <button pButton icon="pi pi-trash" style="margin-left: 10px"
+                                  pTooltip="Excluir Verificador" tooltipPosition="top"></button>
+                          </th>
+                      </tr>
+                  </ng-template>
+              </p-table>
+
+          </div>
+      </div>
+  </p-card>
+</div>

@@ -2484,7 +2484,7 @@ CONSTRAINT material3_fk FOREIGN KEY (r15_cdmaterial3) REFERENCES d09_material_m(
 -- App Monitoramento ---------------------
 
 CREATE TABLE d18_monitoramento (
-	d18_cdappmonitoramento BIGINT AUTO_INCREMENT,
+	d18_cdmonitoramento BIGINT AUTO_INCREMENT,
 	d18_cdtemplate BIGINT,
 	d18_cdempresa BIGINT,
 	d18_nmmonitoramento VARCHAR(200),

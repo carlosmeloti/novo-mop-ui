@@ -3,17 +3,16 @@ import { Http, Headers } from '@angular/http';
 import {Modverificadoresdomodelo} from '../core/model';
 
 export class ModverificadoresdomodeloFiltro{
-
-  txColetaAnalitica: string;
-  page = 0;
-  size = 5;
-
+  cdTemplate: any;
+  cdEmpresa: any;
+ // page = 0;
+ // size = 5;
 }
 
 @Injectable()
 export class ModverificadoresdomodeloService {
 
-  verificadoresdomodelourl = 'http://localhost:8081/modverificadoresmonitoramentotemplate';
+  verificadoresdomodelourl = 'http://localhost:8081/modverificadoresmonitoramentotemplate?resumo';
 
   constructor(private http: Http) { }
 
@@ -23,24 +22,17 @@ export class ModverificadoresdomodeloService {
     const headers = new Headers;
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
 
-    if (filtro.txColetaAnalitica) {
-      params.set('txColetaAnalitica', filtro.txColetaAnalitica);
-    }
+    if (filtro.cdTemplate) {
+      params.set('cdTemplate', filtro.cdTemplate);
+   }
 
-    return this.http.get(`${this.verificadoresdomodelourl}`, { headers, search: filtro })
-      .toPromise()
-      .then(response => {
-        const responseJson = response.json();
-        const verificadordomodelo = responseJson.content;
-
-        const resultado = {
-          verificadordomodelo,
-          total: responseJson.totalElements
-        };
-        return resultado;
-      })
+   return this.http.get(`${this.verificadoresdomodelourl}`, { headers, search: filtro })
+   .toPromise()
+   .then(response => response.json())
 
   };
+
+  
 
 
 

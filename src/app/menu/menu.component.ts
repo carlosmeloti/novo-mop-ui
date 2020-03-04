@@ -100,7 +100,7 @@ export class MenuComponent implements OnInit {
                 },
                 {
                   label: 'Verificadores do Modelo',
-                  routerLink: '/modverificadoresmonitoramentotemplate'
+                  routerLink: '/modverificadoresdomodelo'
                 }]
 
               }

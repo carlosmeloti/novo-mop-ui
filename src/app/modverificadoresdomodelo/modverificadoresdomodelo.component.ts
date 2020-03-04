@@ -27,9 +27,11 @@ export class ModverificadoresdomodeloComponent  {
   verificadordomodelo = [];
 
   empresas = [];
+  MonitoramentoTemplate = [];
   @ViewChild('tabela') grid;
 
   constructor(
+    private modmonitoramentotemplateService: ModmonitoramentotemplateService,
     private modverificadoresdomodeloService: ModverificadoresdomodeloService,
     private errorHandler: ErrorHandlerService,
     private toasty: ToastyService,
@@ -37,22 +39,43 @@ export class ModverificadoresdomodeloComponent  {
     private route: ActivatedRoute
     ) {}
 
-
-  pesquisar(page = 0){
-
-    this.filtro.page = page;
-
-    this.modverificadoresdomodeloService.pesquisar(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.verificadordomodelo = resultado.verificadordomodelo;
-      })
-      .catch(erro => this.errorHandler.handle(erro));
+    ngOnInit() {
+      this.carregarMonitoramentoTemplate();
+      
+      const codigoAppMonitoramento = this.route.snapshot.params['codigo'];
     }
 
-    aoMudarPagina(event: LazyLoadEvent){
+    pesquisar() {
+
+      const filtro: ModverificadoresdomodeloFiltro = {
+        cdTemplate: this.verificadoresDoModeloSalvar.cdTemplate.cdTemplate,
+        cdEmpresa: this.verificadoresDoModeloSalvar.cdEmpresa.cdEmpresa
+      }
+      this.modverificadoresdomodeloService.pesquisar(filtro)
+        .then(verificadordomodelo => this.verificadordomodelo = verificadordomodelo);
+    
+    
+      }
+    aoMudarPagina(event: LazyLoadEvent) {
       const page = event.first / event.rows;
-      this.pesquisar(page);
+  
+    }
+
+    
+  
+    
+
+
+  
+
+   
+
+    carregarMonitoramentoTemplate() {
+      return this.modmonitoramentotemplateService.listarTodas()
+        .then(modmonitoramento => {
+          this.MonitoramentoTemplate = modmonitoramento.map(c => ({ label: c.cdTemplate + " - " + c.nmTemplate, value: c.cdTemplate }));
+        })
+        .catch(erro => this.errorHandler.handle(erro));
     }
 
 

@@ -7,12 +7,13 @@
                 </div>
                 <div class="ui-g-4 ui-fluid">
                     <label style="display: block">Escolha um modelo de Monitoramento: </label>
-                    <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate" placeholder="Selecione" [style]="{'width':'370px'}"></p-dropdown>
+                    <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate"
+                     placeholder="Selecione" [style]="{'width':'370px'}"  [(ngModel)]="verificadoresDoModeloSalvar.cdTemplate.cdTemplate"></p-dropdown>
                 </div>
                 <div class="ui-g-8 ">
                     <br />
                     <button type="button" style="width: 200px" pButton
-                      label="Buscar Verificadores" ></button>
+                      label="Buscar Verificadores"  (click)="pesquisar()" ></button>
                 </div>
                 <div class="ui-g-1 ui-fluid">
                     <label style="display: block">Código: </label>
@@ -43,11 +44,7 @@
 
 
 
-                <div class="ui-g-2 ui-fluid">
-                    <br />
-                    <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-success"></button>
-                </div>
-               
+                               
 
                 <div class="ui-g-2 ui-fluid">
                     <br />
@@ -63,36 +60,36 @@
 
         <div class="ui-g">
             <div class="ui-g-12">
-
-                <p-table [value]="verificadorm" [paginator]="true" [rows]="10" [responsive]="true"
-                    [totalRecords]="totalRecords">
-
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th style="width: 70px">Cód. Ver.</th>
-                            <th style="width: 70px">Cód. Alf.</th>
-                            <th style="width: 70px">Graco. co. </th>
-                            <th>Verificador</th>
-                            <th style=" width: 140px"></th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-verificador>
-                        <tr>
-                            <th>{{verificador.cdVerificador}}</th>
-                            <th>{{verificador.codalfa}}</th>
-                            <th>{{verificador.p01_graco}}</th>
-                            <th style="text-align: left">{{verificador.nmverificador}}</th>
-                            <th>
-                                <a pButton icon="pi pi-pencil" pTooltip="Editar Verificador" tooltipPosition="top"
-                                    [routerLink]="['/verificador_m', verificador.codigo]"></a>
-                                <button pButton icon="pi pi-trash" style="margin-left: 10px"
-                                    pTooltip="Excluir Verificador" tooltipPosition="top"></button>
-                            </th>
-                        </tr>
-                    </ng-template>
-                </p-table>
-
+              <p-table [value]="verificadordomodelo" [paginator]="true" [rows]="10" [responsive]="true"
+              [totalRecords]="totalRecords">
+      
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width: 70px">Codigo</th>
+                    <th style="width: 150px">Alfanumérico</th>
+                    <th style="width: 150px">Sigla</th>
+                    <th style="margin-left: 10px">Descrição</th>
+                    <th style=" width: 140px"></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-verificadordomodelo>
+                  <tr>
+                    <th>{{verificadordomodelo.cdVerificador}}</th>
+                    <th>{{verificadordomodelo.codalfa}}</th>
+                    <th>{{verificadordomodelo.sigla}}</th>
+                    <th style="text-align: left">{{verificadordomodelo.nmVerificador}}</th>
+                    <th>
+                        
+                        <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Este Verificador"
+                          tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(modverificadoresdomodelo)"></button>
+                      </th>
+                   
+                  </tr>
+                </ng-template>
+              </p-table>
+      
             </div>
-        </div>
+          </div>
+        
     </p-card>
 </div>

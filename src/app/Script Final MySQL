@@ -2517,7 +2517,7 @@ INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO D
 INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO DE MONITORAMENTO OPERACIONAL','1');
 INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO DE AVALIAÇÃO DE SUSTENTABILIDADE','5');
 INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO DE AVALIAÇÃO DE IMPACTOS','2');
-
+INSERT INTO d14_template(d14_nmtemplate, d14_cdtipoverificador) VALUES('MODELO DE TESTES','2');
 -- Mod Verificadores do modelo ------------------------------------
 
 CREATE TABLE r17_verificador_template_m (

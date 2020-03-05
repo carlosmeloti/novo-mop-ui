@@ -22,7 +22,7 @@ CONSTRAINT  empresa_pk PRIMARY KEY (d24_cdempresa)
 
 INSERT INTO d24_empresa (d24_cdempresa,d24_nmempresa, d24_nmabreviado, d24_nrtelefone, d24_enderecocompleto, d24_txpessoacontato, d24_cnpjempresa, d24_diretorioarquivos) VALUES (1,'EMPRESA EXEMPLO','EXEMPLO','','','','','databases');
 
---menu-empresa
+-- menu-empresa
 CREATE TABLE menu_empresa (
 	cdempresa BIGINT(20) AUTO_INCREMENT,
 	nmempresa VARCHAR(100),

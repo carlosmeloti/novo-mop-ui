@@ -12,8 +12,8 @@ export class ModverificadoresdomodeloFiltro{
 @Injectable()
 export class ModverificadoresdomodeloService {
 
-  verificadoresdomodelourl = 'http://localhost:8081/modverificadoresmonitoramentotemplate?resumo';
-
+  verificadoresdomodelourlresumo = 'http://localhost:8081/modverificadoresmonitoramentotemplate?resumo';
+  verificadoresdomodelourl = 'http://localhost:8081/modverificadoresmonitoramentotemplate';
   constructor(private http: Http) { }
 
   pesquisar(filtro: ModverificadoresdomodeloFiltro): Promise<any> {
@@ -26,11 +26,21 @@ export class ModverificadoresdomodeloService {
       params.set('cdTemplate', filtro.cdTemplate);
    }
 
-   return this.http.get(`${this.verificadoresdomodelourl}`, { headers, search: filtro })
+   return this.http.get(`${this.verificadoresdomodelourlresumo}`, { headers, search: filtro })
    .toPromise()
    .then(response => response.json())
 
   };
+
+
+  excluir(cdVeriMod: number): Promise<void> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    return this.http.delete(`${this.verificadoresdomodelourl}/${cdVeriMod}`, { headers })
+      .toPromise()
+      .then(() => null);
+  }
 
   
 

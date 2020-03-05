@@ -61,15 +61,27 @@ export class ModverificadoresdomodeloComponent  {
   
     }
 
-    
+    confirmarExclusao(verificadordomodelo: any) {
+      this.confirmation.confirm( {
+        message: 'Tem certeza que deseja excluir o verificador deste modelo?',
+        accept: () =>{
+          this.excluir(verificadordomodelo);
+        }
+      });
+    }
   
-    
-
-
+    excluir(verificadordomodelo: any){
   
+      this.modverificadoresdomodeloService.excluir(verificadordomodelo.cdVeriMod)
+        .then(() => {
+         this.pesquisar();
+          this.toasty.success('Verificador excluído com sucesso!');
+        })
+        
+  
+    }
 
    
-
     carregarMonitoramentoTemplate() {
       return this.modmonitoramentotemplateService.listarTodas()
         .then(modmonitoramento => {

@@ -65,6 +65,7 @@
       
                 <ng-template pTemplate="header">
                   <tr>
+                    <th style="width: 70px">COD</th>
                     <th style="width: 70px">Codigo</th>
                     <th style="width: 150px">Alfanumérico</th>
                     <th style="width: 150px">Sigla</th>
@@ -74,6 +75,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-verificadordomodelo>
                   <tr>
+                    <th>{{verificadordomodelo.cdVeriMod}}</th>
                     <th>{{verificadordomodelo.cdVerificador}}</th>
                     <th>{{verificadordomodelo.codalfa}}</th>
                     <th>{{verificadordomodelo.sigla}}</th>
@@ -81,7 +83,7 @@
                     <th>
                         
                         <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Este Verificador"
-                          tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(modverificadoresdomodelo)"></button>
+                          tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(verificadordomodelo)"></button>
                       </th>
                    
                   </tr>

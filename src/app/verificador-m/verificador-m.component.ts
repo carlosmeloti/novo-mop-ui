@@ -56,39 +56,23 @@ export class VerificadorMComponent implements OnInit {
     return Boolean(this.verificadorMSalvar.cdVerificador)
   }
 
+  pesquisar() {
 
-  pesquisarMon() {
-    this.verificadorMService.pesquisarMon()
-      .then(verificadores => this.verificadorm = verificadores);
-  }
-
-  pesquisarImp() {
-
-    this.verificadorMService.pesquisarImp()
-      .then(verificadores => this.verificadorm = verificadores);
-  }
-
-  pesquisarPMFS() {
-    this.verificadorMService.pesquisarPMFS()
-      .then(verificadores => this.verificadorm = verificadores);
-  }
-
-  pesquisarCerti() {
-    this.verificadorMService.pesquisarCerti()
-      .then(verificadores => this.verificadorm = verificadores);
-  }
-
-  pesquisarSuste() {
-    this.verificadorMService.pesquisarSuste()
-      .then(verificadores => this.verificadorm = verificadores);
-  }
-
-
+    const filtro: CadverificadorFiltro = {
+      cdTipoDeVerificador: this.verificadorMSalvar.cdTipoDeVerificador
+     // nmTipoDeVerificador: this.verificadorMSalvar.cdTipoDeVerificador.nmTipoDeVerificador,
+      
+    }
+    this.verificadorMService.pesquisar(filtro)
+      .then(verificadorm => this.verificadorm = verificadorm);
+  
+  
+    }
 
   carregarTipoDeVerificadores() {
     return this.tipoDeVerificadores.listarTodas()
       .then(tipoDeVerificadores => {
-        this.cadtipodeverificador = tipoDeVerificadores.map(c => ({ label: c.nmTipoDeVerificador, value: c.cdTipoDeVerificador }));
+        this.cadtipodeverificador = tipoDeVerificadores.map(c => ({ label: c.cdTipoDeVerificador + " - " + c.nmTipoDeVerificador, value: c.cdTipoDeVerificador }));
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

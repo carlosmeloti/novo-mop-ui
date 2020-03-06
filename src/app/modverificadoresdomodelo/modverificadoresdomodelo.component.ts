@@ -80,7 +80,6 @@ export class ModverificadoresdomodeloComponent  {
         
   
     }
-
    
     carregarMonitoramentoTemplate() {
       return this.modmonitoramentotemplateService.listarTodas()

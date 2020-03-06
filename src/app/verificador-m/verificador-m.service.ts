@@ -3,7 +3,9 @@ import { Verificador_m } from '../core/model';
 import { Http, Headers } from '@angular/http';
 
 export class CadverificadorFiltro{
-  nmTipoVerificador : string;
+  
+  cdTipoDeVerificador: any;
+ // nmTipoDeVerificador: string;
 
 }
 
@@ -15,6 +17,23 @@ export class VerificadorMService {
 
 
   constructor(private http: Http) { }
+
+  pesquisar(filtro: CadverificadorFiltro): Promise<any> {
+
+    const params = new URLSearchParams;
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    if (filtro.cdTipoDeVerificador) {
+      params.set('cdTipoDeVerificador', filtro.cdTipoDeVerificador);
+   }
+
+   return this.http.get(`${this.verificadormURL}`, { headers, search: filtro })
+   .toPromise()
+   .then(response => response.json())
+
+  };
+
 
     pesquisarMon(): Promise<any> {
 
@@ -28,8 +47,6 @@ export class VerificadorMService {
       .then(response => response.json());
 
     }
-
-
 
     pesquisarImp(): Promise<any> {
 

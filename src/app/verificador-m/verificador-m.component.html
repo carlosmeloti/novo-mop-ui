@@ -14,28 +14,10 @@
         </div>
         <div class="ui-g-8 ">
           <br />
-          <button *ngIf="verificadorMSalvar.cdTipoDeVerificador == 1" type="button" style="width: 200px" pButton
-            label="Buscar Verificadores" (click)="pesquisarMon()"></button>
-          <button *ngIf="verificadorMSalvar.cdTipoDeVerificador == 2" type="button" pButton label="Buscar Verificadores"
-            (click)="pesquisarImp()"></button>
-          <button *ngIf="verificadorMSalvar.cdTipoDeVerificador == 3" type="button" pButton label="Buscar Verificadores"
-            (click)="pesquisarPMFS()"></button>
-          <button *ngIf="verificadorMSalvar.cdTipoDeVerificador == 4" type="button" pButton label="Buscar Verificadores"
-            (click)="pesquisarCerti()"></button>
-          <button *ngIf="verificadorMSalvar.cdTipoDeVerificador == 5" type="button" pButton label="Buscar Verificadores"
-            (click)="pesquisarSuste()"></button>
+          <button type="button" style="width: 200px" pButton label="Buscar Verificadores"
+            (click)="pesquisar()"></button>
+
         </div>
-        <!--<div class="ui-g-4 ">
-                  <br />
-                  <h3><strong><a *ngIf="verificadorMSalvar.cadTipodeverificador.cdTipoVerificador == 1" routerLink="/verificador_m">Sair da edição</a></strong></h3>
-                <button *ngIf="verificadorMSalvar.cadTipodeverificador.cdTipoVerificador == 2" type="button" pButton label="Buscar Ve rificadores" (click)="pesquisarImp()"></button>
-                <button *ngIf="verificadorMSalvar.cadTipodeverificador.cdTipoVerificador == 3" type="button" pButton label="Buscar Verificadores" (click)="pesquisarPMFS()"></button>
-                <button *ngIf="verificadorMSalvar.cadTipodeverificador.cdTipoVerificador == 4" type="button" pButton label="Buscar Verificadores" (click)="pesquisarCerti()"></button>
-                <button *ngIf="verificadorMSalvar.cadTipodeverificador.cdTipoVerificador == 5" type="button" pButton label="Buscar Verificadores" (click)="pesquisarSuste()"></button>
-              </div>-->
-
-
-
 
         <div class="ui-g-1 ui-fluid">
           <label style="display: block">Código: </label>
@@ -56,7 +38,8 @@
         </div>
         <div class="ui-g-6 ui-fluid">
           <label style="display: block">Verificador: </label>
-          <textarea name="nmverificador" pInputTextarea autoResize="autoResize" [(ngModel)]="verificadorMSalvar.nmverificador"></textarea>
+          <textarea name="nmverificador" pInputTextarea autoResize="autoResize"
+            [(ngModel)]="verificadorMSalvar.nmverificador"></textarea>
         </div>
         <div class="ui-g-6 ui-fluid">
           <label style="display: block">Limiar: </label>
@@ -68,8 +51,7 @@
 
         <div class="ui-g-2 ui-fluid">
           <br />
-          <button pButton type="button" label="Salvar"
-            class="ui-button-raised ui-button-success"></button>
+          <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-success"></button>
         </div>
 
         <div *ngIf="editando" class="ui-g-2 ui-fluid ">

@@ -173,6 +173,11 @@ export class AppAvaliacao {
   dtFim: Date;
 }
 
+export class AppFormularioColeta{
+  cdMonitoramento = new AppMonitoramento();
+  cdAvaliacao = new AppAvaliacao();
+}
+
 export class Modverificadoresdomodelo {
 
   cdVeriMod: number;

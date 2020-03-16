@@ -20,6 +20,16 @@ export class AppavaliacaoService {
 
   constructor(private http: Http) { }
 
+  listarPorMonitoramento(cdMonitoramento:any): Promise<any> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.appavaliacaoURL}?cdMonitoramento=${cdMonitoramento}`, { headers })
+      .toPromise()
+      .then(response => response.json().content);
+  }
+
 
   pesquisarMon(filtro: AppAvaliacaoFiltro): Promise<any> {
 

@@ -4,13 +4,13 @@ import { NodeService } from 'src/service/nodeservice';
 import { Modlocal1Service } from '../modlocal1/modlocal1.service';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { Modlocal3 } from '../core/model';
-import { Modlocal3Filtro, UnidadelocalsublocalService, subLocalFiltro } from './unidadelocalsublocal.service';
+import { Modlocal3Filtro, UnidadelocalsublocalService, subLocalFiltro, Filtro3 } from './unidadelocalsublocal.service';
 import { Modlocal2Service } from '../modlocal2/modlocal2.service';
 import { ActivatedRoute } from '@angular/router';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
 import { ToastyService } from 'ng2-toasty';
 import { FormControl } from '@angular/forms';
-
+import {ListboxModule} from 'primeng/listbox';
 
 
 
@@ -35,6 +35,7 @@ export class UnidadelocalsublocalComponent implements OnInit {
   tatalRegistros = 0;
   filtro = new Modlocal3Filtro();
   filtro2 = new subLocalFiltro();
+  filtro3 = new Filtro3();
   cdLocal1:number;
 
   cdLocal2: number;
@@ -48,6 +49,7 @@ export class UnidadelocalsublocalComponent implements OnInit {
   @ViewChild('tabela') grid;
 
   modlocal1 = [];
+  modlocal2 = [];
   modlocalFOD = [];
   modlocalFOA = [];
   modlocalPEO = [];
@@ -78,16 +80,12 @@ export class UnidadelocalsublocalComponent implements OnInit {
   ngOnInit() {
     this.nodeService.getFiles().then(files => this.files = files);
     this.carregarUnidadeDeAvaliacao();
-    this.carregarLocalDeAvaliacaoFOD();
-    this.carregarLocalDeAvaliacaoFOA();
-    this.carregarLocalDeAvaliacaoPEO();
-    this.carregarLocalDeAvaliacaoPATRANS();
-    this.carregarLocalDeAvaliacaoINFRA();
-    this.carregarLocalDeAvaliacaoMON();
-    this.carregarLocalDeAvaliacaoACAM();
-    this.carregarLocalDeAvaliacaoESCRI();
-    this.carregarLocalDeAvaliacaoENTOR();
+    
+    
+   
+  
     this.carregarEmpresas();
+    
 
     const codigoModlocal3 = this.route.snapshot.params['codigo'];
 
@@ -111,6 +109,17 @@ export class UnidadelocalsublocalComponent implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
+  pesquisarLocal2() {
+
+    const filtro3: Filtro3 = {
+      cdLocal1: this.cdLocal1,
+     
+    }
+    this.unidadelocalsublocalService.pesquisarLocal2(filtro3)
+      .then(modlocal2 => this.modlocal2 = modlocal2);
+      this.carregarLocal2(this.cdLocal1);
+  }
+
 
   pesquisarSubLocal() {
 
@@ -124,348 +133,6 @@ export class UnidadelocalsublocalComponent implements OnInit {
   }
 
 
-  pesquisarEmTodosOsLocais(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-
-  pesquisarPicadasInventario(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarPicadasInventario(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarDerruba(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarDerruba(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarEmTodosOsLocais2(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais2(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-
-  pesquisarTrilhasDeArraste(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarTrilhasDeArraste(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-
-  pesquisarEmTodosOsLocais3(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais3(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarTodoPatio(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarTodoPatio(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarBordasPatio(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarBordasPatio(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarSaidaPatio(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarSaidaPatio(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarEmTodosOsLocais4(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais4(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarTodoPatioTransportado(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarTodoPatioTransportado(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarEmTodosOsLocais5(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais5(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisareEstradasPrincipais(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisareEstradasPrincipais(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarEmTodosOsLocais6(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais6(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarEstradasSecundarias(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEstradasSecundarias(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarTodaMalhaViaria(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarTodaMalhaViaria(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarParcela(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarParcela(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarGeral(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarGeral(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarEmTodosOsLocais7(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais7(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarGeralAcam(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarGeralAcam(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarAlojamento(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarAlojamento(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarEmTodosOsLocais8(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais8(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarGeralEscri(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarGeralEscri(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarPmfs(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarPmfs(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarEmTodosOsLocais9(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarEmTodosOsLocais9(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarGeralEntor(page = 0) {
-
-    this.filtro.page = page;
-
-    this.unidadelocalsublocalService.pesquisarGeralEntor(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modlocal3 = resultado.modlocal3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-
 
 
   carregarUnidadeDeAvaliacao() {
@@ -476,80 +143,15 @@ export class UnidadelocalsublocalComponent implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-
-
-
-  carregarLocalDeAvaliacaoFOD() {
-    return this.modLocal2Service.listarFOD()
+  carregarLocal2(cdLocal1:any) {
+    return this.modLocal2Service.listarPorLocal1(cdLocal1)
       .then(modlocal2 => {
-        this.modlocalFOD = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
+        this.modlocal2 = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  carregarLocalDeAvaliacaoFOA() {
-    return this.modLocal2Service.listarFOA()
-      .then(modlocal2 => {
-        this.modlocalFOA = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
 
-  carregarLocalDeAvaliacaoPEO() {
-    return this.modLocal2Service.listarPEO()
-      .then(modlocal2 => {
-        this.modlocalPEO = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  carregarLocalDeAvaliacaoPATRANS() {
-    return this.modLocal2Service.listarPATRANS()
-      .then(modlocal2 => {
-        this.modlocalPATRANS = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  carregarLocalDeAvaliacaoINFRA() {
-    return this.modLocal2Service.listarINFRA()
-      .then(modlocal2 => {
-        this.modlocalINFRA = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  carregarLocalDeAvaliacaoMON() {
-    return this.modLocal2Service.listarMON()
-      .then(modlocal2 => {
-        this.modlocalMON = [] = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  carregarLocalDeAvaliacaoACAM() {
-    return this.modLocal2Service.listarACAM()
-      .then(modlocal2 => {
-        this.modlocalACAM = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  carregarLocalDeAvaliacaoESCRI() {
-    return this.modLocal2Service.listarESCRI()
-      .then(modlocal2 => {
-        this.modlocalESCRI = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  carregarLocalDeAvaliacaoENTOR() {
-    return this.modLocal2Service.listarENTOR()
-      .then(modlocal2 => {
-        this.modlocalENTOR = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
 
   carregarEmpresas() {
     return this.cadEmpresaService.listarTodas()

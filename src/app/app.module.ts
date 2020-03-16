@@ -5,7 +5,7 @@ import { AppmonitoramentoComponent } from './appmonitoramento/appmonitoramento.c
 import { AssociarverificadorService } from './associarverificador/associarverificador.service';
 import { ModmonitoramentoComponent } from './modmonitoramento/modmonitoramento.component';
 import { Modnivel1Service } from './modnivel1/modnivel1.service';
-
+import {ListboxModule} from 'primeng/listbox';
 import { UnidadelocalsublocalService } from './unidadelocalsublocal/unidadelocalsublocal.service';
 import { CadtipodeverificadorService } from './cadtipodeverificador/cadtipodeverificador.service';
 import { CadmaterialService } from './cadmaterial/cadmaterial.service';
@@ -93,6 +93,7 @@ import { AppcoletadedadosComponent } from './appcoletadedados/appcoletadedados.c
 import { MenuempresaComponent } from './menuempresa/menuempresa.component';
 import { MenuempresaService } from './menuempresa/menuempresa.service';
 import { AddverificadormodeloComponent } from './addverificadormodelo/addverificadormodelo.component';
+import { AppformulariocoletaService } from './appformulariocoleta/appformulariocoleta.service';
 
 
 
@@ -213,7 +214,8 @@ const routes: Routes = [
     CalendarModule,
     ToastyModule.forRoot(),
     ConfirmDialogModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ListboxModule
   ],
   providers: [
     NodeService,
@@ -241,7 +243,8 @@ const routes: Routes = [
     AppmonitoramentoService,
     AppavaliacaoService,
     AssociarverificadorService,
-    ErrorHandlerService
+    ErrorHandlerService,
+    AppformulariocoletaService,
 
   ],
   bootstrap: [AppComponent]

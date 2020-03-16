@@ -16,7 +16,7 @@ export class ModverificadoresdomodeloService {
   verificadoresdomodelourl = 'http://localhost:8081/modverificadoresmonitoramentotemplate';
   constructor(private http: Http) { }
 
-  pesquisar(filtro: ModverificadoresdomodeloFiltro): Promise<any> {
+pesquisar(filtro: ModverificadoresdomodeloFiltro): Promise<any> {
 
     const params = new URLSearchParams;
     const headers = new Headers;
@@ -30,7 +30,7 @@ export class ModverificadoresdomodeloService {
    .toPromise()
    .then(response => response.json())
 
-  };
+  };  
 
 
   excluir(cdVeriMod: number): Promise<void> {

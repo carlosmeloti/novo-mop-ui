@@ -1,177 +1,105 @@
-
 <div class="container">
-<p-card [style]="{width: 'px'}" styleClass="ui-card-shadow">
-  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
-<div class="ui-g">
-  <div class="ui-g-12">
-    <h2>Unidade, Local e Sublocal {{ editando ? ' - Editando - ' : '' }}</h2>
-  </div>
+  <p-card [style]="{width: 'px'}" styleClass="ui-card-shadow">
+    <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <h2>Unidade, Local e Sublocal {{ editando ? ' - Editando - ' : '' }}</h2>
+        </div>
+        <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
+          <label>Unidade de Avaliação</label>
+          <p-dropdown name="modlocal1" [options]="modlocal1" placeholder="Selecione" [autoWidth]="false"
+            [(ngModel)]="cdLocal1" [showClear]="true" required></p-dropdown>
+        </div>
+        <div class="ui-g-6 ui-fluid">
+          <br>
+          <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Local"
+            (click)="pesquisarLocal2()"></button>
+        </div>
 
-  <div class="ui-g-12 ui-fluid" style="padding-top:10px ">
+        <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
+          <label style="display: block">Local de Avaliação: </label>
 
-    <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
-      <label>Unidade de Avaliação</label>
-      <p-dropdown name="modlocal1" [options]="modlocal1" placeholder="Selecione" [autoWidth]="false"
-        [(ngModel)]="cdLocal1" [showClear]="true" required></p-dropdown>
-    </div>
- 
+          <p-dropdown name="modlocal2" [options]="modlocal2" placeholder="Selecione" [autoWidth]="false"
+            [(ngModel)]="cdLocal2" [showClear]="true" required></p-dropdown>
 
-    <div *ngIf="cdLocal1 == 1" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalFOD" [options]="modlocalFOD" placeholder="Selecione" [autoWidth]="false"
-        [(ngModel)]="cdLocal2" [showClear]="true" required></p-dropdown>
-    </div>
-
-   
-
-    <div *ngIf="cdLocal1 == 2" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalFOA" [options]="modlocalFOA" placeholder="Selecione" [showClear]="true"
-        [(ngModel)]="cdLocal2" [autoWidth]="false" required></p-dropdown>
-    </div>
-
-    
-
-
-    <div *ngIf="cdLocal1 == 3" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalPEO" [options]="modlocalPEO" placeholder="Selecione" [showClear]="true"
-        [(ngModel)]="cdLocal2" [autoWidth]="false" required></p-dropdown>
-    </div>
-
-   
-    <div *ngIf="cdLocal1 == 4" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalPATRANS" [options]="modlocalPATRANS" placeholder="Selecione" [showClear]="true"
-        [(ngModel)]="cdLocal2" [autoWidth]="false" required></p-dropdown>
-    </div>
-
-
-    <div *ngIf="cdLocal1 == 5" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalINFRA" [options]="modlocalINFRA" placeholder="Selecione" [showClear]="true"
-        [(ngModel)]="cdLocal2" [autoWidth]="false" required></p-dropdown>
-    </div>
-  
-
-    <div *ngIf="cdLocal1 == 6" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalMON" [options]="modlocalMON" placeholder="Selecione" [showClear]="true"
-        [(ngModel)]="cdLocal2" [autoWidth]="false" required></p-dropdown>
-    </div>
-   
-
-    <div *ngIf="cdLocal1 == 7" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalACAM" [options]="modlocalACAM" placeholder="Selecione" [showClear]="true"
-        [(ngModel)]="cdLocal2" [autoWidth]="false" required></p-dropdown>
-    </div>
-    
-
-    <div *ngIf="cdLocal1 == 8" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalESCRI" [options]="modlocalESCRI" placeholder="Selecione" [showClear]="true"
-        [(ngModel)]="cdLocal2" [autoWidth]="false" required></p-dropdown>
-    </div>
-    
-
-    <div *ngIf="cdLocal1 == 9" class="ui-g-4 ui-fluid"
-      style="padding-top:10px ">
-      <label style="display: block">Local de Avaliação: </label>
-      <p-dropdown name="modlocalENTOR" [options]="modlocalENTOR" placeholder="Selecione" [showClear]="true"
-        [(ngModel)]="cdLocal2" [autoWidth]="false" required></p-dropdown>
-    </div>
-
-
-    <div *ngIf="cdLocal2 != null" class="ui-g-2 ui-fluid">
-      <br>
-      <button name="botaopesquisar" type="button" pButton label="Buscar SubLocal"
-        (click)="pesquisarSubLocal()"></button>
-    </div>
-   
-
-    <div class="ui-g-12 ui-fluid" style="padding-top:10px ">
-      <label style="display: block">Sublocal de Avaliação: </label>
-    </div>
-    <div class="ui-g-12 ui-fluid" style="padding-top:10px ">
-      <label style="display: block">Código: </label>
-      <input type="text" pInputText style="width: 50px" [(ngModel)]="modLocal3Salvar.cdLocal3" />
-    </div>
-    <div class="ui-g-3 ui-fluid">
-      <label>Empresa</label>
-      <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
-
-      <p-selectButton name="empresa" [options]="empresas"
-        [(ngModel)]="modLocal3Salvar.cdEmpresa.cdEmpresa">
-      </p-selectButton>
-    </div>
-    <div class="ui-g-9 ui-fluid"></div>
-
-    <div class="ui-g-12 ui-fluid">
-        <label style="display: block">Sublocal: </label>
-        <input type="text" name="local3" pInputText [(ngModel)]="modLocal3Salvar.nmLocal3" />
-      </div>
-  </div>
-
-  <div class="ui-g-8">
-
-  </div>
+        </div>
 
         <div class="ui-g-2 ui-fluid">
-      <br />
-      <button pButton type="submit" label="Salvar" class="ui-button-raised ui-button-success"></button>
+          <br>
+          <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar SubLocal"
+            (click)="pesquisarSubLocal()"></button>
+        </div>
+
+
+        <div class="ui-g-12 ui-fluid" style="padding-top:10px ">
+          <label style="display: block">Sublocal de Avaliação: </label>
+        </div>
+        <div class="ui-g-12 ui-fluid" style="padding-top:10px ">
+          <label style="display: block">Código: </label>
+          <input type="text" pInputText style="width: 50px" [(ngModel)]="modLocal3Salvar.cdLocal3" />
+        </div>
+        <div class="ui-g-3 ui-fluid">
+          <label>Empresa</label>
+          <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
+
+          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="modLocal3Salvar.cdEmpresa.cdEmpresa">
+          </p-selectButton>
+        </div>
+        <div class="ui-g-9 ui-fluid"></div>
+
+        <div class="ui-g-12 ui-fluid">
+          <label style="display: block">Sublocal: </label>
+          <input type="text" name="local3" pInputText [(ngModel)]="modLocal3Salvar.nmLocal3" />
+        </div>
+
+
+        <div class="ui-g-8">
+
+        </div>
+
+        <div class="ui-g-2 ui-fluid">
+          <br />
+          <button pButton type="submit" label="Salvar" class="ui-button-raised ui-button-success"></button>
+        </div>
+        <div class="ui-g-2 ui-fluid">
+          <br />
+          <button pButton type="button" label="Excluir" class="ui-button-raised ui-button-danger"></button>
+        </div>
+
+        <div *ngIf="editando" class="ui-g-2 ui-fluid ">
+
+          <h3><strong><a routerLink="/unidadelocalsublocal">Sair da edição</a></strong></h3>
+        </div>
+      </div>
+    </form>
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <p-table [value]="modlocal3" [paginator]="true" [rows]="5" [responsive]="true"
+          (onLazyLoad)="aoMudarPagina($event)" #tabela>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 70px">Codigo</th>
+              <th>Sublocal</th>
+              <th style=" width: 140px"></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-modlocal3>
+            <tr>
+              <th>{{modlocal3.cdLocal3}}</th>
+              <th style="text-align: left">{{modlocal3.nmLocal3}}</th>
+              <th>
+                <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top"
+                  [routerLink]="['/unidadelocalsublocal', modlocal3.cdLocal3]"></a>
+                <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Empresa"
+                  tooltipPosition="top" (click)="confirmarExclusao(modlocal3)"></button>
+              </th>
+            </tr>
+          </ng-template>
+        </p-table>
+
+      </div>
     </div>
-  <div class="ui-g-2 ui-fluid">
-    <br />
-    <button pButton type="button" label="Excluir" class="ui-button-raised ui-button-danger"></button>
-  </div>
-
-  <div *ngIf="editando" class="ui-g-2 ui-fluid ">
-
-    <h3><strong><a routerLink="/unidadelocalsublocal">Sair da edição</a></strong></h3>
-  </div>
-</div>
-</form>
-
-<div class="ui-g">
-  <div class="ui-g-12">
-    <p-table [value]="modlocal3" [paginator]="true" [rows]="5" [responsive]="true"
-      (onLazyLoad)="aoMudarPagina($event)" #tabela>
-
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 70px">Codigo</th>
-          <th>Sublocal</th>
-          <th style=" width: 140px"></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-modlocal3>
-        <tr>
-          <th>{{modlocal3.cdLocal3}}</th>
-          <th style="text-align: left">{{modlocal3.nmLocal3}}</th>
-          <th>
-            <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top"
-              [routerLink]="['/unidadelocalsublocal', modlocal3.cdLocal3]"></a>
-            <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Empresa"
-              tooltipPosition="top" (click)="confirmarExclusao(modlocal3)"></button>
-          </th>
-        </tr>
-      </ng-template>
-    </p-table>
-
-  </div>
-</div>
-
-
-
-
-</p-card>
+  </p-card>
 </div>

@@ -7,11 +7,16 @@
         </div>
         <div class="ui-g-6 ui-fluid">
           <label style="display: block">Monitoramento: </label>
-          <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate" placeholder="Selecione" [style]="{'width':'500px'}"></p-dropdown>
+          <p-dropdown [options]="AppMonitoramento" name="AppMonitoramento" [(ngModel)]="cdMonitoramento" placeholder="Selecione" [style]="{'width':'500px'}"></p-dropdown>
+        </div>
+        <div class="ui-g-6 ui-fluid">
+          <br>
+          <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Local"
+            (click)="pesquisar()"></button>
         </div>
         <div class="ui-g-6 ui-fluid">
           <label style="display: block">Avaliação: </label>
-          <p-dropdown [options]="cadtipodeverificador" name="cadtipodeverificador" placeholder="Selecione"  [style]="{'width':'500px'}"></p-dropdown>
+          <p-dropdown [options]="avaliacao" name="avaliacao" placeholder="Selecione"  [style]="{'width':'500px'}"></p-dropdown>
         </div>
 
         <div class="ui-g-12 ui-fluid">
@@ -21,7 +26,7 @@
 
         <div class="ui-g-6">
           <br />
-          <button pButton type="submit" label="Processar" class="ui-button-raised ui-button-success" [style]="{'width':'100px'}"></button>
+          <button pButton type="submit" label="Processar" (click)="pesquisar()" class="ui-button-raised ui-button-success" [style]="{'width':'100px'}"></button>
         </div>
         
     </div>

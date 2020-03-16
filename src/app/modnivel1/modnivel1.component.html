@@ -9,16 +9,9 @@
           <label style="display: block">Código: </label>
           <input type="text" name="codigo" pInputText style="width: 50px" [(ngModel)]="modNivel1Salvar.cdNivel1" />
         </div>
-        <!--<div class="ui-g-8 ui-fluid">
-          <label>Empresa</label>
-          <p-dropdown name="empresa" [options]="empresas" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="modNivel1Salvar.cdEmpresa.cdEmpresa" required></p-dropdown>
-        </div> -->
-
         <div class="ui-g-3 ui-fluid">
           <label>Empresa</label>
-          <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
-
+         
           <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="modNivel1Salvar.cdEmpresa.cdEmpresa">
           </p-selectButton>
         </div>

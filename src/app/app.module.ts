@@ -94,6 +94,7 @@ import { MenuempresaComponent } from './menuempresa/menuempresa.component';
 import { MenuempresaService } from './menuempresa/menuempresa.service';
 import { AddverificadormodeloComponent } from './addverificadormodelo/addverificadormodelo.component';
 import { AppformulariocoletaService } from './appformulariocoleta/appformulariocoleta.service';
+import { TodosOsVerificadoresComponent } from './todos-os-verificadores/todos-os-verificadores.component';
 
 
 
@@ -148,6 +149,7 @@ const routes: Routes = [
   { path: 'addverificadoresmodelo', component:AddverificadormodeloComponent},
   { path: 'addverificadoresmodelo/:codigo', component:AddverificadormodeloComponent},
 
+  { path: 'relatorios', component:TodosOsVerificadoresComponent},
   
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
 ]
@@ -185,7 +187,7 @@ const routes: Routes = [
     AppcoletadedadosComponent,
     MenuempresaComponent,
     AddverificadormodeloComponent,
-
+    TodosOsVerificadoresComponent
 
 
   ],

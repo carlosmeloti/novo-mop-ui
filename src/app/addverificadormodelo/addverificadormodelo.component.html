@@ -1,6 +1,6 @@
 <div class="container">
   <p-card [style]="{width: 'px'}" styleClass="ui-card-shadow">
-      <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+      <form #f="ngForm" autocomplete="off" (ngSubmit)="adicionar(f)">
           <div class="ui-g">
               <div class="ui-g-12">
                   <h2>Adicionar Verificador ao Modelo</h2>
@@ -8,7 +8,7 @@
 
               <div class="ui-g-4 ">
                 <label style="display: block">Listar Verificadores do Tipo: </label>
-                <p-dropdown name="cadtipodeverificador" [style]="{'width':'320px'}" [options]="cadtipodeverificador"
+                <p-dropdown name="cadTipoDeVerificadores" [style]="{'width':'340px'}" [options]="cadTipoDeVerificadores"
                   placeholder="Selecione" [showClear]="true">
                 </p-dropdown>
               </div>
@@ -18,8 +18,17 @@
                   (click)="pesquisar()"></button>
       
               </div>
+              <div class="ui-g-4 ui-fluid">
+                <label style="display: block">Escolha um modelo de Monitoramento: </label>
+                <p-dropdown [options]="MonitoramentoTemplate" [style]="{'width':'340px'}" name="MonitoramentoTemplate" placeholder="Selecione"  [style]="{'width':'370px'}"></p-dropdown>
+              </div>
+              <div class="ui-g-4 ui-fluid">
+                <label style="display: block">Verificador: </label>
+                <p-dropdown [options]="verificadorM" [style]="{'width':'120px'}" name="verificadorM" placeholder="Selecione"  [style]="{'width':'370px'}"></p-dropdown>
+              </div>
+              
 
-
+              
               <div class="ui-g-2 ui-fluid">
                   <br />
                   <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-success"></button>

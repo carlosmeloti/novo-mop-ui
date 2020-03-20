@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { AppmonitoramentoService } from '../appmonitoramento/appmonitoramento.service';
 
-import { AppAvaliacao, AppFormularioColeta } from '../core/model';
+import { AppAvaliacao, AppFormularioColeta, AppMonitoramento } from '../core/model';
 import { AppavaliacaoService } from '../appavaliacao/appavaliacao.service';
 import { AppformulariocoletaService, FormFiltro } from './appformulariocoleta.service';
 
@@ -22,6 +22,7 @@ export class AppformulariocoletaComponent {
   appformulario  = [];
   cdTemplate: number;
   appformularioSalvar = new AppFormularioColeta();
+  appMonitoramentoSalvar = new AppMonitoramento();
   filtro = new FormFiltro();
 
   constructor(
@@ -39,10 +40,11 @@ export class AppformulariocoletaComponent {
     this.carregarAvaliacao();
   }
 
-  pesquisar() {
+  gerar() {
 
+    console.log(this.cdTemplate)
     const filtro: FormFiltro = {
-      cdTemplate: this.appformularioSalvar.cdMonitoramento.cdTemplate.cdTemplate
+      cdTemplate: this.appMonitoramentoSalvar.cdTemplate.cdTemplate
       
     }
     this.appformularioService.pesquisar(filtro)

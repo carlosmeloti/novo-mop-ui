@@ -5,15 +5,23 @@
                 <div class="ui-g-12">
                     <h2>Verificadores de Modelo {{ editando ? ' - Editando - ' : '' }}</h2>
                 </div>
+
+                <div class="ui-g-12 ui-fluid">
+                    <label style="display: block">Verificador: </label>
+                    <p-dropdown [options]="verificadorM" [style]="{'width':'120px'}" name="verificadorM"
+                        placeholder="Selecione" [style]="{'width':'370px'}"></p-dropdown>
+                </div>
+
                 <div class="ui-g-4 ui-fluid">
                     <label style="display: block">Escolha um modelo de Monitoramento: </label>
-                    <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate"
-                     placeholder="Selecione" [style]="{'width':'370px'}"  [(ngModel)]="verificadoresDoModeloSalvar.cdTemplate.cdTemplate"></p-dropdown>
+                    <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate" placeholder="Selecione"
+                        [style]="{'width':'370px'}" [(ngModel)]="verificadoresDoModeloSalvar.cdTemplate.cdTemplate">
+                    </p-dropdown>
                 </div>
                 <div class="ui-g-8 ">
                     <br />
-                    <button type="button" style="width: 200px" pButton
-                      label="Buscar Verificadores"  (click)="pesquisar()" ></button>
+                    <button type="button" style="width: 200px" pButton label="Buscar Verificadores"
+                        (click)="pesquisar()"></button>
                 </div>
                 <div class="ui-g-1 ui-fluid">
                     <label style="display: block">Código: </label>
@@ -29,12 +37,12 @@
                     <input name="nmNivelAvaliacao" type="text" pInputText />
                 </div>
                 <div class="ui-g" style="width:250px;margin-bottom:10px">
-                    <p-checkbox name="cdanalitico"value="Coleta Analítica" label="Coleta Analítica"></p-checkbox>
+                    <p-checkbox name="cdanalitico" value="Coleta Analítica" label="Coleta Analítica"></p-checkbox>
                     <p-checkbox name="cdagrupados" value="Coleta Agrupada" label="Coleta Agrupada"></p-checkbox>
                 </div>
-                
-                    
-                
+
+
+
                 <div class="ui-g-12 ui-fluid">
                     <label style="display: block">Verificador: </label>
                     <textarea name="nmverificador" pInputTextarea autoResize="autoResize"></textarea>
@@ -44,7 +52,7 @@
 
 
 
-                               
+
 
                 <div class="ui-g-2 ui-fluid">
                     <br />
@@ -60,38 +68,39 @@
 
         <div class="ui-g">
             <div class="ui-g-12">
-              <p-table [value]="verificadordomodelo" [paginator]="true" [rows]="10" [responsive]="true"
-              [totalRecords]="totalRecords">
-      
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th style="width: 70px">COD</th>
-                    <th style="width: 70px">Codigo</th>
-                    <th style="width: 150px">Alfanumérico</th>
-                    <th style="width: 150px">Sigla</th>
-                    <th style="margin-left: 10px">Descrição</th>
-                    <th style=" width: 140px"></th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-verificadordomodelo>
-                  <tr>
-                    <th>{{verificadordomodelo.cdVeriMod}}</th>
-                    <th>{{verificadordomodelo.cdVerificador}}</th>
-                    <th>{{verificadordomodelo.codalfa}}</th>
-                    <th>{{verificadordomodelo.sigla}}</th>
-                    <th style="text-align: left">{{verificadordomodelo.nmVerificador}}</th>
-                    <th>
-                        
-                        <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Este Verificador"
-                          tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(verificadordomodelo)"></button>
-                      </th>
-                   
-                  </tr>
-                </ng-template>
-              </p-table>
-      
+                <p-table [value]="verificadordomodelo" [paginator]="true" [rows]="10" [responsive]="true"
+                    [totalRecords]="totalRecords">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 70px">COD</th>
+                            <th style="width: 70px">Codigo</th>
+                            <th style="width: 150px">Alfanumérico</th>
+                            <th style="width: 150px">Sigla</th>
+                            <th style="margin-left: 10px">Descrição</th>
+                            <th style=" width: 140px"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-verificadordomodelo>
+                        <tr>
+                            <th>{{verificadordomodelo.cdVeriMod}}</th>
+                            <th>{{verificadordomodelo.cdVerificador}}</th>
+                            <th>{{verificadordomodelo.codalfa}}</th>
+                            <th>{{verificadordomodelo.sigla}}</th>
+                            <th style="text-align: left">{{verificadordomodelo.nmVerificador}}</th>
+                            <th>
+
+                                <button pButton icon="pi pi-trash" style="margin-left: 10px"
+                                    pTooltip="Excluir Este Verificador" tooltipPosition="top" class="ui-button-danger"
+                                    (click)="confirmarExclusao(verificadordomodelo)"></button>
+                            </th>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+
             </div>
-          </div>
-        
+        </div>
+
     </p-card>
 </div>

@@ -4,20 +4,38 @@ import { ErrorHandlerService } from '../core/error-handler.service';
 import { ToastyService } from 'ng2-toasty';
 import { ConfirmationService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
+import { Cadtipodeverificador, Verificador_m, Modverificadoresdomodelo } from '../core/model';
+import { CadtipodeverificadorService } from '../cadtipodeverificador/cadtipodeverificador.service';
+import { VerificadorMComponent } from '../verificador-m/verificador-m.component';
+import { VerificadorMService, CadverificadorFiltro } from '../verificador-m/verificador-m.service';
+import { FormControl } from '@angular/forms';
+import { AddverificadormodeloService } from './addverificadormodelo.service';
+
 
 @Component({
   selector: 'app-addverificadormodelo',
   templateUrl: './addverificadormodelo.component.html',
-  styleUrls: ['./addverificadormodelo.component.css'] 
+  styleUrls: ['./addverificadormodelo.component.css']
 })
 export class AddverificadormodeloComponent implements OnInit {
 
   MonitoramentoTemplate = [];
-  @ViewChild('tabela') grid;
-  
+  cadTipoDeVerificadores = [];
+  cdTipoDeVerificador: any;
+  verificadorm = [];
+  filtro = new CadverificadorFiltro;
 
+  @ViewChild('tabela') grid;
+
+  verificadorMSalvar = new Verificador_m();
+  addVerificadoresModeloSalvar = new Modverificadoresdomodelo();
+
+  
   constructor(
     private modmonitoramentotemplateService: ModmonitoramentotemplateService,
+   
+    private verificadorM: VerificadorMService,
+    private cadTipoDeVerificadoresService: CadtipodeverificadorService,
     private errorHandler: ErrorHandlerService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
@@ -25,7 +43,10 @@ export class AddverificadormodeloComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.carregarMonitoramentoTemplate() 
+    this.carregarMonitoramentoTemplate()
+    this.carregarTipoDeVerificadores()
+    this.carregarMonitoramentoTemplate()
+    this.carregarVerificadores()
   }
 
   carregarMonitoramentoTemplate() {
@@ -35,6 +56,25 @@ export class AddverificadormodeloComponent implements OnInit {
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
+
+  carregarTipoDeVerificadores() {
+    return this.cadTipoDeVerificadoresService.listarTodas()
+          .then(cadTipoDeVerificadores => {
+        this.cadTipoDeVerificadores = cadTipoDeVerificadores.map(c => ({ label: c.cdTipoDeVerificador + " - " + c.nmTipoDeVerificador, value: c.cdTipoDeVerificador }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarVerificadores() {
+    return this.verificadorM.listarTodas()
+          .then(verificadorM => {
+        this.verificadorM = verificadorM.map(c => ({ label: c.codalfa, value: c.cdVerificador }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  
+
 
 
 }

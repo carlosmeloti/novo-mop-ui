@@ -16,7 +16,7 @@ import { FormControl } from '@angular/forms';
 })
 export class Modnivel2Component implements OnInit {
 
-  tatalRegistros = 0;
+  cdNivel1: number;
   filtro = new Modnivel2Filtro();
 
 
@@ -65,83 +65,18 @@ export class Modnivel2Component implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  pesquisarModNivel2_cdNivel1_1(page = 0) {
+  pesquisarNivel2() {
 
-    this.filtro.page = page;
-
-    this.modNivel2Service.pesquisarModNivel2_cdNivel1_1(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel2 = resultado.modnivel2;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
+    const filtro: Modnivel2Filtro = {
+      cdNivel1: this.cdNivel1,
+     
+    }
+    this.modNivel2Service.pesquisarNivel2(filtro)
+      .then(modnivel2 => this.modnivel2 = modnivel2);
+     // this.carregarLocal2(this.cdLocal1);
   }
 
-  pesquisarModNivel2_cdNivel1_2(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel2Service.pesquisarModNivel2_cdNivel1_2(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel2 = resultado.modnivel2;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel2_cdNivel1_3(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel2Service.pesquisarModNivel2_cdNivel1_3(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel2 = resultado.modnivel2;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel2_cdNivel1_4(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel2Service.pesquisarModNivel2_cdNivel1_4(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel2 = resultado.modnivel2;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel2_cdNivel1_5(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel2Service.pesquisarModNivel2_cdNivel1_5(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel2 = resultado.modnivel2;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel2_cdNivel1_6(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel2Service.pesquisarModNivel2_cdNivel1_6(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel2 = resultado.modnivel2;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
+ 
 
   aoMudarPagina(event: LazyLoadEvent) {
     const page = event.first / event.rows;

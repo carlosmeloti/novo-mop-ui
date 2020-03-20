@@ -115,9 +115,7 @@ export class UnidadelocalsublocalComponent implements OnInit {
       cdLocal1: this.cdLocal1,
      
     }
-    this.unidadelocalsublocalService.pesquisarLocal2(filtro3)
-      .then(modlocal2 => this.modlocal2 = modlocal2);
-      this.carregarLocal2(this.cdLocal1);
+         this.carregarLocal2(this.cdLocal1);
   }
 
 

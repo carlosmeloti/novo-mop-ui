@@ -9,115 +9,30 @@
 
         <div class="ui-g-4 ui-fluid">
           <label>Assunto: <strong><a routerLink="/modnivel1"> Editar</a></strong></label>
-          <p-dropdown name="modnivel1" [options]="modnivel1" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="modNivel3Salvar.cdNivel1.cdNivel1" required></p-dropdown>
+          <p-dropdown name="modNivel1" [options]="modNivel1" placeholder="Selecione" [autoWidth]="false"
+            [(ngModel)]="cdNivel1" required></p-dropdown>
         </div>
 
-
-        <div *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 1" class="ui-g-4 ui-fluid" style="padding-top:10px ">
-          <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
-          <p-dropdown name="modnivel2" [options]="modnivel2_cdNivel1_1" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="modNivel3Salvar.cdNivel2.cdNivel2" [showClear]="true" required></p-dropdown>
-        </div>
-
-        <div *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 2" class="ui-g-4 ui-fluid" style="padding-top:10px ">
-          <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
-          <p-dropdown name="modnivel2" [options]="modnivel2_cdNivel1_2" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="modNivel3Salvar.cdNivel2.cdNivel2" [showClear]="true" required></p-dropdown>
-        </div>
-
-        <div *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 3" class="ui-g-4 ui-fluid" style="padding-top:10px ">
-          <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
-          <p-dropdown name="modnivel2" [options]="modnivel2_cdNivel1_3" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="modNivel3Salvar.cdNivel2.cdNivel2" [showClear]="true" required></p-dropdown>
-        </div>
-
-        <div *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 4" class="ui-g-4 ui-fluid" style="padding-top:10px ">
-          <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
-          <p-dropdown name="modnivel2" [options]="modnivel2_cdNivel1_4" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="modNivel3Salvar.cdNivel2.cdNivel2" [showClear]="true" required></p-dropdown>
-        </div>
-
-        <div *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 5" class="ui-g-4 ui-fluid" style="padding-top:10px ">
-          <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
-          <p-dropdown name="modnivel2" [options]="modnivel2_cdNivel1_5" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="modNivel3Salvar.cdNivel2.cdNivel2" [showClear]="true" required></p-dropdown>
-        </div>
-
-        <div *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 6" class="ui-g-4 ui-fluid" style="padding-top:10px ">
-          <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
-          <p-dropdown name="modnivel2" [options]="modnivel2_cdNivel1_6" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="modNivel3Salvar.cdNivel2.cdNivel2" [showClear]="true" required></p-dropdown>
-        </div>
-
-
-        <div class="ui-g-2 ui-fluid">
+        <div class="ui-g-8 ui-fluid">
           <br />
-          <!-- == Nivel 1 = 1  == -->
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 1 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 1" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_1_cdNivel2_1()">
+          <button type="button" style="width: 200px" pButton label="Buscar"
+            (click)="pesquisarNivel2()">
           </button>
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 1 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 2" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_1_cdNivel2_2()">
-          </button>
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 1 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 3" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_1_cdNivel2_3()">
-          </button>
+        </div>
 
-          <!-- == Nivel 1 = 2  == -->
 
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 2 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 1" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_2_cdNivel2_1()">
+        <div  class="ui-g-4 ui-fluid" style="padding-top:10px ">
+          <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
+          <p-dropdown name="modNivel2" [options]="modNivel2" placeholder="Selecione" [autoWidth]="false"
+            [(ngModel)]="cdNivel2" [showClear]="true" required></p-dropdown>
+        </div>
+
+        <div class="ui-g-8 ui-fluid">
+          <br />
+          <button type="button" style="width: 200px" pButton label="Buscar"
+            (click)="pesquisarNivel3()">
           </button>
-
-          <!-- == Nivel 1 = 3  == -->
-
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 3 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 1" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_3_cdNivel2_1()">
-          </button>
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 3 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 2" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_3_cdNivel2_2()">
-          </button>
-
-          <!-- == Nivel 1 = 4  == -->
-
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 4 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 1" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_4_cdNivel2_1()">
-          </button>
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 4 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 2" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_4_cdNivel2_2()">
-          </button>
-
-          <!-- == Nivel 1 = 5  == -->
-
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 5 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 1" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_5_cdNivel2_1()">
-          </button>
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 5 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 2" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_5_cdNivel2_2()">
-          </button>
-
-          <!-- == Nivel 1 = 6  == -->
-
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 6 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 1" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_6_cdNivel2_1()">
-          </button>
-          <button *ngIf="modNivel3Salvar.cdNivel1.cdNivel1 == 6 &&
-            modNivel3Salvar.cdNivel2.cdNivel2 == 2" type="button" style="width: 200px" pButton label="Buscar"
-            (click)="pesquisarModNivel3_cdNivel1_6_cdNivel2_2()">
-          </button>
-
+          
 
         </div>
 
@@ -164,7 +79,7 @@
 
     <div class="ui-g">
       <div class="ui-g-12">
-        <p-table [value]="modnivel3" [paginator]="true" [rows]="5" [responsive]="true"
+        <p-table [value]="modNivel3" [paginator]="true" [rows]="5" [responsive]="true"
           (onLazyLoad)="aoMudarPagina($event)" #tabela>
 
           <ng-template pTemplate="header">

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModNivel3 } from '../core/model';
 import { Modnivel1Service } from '../modnivel1/modnivel1.service';
 import { Modnivel2Service } from '../modnivel2/modnivel2.service';
-import { Modnivel3Service, Modnivel3Filtro } from './modnivel3.service';
+import { Modnivel3Service, Modnivel3Filtro, Filtro2 } from './modnivel3.service';
 import { ToastyService } from 'ng2-toasty';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ErrorHandlerService } from '../core/error-handler.service';
@@ -19,24 +19,19 @@ export class Modnivel3Component implements OnInit {
 
   tatalRegistros = 0;
   filtro = new Modnivel3Filtro();
-
-
+  filtro2 = new Filtro2()
+  cdNivel1: number;
+  cdNivel2: number;
+  nmNivel3: string;
   modNivel3Salvar = new ModNivel3();
 
   empresas = [];
 
   @ViewChild('tabela') grid;
 
-  modnivel1 = [];
-  modnivel2 = [];
-  modnivel3 = [];
-
-  modnivel2_cdNivel1_1 = [];
-  modnivel2_cdNivel1_2 = [];
-  modnivel2_cdNivel1_3 = [];
-  modnivel2_cdNivel1_4 = [];
-  modnivel2_cdNivel1_5 = [];
-  modnivel2_cdNivel1_6 = [];
+  modNivel1 = [];
+  modNivel2 = [];
+  modNivel3 = [];
 
   constructor(
     private modNivel1Service: Modnivel1Service,
@@ -51,16 +46,6 @@ export class Modnivel3Component implements OnInit {
 
   ngOnInit() {
     this.carregarModNivel1();
-    this.carregarModNivel2();
-
-    this.carregarModNivel2_cdNivel1_1();
-    this.carregarModNivel2_cdNivel1_2();
-    this.carregarModNivel2_cdNivel1_3();
-    this.carregarModNivel2_cdNivel1_4();
-    this.carregarModNivel2_cdNivel1_5();
-    this.carregarModNivel2_cdNivel1_6();
-
-
     this.carregarEmpresas();
     //console.log(this.route.snapshot.params['codigo']);
 
@@ -85,207 +70,34 @@ export class Modnivel3Component implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  pesquisarModNivel3_cdNivel1_1_cdNivel2_1(page = 0) {
+  pesquisarNivel2() {
 
-    this.filtro.page = page;
+    const filtro2: Filtro2 = {
+      cdNivel1: this.cdNivel1,
+     
+    }
+         this.carregarNivel2(this.cdNivel1);
+  }
 
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_1_cdNivel2_1(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
+  carregarNivel2(cdNivel1:any) {
+    return this.modNivel2Service.listarPorNivel1(cdNivel1)
+      .then(modNivel2 => {
+        this.modNivel2 = modNivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  pesquisarModNivel3_cdNivel1_1_cdNivel2_2(page = 0) {
+  pesquisarNivel3() {
 
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_1_cdNivel2_2(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
+    const filtro: Modnivel3Filtro = {
+      //cdNivel1: this.cdNivel1,
+      cdNivel2: this.cdNivel2,
+      nmNivel3: this.nmNivel3
+    }
+    this.modNivel3Service.pesquisarNivel3(filtro)
+      .then(modNivel3 => this.modNivel3 = modNivel3);
   }
-
-  pesquisarModNivel3_cdNivel1_1_cdNivel2_3(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_1_cdNivel2_3(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_2_cdNivel2_1(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_2_cdNivel2_1(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_3_cdNivel2_1(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_3_cdNivel2_1(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_3_cdNivel2_2(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_3_cdNivel2_2(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_4_cdNivel2_1(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_4_cdNivel2_1(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_4_cdNivel2_2(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_4_cdNivel2_2(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_5_cdNivel2_1(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_5_cdNivel2_1(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_5_cdNivel2_2(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_5_cdNivel2_2(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_6_cdNivel2_1(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_6_cdNivel2_1(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  pesquisarModNivel3_cdNivel1_6_cdNivel2_2(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel3Service.pesquisarModNivel3_cdNivel1_6_cdNivel2_2(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel3 = resultado.modnivel3;
-
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  carregarModNivel2_cdNivel1_1() {
-    return this.modNivel2Service.listarTodascdNivel1_1()
-      .then(modnivel2 => {
-        this.modnivel2_cdNivel1_1 = modnivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-
-  carregarModNivel2_cdNivel1_2() {
-    return this.modNivel2Service.listarTodascdNivel1_2()
-      .then(modnivel2 => {
-        this.modnivel2_cdNivel1_2 = modnivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  carregarModNivel2_cdNivel1_3() {
-    return this.modNivel2Service.listarTodascdNivel1_3()
-      .then(modnivel2 => {
-        this.modnivel2_cdNivel1_3 = modnivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-  carregarModNivel2_cdNivel1_4() {
-    return this.modNivel2Service.listarTodascdNivel1_4()
-      .then(modnivel2 => {
-        this.modnivel2_cdNivel1_4 = modnivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-  carregarModNivel2_cdNivel1_5() {
-    return this.modNivel2Service.listarTodascdNivel1_5()
-      .then(modnivel2 => {
-        this.modnivel2_cdNivel1_5 = modnivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-  carregarModNivel2_cdNivel1_6() {
-    return this.modNivel2Service.listarTodascdNivel1_6()
-      .then(modnivel2 => {
-        this.modnivel2_cdNivel1_6 = modnivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
+  
 
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -346,19 +158,10 @@ export class Modnivel3Component implements OnInit {
   carregarModNivel1() {
     return this.modNivel1Service.listarTodas()
       .then(modnivel1 => {
-        this.modnivel1 = modnivel1.map(c => ({ label: c.cdNivel1 + " - " + c.nmNivel1, value: c.cdNivel1 }));
+        this.modNivel1 = modnivel1.map(c => ({ label: c.cdNivel1 + " - " + c.nmNivel1, value: c.cdNivel1 }));
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
-
-  carregarModNivel2() {
-    return this.modNivel2Service.listarTodas()
-      .then(modnivel2 => {
-        this.modnivel2 = modnivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
-
   carregarEmpresas() {
     return this.cadEmpresaService.listarTodas()
       .then(empresas => {

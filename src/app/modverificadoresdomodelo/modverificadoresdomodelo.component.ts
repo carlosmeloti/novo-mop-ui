@@ -11,6 +11,7 @@ import { FormControl } from '@angular/forms';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
 import { ModmonitoramentotemplateService } from '../modmonitoramentotemplate/modmonitoramentotemplate.service';
 import { ModverificadoresdomodeloFiltro, ModverificadoresdomodeloService } from './modverificadoresdomodelo.service';
+import { VerificadorMService } from '../verificador-m/verificador-m.service';
 
 @Component({
   selector: 'app-modverificadoresdomodelo',
@@ -25,7 +26,7 @@ export class ModverificadoresdomodeloComponent  {
 
   verificadoresDoModeloSalvar = new Modverificadoresdomodelo();
   verificadordomodelo = [];
-
+  verificadorM = [];
   empresas = [];
   MonitoramentoTemplate = [];
   @ViewChild('tabela') grid;
@@ -33,6 +34,7 @@ export class ModverificadoresdomodeloComponent  {
   constructor(
     private modmonitoramentotemplateService: ModmonitoramentotemplateService,
     private modverificadoresdomodeloService: ModverificadoresdomodeloService,
+    private verificadorM2: VerificadorMService,
     private errorHandler: ErrorHandlerService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
@@ -41,7 +43,7 @@ export class ModverificadoresdomodeloComponent  {
 
     ngOnInit() {
       this.carregarMonitoramentoTemplate();
-      
+      this.carregarVerificadores();
       const codigoAppMonitoramento = this.route.snapshot.params['codigo'];
     }
 
@@ -85,6 +87,14 @@ export class ModverificadoresdomodeloComponent  {
       return this.modmonitoramentotemplateService.listarTodas()
         .then(modmonitoramento => {
           this.MonitoramentoTemplate = modmonitoramento.map(c => ({ label: c.cdTemplate + " - " + c.nmTemplate, value: c.cdTemplate }));
+        })
+        .catch(erro => this.errorHandler.handle(erro));
+    }
+
+    carregarVerificadores() {
+      return this.verificadorM2.listarTodas()
+            .then(verificadorM => {
+          this.verificadorM = verificadorM.map(c => ({ label: c.codalfa, value: c.cdVerificador }));
         })
         .catch(erro => this.errorHandler.handle(erro));
     }

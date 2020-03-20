@@ -1,13 +1,13 @@
 <div class="container">
   <p-card  [style]="{width: 'px'}" styleClass="ui-card-shadow">
-    <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+    <form #f="ngForm" autocomplete="off" (ngSubmit)="gerar(f)">
     <div class="ui-g">
         <div class="ui-g-12">
           <h2>Formulário de Coleta de Dados</h2>
         </div>
         <div class="ui-g-6 ui-fluid">
           <label style="display: block">Monitoramento: </label>
-          <p-dropdown [options]="AppMonitoramento" name="AppMonitoramento" [(ngModel)]="cdMonitoramento" placeholder="Selecione" [style]="{'width':'500px'}"></p-dropdown>
+          <p-dropdown [options]="AppMonitoramento" name="AppMonitoramento" [(ngModel)]="cdTemplate" placeholder="Selecione" [style]="{'width':'500px'}"></p-dropdown>
         </div>
         <div class="ui-g-6 ui-fluid">
           <br>
@@ -26,7 +26,7 @@
 
         <div class="ui-g-6">
           <br />
-          <button pButton type="submit" label="Processar" (click)="pesquisar()" class="ui-button-raised ui-button-success" [style]="{'width':'100px'}"></button>
+          <button pButton type="submit" label="Processar" (click)="gerar()" class="ui-button-raised ui-button-success" [style]="{'width':'100px'}"></button>
         </div>
         
     </div>

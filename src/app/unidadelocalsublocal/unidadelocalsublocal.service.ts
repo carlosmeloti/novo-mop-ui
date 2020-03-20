@@ -71,23 +71,7 @@ export class UnidadelocalsublocalService {
       });
   }
 
-  pesquisarLocal2(filtro3: Filtro3): Promise<any> {
-
-    const params = new URLSearchParams;
-    const headers = new Headers;
-    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
-   
-    if (filtro3.cdLocal1) { 
-      params.set('cdLocal1', filtro3.cdLocal1);
-     // params.set('cdLocal2', filtro2.nmLocal2)
-    }
-
-    return this.http.get(`${this.modLocal3URL}`, { headers, search: Filtro3 })
-      .toPromise()
-      .then(response => response.json().content)
-
-  };
-
+  
 
   pesquisarSubLocal(filtro2: subLocalFiltro): Promise<any> {
 

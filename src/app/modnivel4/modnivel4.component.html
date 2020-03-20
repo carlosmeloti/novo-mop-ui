@@ -8,7 +8,7 @@
       <div class="ui-g-12 ui-fluid" style="padding-top:10px ">
         <div class="ui-g-4 ui-fluid">
           <label>Assunto: <strong><a routerLink="/modnivel1"> Editar</a></strong></label>
-          <p-dropdown name="modnivel1" [options]="modnivel1" placeholder="Selecione" [autoWidth]="false"
+          <p-dropdown name="modNivel1" [options]="modNivel1" placeholder="Selecione" [autoWidth]="false"
             [(ngModel)]="cdNivel1" required></p-dropdown>
         </div>
 
@@ -85,7 +85,7 @@
 
     <div class="ui-g">
       <div class="ui-g-12">
-        <p-table [value]="modnivel4" [paginator]="true" [rows]="5" [responsive]="true"
+        <p-table [value]="modNivel4" [paginator]="true" [rows]="5" [responsive]="true"
           (onLazyLoad)="aoMudarPagina($event)" #tabela>
 
           <ng-template pTemplate="header">

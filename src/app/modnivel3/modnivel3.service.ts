@@ -6,6 +6,10 @@ export class Filtro2 {
   cdNivel1: any;
 }
 
+export class Filtro23 {
+  cdNivel2: any;
+}
+
 
 export class Modnivel3Filtro {
 
@@ -43,6 +47,16 @@ export class Modnivel3Service {
 
   };
 
+  listarPorNivel2(cdNivel2:any): Promise<any> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.modnivel3URL}?cdNivel2=${cdNivel2}`, { headers })
+      .toPromise()
+      .then(response => response.json().content);
+  }
+
 
   excluir(cdNivel3: number): Promise<void> {
     const headers = new Headers;
@@ -52,6 +66,8 @@ export class Modnivel3Service {
       .toPromise()
       .then(() => null);
   }
+
+
 
   adicionar(modnivel3: ModNivel3): Promise<ModNivel3> {
     const headers = new Headers;

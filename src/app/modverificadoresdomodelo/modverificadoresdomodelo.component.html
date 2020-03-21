@@ -6,51 +6,33 @@
                     <h2>Verificadores de Modelo {{ editando ? ' - Editando - ' : '' }}</h2>
                 </div>
 
-                <div class="ui-g-12 ui-fluid">
-                    <label style="display: block">Verificador: </label>
-                    <p-dropdown [options]="verificadorM" [style]="{'width':'120px'}" name="verificadorM"
-                        placeholder="Selecione" [style]="{'width':'370px'}"></p-dropdown>
+                <div class="ui-g-4 ui-fluid">
+                    <label style="display: block">Tipo de Verificador </label>
+                    <p-dropdown [options]="cadTipoDeVerificador" name="cadTipoDeVerificador" placeholder="Selecione"
+                        [style]="{'width':'370px'}" [(ngModel)]="cdTipoDeVerificador">
+                    </p-dropdown>
                 </div>
-
+                <div class="ui-g-8 ui-fluid">
+                    <br />
+                    <button type="button" style="width: 200px" pButton label="Modelos e Verificadores" (click)="pesquisarModelosPorTipo()">
+                    </button>
+                </div>
                 <div class="ui-g-4 ui-fluid">
                     <label style="display: block">Escolha um modelo de Monitoramento: </label>
                     <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate" placeholder="Selecione"
-                        [style]="{'width':'370px'}" [(ngModel)]="verificadoresDoModeloSalvar.cdTemplate.cdTemplate">
+                        [style]="{'width':'370px'}" [(ngModel)]="cdTemplate">
                     </p-dropdown>
                 </div>
-                <div class="ui-g-8 ">
-                    <br />
-                    <button type="button" style="width: 200px" pButton label="Buscar Verificadores"
-                        (click)="pesquisar()"></button>
+
+                <div class="ui-g-8 ui-fluid">
+                    <label style="display: block">Escolha um Verificador: </label>
+                    <p-dropdown [options]="verificadorM" name="verificadorM" placeholder="Selecione"
+                        [style]="{'width':'740px'}" [(ngModel)]="cdVerificador">
+                    </p-dropdown>
                 </div>
-                <div class="ui-g-1 ui-fluid">
-                    <label style="display: block">Código: </label>
-                    <input name="codigo" type="text" pInputText />
-                </div>
-                <div class="ui-g-3 ui-fluid">
-                    <label style="display: block">Código Alfanumérico: </label>
-                    <input name="codalfa" type="text" pInputText />
-                </div>
-
-                <div class="ui-g-4 ui-fluid">
-                    <label style="display: block">Categoria de Avaliação: </label>
-                    <input name="nmNivelAvaliacao" type="text" pInputText />
-                </div>
-                <div class="ui-g" style="width:250px;margin-bottom:10px">
-                    <p-checkbox name="cdanalitico" value="Coleta Analítica" label="Coleta Analítica"></p-checkbox>
-                    <p-checkbox name="cdagrupados" value="Coleta Agrupada" label="Coleta Agrupada"></p-checkbox>
-                </div>
-
-
-
-                <div class="ui-g-12 ui-fluid">
-                    <label style="display: block">Verificador: </label>
-                    <textarea name="nmverificador" pInputTextarea autoResize="autoResize"></textarea>
-                </div>
-
-
-
-
+                
+                
+                
 
 
 

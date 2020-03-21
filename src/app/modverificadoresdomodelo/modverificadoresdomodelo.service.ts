@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import {Modverificadoresdomodelo} from '../core/model';
 
+export class FiltroModelosPorTipo{
+  cdTipoDeVerificador: any;
+}
+
+export class Filtro2{
+ cdTipoDeVerificador:any;
+}
 export class ModverificadoresdomodeloFiltro{
   cdTemplate: any;
   cdEmpresa: any;

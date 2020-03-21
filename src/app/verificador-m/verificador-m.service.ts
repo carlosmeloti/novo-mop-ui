@@ -13,7 +13,7 @@ export class CadverificadorFiltro{
 export class VerificadorMService {
 
   verificadormURL = 'http://localhost:8081/verificador_m';
-
+  verificadormURLResumo = 'http://localhost:8081/verificador_m?resumo';
 
 
   constructor(private http: Http) { }
@@ -70,6 +70,16 @@ export class VerificadorMService {
           headers.append('Content-Type', 'application/json');
       
           return this.http.get(this.verificadormURL, { headers })
+            .toPromise()
+            .then(response => response.json());
+        }
+
+        listarPorTipo(cdTipoDeVerificador:any): Promise<any> {
+          const headers = new Headers;
+          headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+          headers.append('Content-Type', 'application/json');
+      
+          return this.http.get(`${this.verificadormURLResumo}&cdTipoDeVerificador=${cdTipoDeVerificador}`, { headers })
             .toPromise()
             .then(response => response.json());
         }

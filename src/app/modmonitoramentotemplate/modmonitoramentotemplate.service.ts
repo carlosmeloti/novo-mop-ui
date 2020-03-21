@@ -13,6 +13,8 @@ export class ModmonitoramentotemplateService {
 
   modmonitoramentotemplateurl = 'http://localhost:8081/modmonitoramentotemplate';
 
+  modmonitoramentotemplateurlResumo = 'http://localhost:8081/modmonitoramentotemplate?resumo';
+
   constructor(private http: Http){}
 
 
@@ -71,10 +73,20 @@ export class ModmonitoramentotemplateService {
        headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
        headers.append('Content-Type', 'application/json');
 
-       return this.http.get(this.modmonitoramentotemplateurl, { headers })
+       return this.http.get(this.modmonitoramentotemplateurlResumo, { headers })
          .toPromise()
          .then(response => response.json().content);
    }
+
+   listarPorTipo(cdTipoDeVerificador:any): Promise<any> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.modmonitoramentotemplateurlResumo}&cdTipoDeVerificador=${cdTipoDeVerificador}`, { headers })
+      .toPromise()
+      .then(response => response.json().content);
+  }
 
    atualizar(modMonitoramentoTemplate: ModMonitoramentoTemplate): Promise<ModMonitoramentoTemplate>{
     const headers = new Headers;

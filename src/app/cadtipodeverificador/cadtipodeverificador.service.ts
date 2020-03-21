@@ -102,4 +102,14 @@ export class CadtipodeverificadorService {
        .toPromise()
        .then(response => response.json().content);
  }
+
+      listarPorTipo(cdTipoDeVerificador:any): Promise<any> {
+        const headers = new Headers;
+        headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.get(`${this.cadtipodeverificadorURL}?cdTipoDeVerificador=${cdTipoDeVerificador}`, { headers })
+          .toPromise()
+          .then(response => response.json().content);
+      }
 }

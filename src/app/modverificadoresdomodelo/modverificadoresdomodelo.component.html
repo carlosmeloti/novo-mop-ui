@@ -6,10 +6,16 @@
                     <h2>Verificadores de Modelo {{ editando ? ' - Editando - ' : '' }}</h2>
                 </div>
 
-                <div class="ui-g-4 ui-fluid">
+                <div class="ui-g-12 ui-fluid">
+                    <label>Empresa</label>
+                    <p-dropdown name="empresa" [options]="empresas" [autoWidth]="false" placeholder= "Selecione a empresa" 
+                    [(ngModel)]="verificadoresDoModeloSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>
+                  </div>
+
+                  <div class="ui-g-4 ui-fluid">
                     <label style="display: block">Tipo de Verificador </label>
                     <p-dropdown [options]="cadTipoDeVerificador" name="cadTipoDeVerificador" placeholder="Selecione"
-                        [style]="{'width':'370px'}" [(ngModel)]="cdTipoDeVerificador">
+                        [style]="{'width':'370px'}" [(ngModel)]="verificadoresDoModeloSalvar.cdTipoDeVerificador.cdTipoDeVerificador">
                     </p-dropdown>
                 </div>
                 <div class="ui-g-8 ui-fluid">
@@ -17,28 +23,88 @@
                     <button type="button" style="width: 200px" pButton label="Modelos e Verificadores" (click)="pesquisarModelosPorTipo()">
                     </button>
                 </div>
+                
+                <div class="ui-g-12 ui-fluid">
+                    <label style="display: block">Escolha um Verificador: </label>
+                    <p-dropdown [options]="verificadorM" name="verificadorM" placeholder="Selecione"
+                        [style]="{'width':'1100px'}" [(ngModel)]="verificadoresDoModeloSalvar.cdVerificador.codigo">
+                    </p-dropdown>
+                </div>
+
                 <div class="ui-g-4 ui-fluid">
                     <label style="display: block">Escolha um modelo de Monitoramento: </label>
                     <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate" placeholder="Selecione"
-                        [style]="{'width':'370px'}" [(ngModel)]="cdTemplate">
+                        [style]="{'width':'370px'}" [(ngModel)]="verificadoresDoModeloSalvar.cdTemplate.cdTemplate">
                     </p-dropdown>
                 </div>
-
                 <div class="ui-g-8 ui-fluid">
-                    <label style="display: block">Escolha um Verificador: </label>
-                    <p-dropdown [options]="verificadorM" name="verificadorM" placeholder="Selecione"
-                        [style]="{'width':'740px'}" [(ngModel)]="cdVerificador">
-                    </p-dropdown>
-                </div>
-                
-                
+                    <br />
+                    <button type="button" style="width: 200px" pButton label="Listar Verificadores" (click)="pesquisarPorModelo()">
+                    </button>
+                  </div>
                 
 
+                <div class="ui-g-4 ui-fluid">
+                    <label>Assunto: <strong><a routerLink="/modnivel1"> Editar</a></strong></label>
+                    <p-dropdown name="modNivel1" [options]="modNivel1" placeholder="Selecione" [autoWidth]="false"
+                      [(ngModel)]="verificadoresDoModeloSalvar.cdNivel1.cdNivel1" required></p-dropdown>
+                  </div>
+                  <div class="ui-g-8 ui-fluid">
+                    <br />
+                    <button type="button" style="width: 200px" pButton label="Buscar Etapa" (click)="pesquisarNivel2()">
+                    </button>
+                  </div>
+          
+          
+                  <div class="ui-g-4 ui-fluid">
+                    <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
+                    <p-dropdown name="modNivel2" [options]="modNivel2" placeholder="Selecione" [autoWidth]="false"
+                      [(ngModel)]="verificadoresDoModeloSalvar.cdNivel2.cdNivel2" [showClear]="true" required></p-dropdown>
+                  </div>
 
-
+                  <div class="ui-g-8 ui-fluid">
+                    <br />
+                    <button type="button" style="width: 200px" pButton label="Buscar Ítem" (click)="pesquisarNivel3()">
+                    </button>
+                  </div>
+          
+                  <div class="ui-g-4 ui-fluid">
+                    <label style="display: block">Ítem: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
+                    <p-dropdown name="modNivel3" [options]="modNivel3" placeholder="Selecione" [autoWidth]="false"
+                      [(ngModel)]="verificadoresDoModeloSalvar.cdNivel3.cdNivel3" [showClear]="true" required></p-dropdown>
+                  </div>
+                  
+                  <div class="ui-g-8 ui-fluid">
+                    <br />
+                    <button type="button" style="width: 200px" pButton label="Buscar SubÍtem" (click)="pesquisarNivel4()">
+                    </button>
+                  </div> 
+                  <div class="ui-g-4 ui-fluid">
+                    <label style="display: block">SubÍtem: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
+                    <p-dropdown name="modNivel4"  [style]="{'width':'370px'}" [options]="modNivel4" placeholder="Selecione" [autoWidth]="false"
+                      [(ngModel)]="verificadoresDoModeloSalvar.cdNivel4.cdNivel4" [showClear]="true" required></p-dropdown>
+                  </div>
+                  <div class="ui-g-8 ui-fluid">
+                    
+                    <div class="ui-g-12 ui-fluid">
+                        <p-checkbox name="groupname" value="val1"  label="Coleta de dados Analíticos"> eee </p-checkbox>
+                      </div>
+                      <div class="ui-g-12 ui-fluid">
+                          <p-checkbox name="groupname" value="val1"  label="Coleta de dados Agrupados"></p-checkbox>
+                        </div>
+                    </div>
+                    <div class="ui-g-6 ui-fluid">
+                        <label style="display: block">Definição de Coleta Análitica: </label>
+                        <input type="text" name="coletaAnalitica" pInputText [(ngModel)]="verificadoresDoModeloSalvar.txColetaAnalitica" />  
+                    </div> 
+                    <div class="ui-g-6 ui-fluid">
+                        <label style="display: block">Definição de Coleta Agrupada: </label>
+                       <input type="text" name="coletaAgrupada" pInputText [(ngModel)]="verificadoresDoModeloSalvar.txColetaAgrupada" />
+                    </div>    
+               
                 <div class="ui-g-2 ui-fluid">
                     <br />
-                    <button pButton type="button" label="Adicionar" routerLink="/addverificadoresmodelo"></button>
+                    <button pButton type="submit" label="Adicionar" ></button>
                 </div>
 
                 <div *ngIf="editando" class="ui-g-2 ui-fluid ">
@@ -50,7 +116,7 @@
 
         <div class="ui-g">
             <div class="ui-g-12">
-                <p-table [value]="verificadordomodelo" [paginator]="true" [rows]="10" [responsive]="true"
+                <p-table [value]="verificadordomodeloTabela" [paginator]="true" [rows]="10" [responsive]="true"
                     [totalRecords]="totalRecords">
 
                     <ng-template pTemplate="header">

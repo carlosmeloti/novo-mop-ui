@@ -76,6 +76,16 @@ export class Modnivel4Service {
       .then(response => response.json().content);
   }
 
+  listarPorNivel3(cdNivel3:any): Promise<any> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.modnivel4URL}?cdNivel3=${cdNivel3}`, { headers })
+      .toPromise()
+      .then(response => response.json().content);
+  }
+
   atualizar(modnivel4: ModNivel4): Promise<ModNivel4> {
     const headers = new Headers;
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');

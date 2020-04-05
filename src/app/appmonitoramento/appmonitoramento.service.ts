@@ -8,6 +8,10 @@ export class AppMonitoramentoFiltro {
   size = 5;
 }
 
+export class FiltroPorMedelo {
+  cdTemplate: any;
+}
+
 
 @Injectable()
 export class AppmonitoramentoService {
@@ -27,6 +31,16 @@ export class AppmonitoramentoService {
 
         return appMonitoramento;
       });
+}
+
+listarPorTipo(cdTemplate:any): Promise<any> {
+  const headers = new Headers;
+  headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+  headers.append('Content-Type', 'application/json');
+
+  return this.http.get(`${this.appmonitoramentoURL}?cdTemplate=${cdTemplate}`, { headers })
+    .toPromise()
+    .then(response => response.json().content);
 }
 
 pesquisar(filtro: AppMonitoramentoFiltro): Promise<any> {

@@ -1,5 +1,5 @@
-import { AppMonitoramento } from './../core/model';
-import { AppmonitoramentoService, AppMonitoramentoFiltro } from './appmonitoramento.service';
+import { AppMonitoramento, qtd } from './../core/model';
+import { AppmonitoramentoService, AppMonitoramentoFiltro, FiltroPorMedelo } from './appmonitoramento.service';
 import { ModmonitoramentotemplateService } from './../modmonitoramentotemplate/modmonitoramentotemplate.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
@@ -11,6 +11,7 @@ import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { FormControl } from '@angular/forms';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
+import { ModverificadoresdomodeloService } from '../modverificadoresdomodelo/modverificadoresdomodelo.service';
 
 interface City {
   name: string;
@@ -31,11 +32,15 @@ export class AppmonitoramentoComponent  {
   MonitoramentoTemplate = [];
   cadtipodeverificador = [];
   empresas = [];
+  tipodevirificador = [];
+  qtddevirificador = [];
 
   appmonitoramentoSalvar = new AppMonitoramento;
+  appmonitoramentoSalvar2 = new qtd;
 
   @ViewChild('tabela') grid;
   constructor(
+    private modverificadoresdomodeloService: ModverificadoresdomodeloService,
     private modmonitoramentotemplateService: ModmonitoramentotemplateService,
     private appmonitoramentoService: AppmonitoramentoService,
     private tipoDeVerificadores: CadtipodeverificadorService,
@@ -53,21 +58,41 @@ export class AppmonitoramentoComponent  {
     this.carregarTipoDeVerificadores();
     this.carregarEmpresas();
 
-
-
-    // this.pesquisar();
     const codigoAppMonitoramento = this.route.snapshot.params['codigo'];
-
-    //  se houver um id entra no metodo de carregar valores
     if (codigoAppMonitoramento) {
       this.carregarAppMonitoramento(codigoAppMonitoramento);
     }
-
   }
-
   get editando() {
     return Boolean(this.appmonitoramentoSalvar.cdMonitoramento)
   }
+
+  pesquisarPorModelo() {
+  
+    const filtroPorModelo: FiltroPorMedelo = {
+      cdTemplate: this.appmonitoramentoSalvar.cdTemplate.cdTemplate,
+     
+    }
+         this.carregarTipo(this.appmonitoramentoSalvar.cdTemplate.cdTemplate);
+         this.carregarQuantidade(this.appmonitoramentoSalvar.cdTemplate.cdTemplate);
+  }
+
+  carregarTipo(cdTemplate:any) {
+    return this.modmonitoramentotemplateService.listarPorTipo2(cdTemplate)
+      .then(tipodevirificador => {
+        this.tipodevirificador = tipodevirificador.map(c => ({ label: c.cdTipoDeVerificador.nmTipoDeVerificador, value: c.cdTipoDeVerificador.cdTipoDeVerificador }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarQuantidade(cdTemplate:any) {
+    return this.modverificadoresdomodeloService.listarQuantidade(cdTemplate)
+      .then(qtddevirificador => {
+        this.appmonitoramentoSalvar2.qtd = qtddevirificador;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
 
   //Metodo para carregar valores
   carregarAppMonitoramento(codigo: number) {

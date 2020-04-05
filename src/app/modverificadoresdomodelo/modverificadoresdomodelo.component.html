@@ -116,13 +116,13 @@
 
         <div class="ui-g">
             <div class="ui-g-12">
-                <p-table [value]="verificadordomodeloTabela" [paginator]="true" [rows]="10" [responsive]="true"
+                <p-table [value]="verificadordomodeloTabela" [paginator]="true" [rows]="5" [responsive]="true"
                     [totalRecords]="totalRecords">
 
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 70px">COD</th>
-                            <th style="width: 70px">Codigo</th>
+                            <th style="width: 100px">Cod Verificador</th>
                             <th style="width: 150px">Alfanumérico</th>
                             <th style="width: 150px">Sigla</th>
                             <th style="margin-left: 10px">Descrição</th>
@@ -132,10 +132,10 @@
                     <ng-template pTemplate="body" let-verificadordomodelo>
                         <tr>
                             <th>{{verificadordomodelo.cdVeriMod}}</th>
-                            <th>{{verificadordomodelo.cdVerificador}}</th>
-                            <th>{{verificadordomodelo.codalfa}}</th>
-                            <th>{{verificadordomodelo.sigla}}</th>
-                            <th style="text-align: left">{{verificadordomodelo.nmVerificador}}</th>
+                            <th>{{verificadordomodelo.cdVerificador.codigo}}</th>
+                            <th>{{verificadordomodelo.cdVerificador.codalfa}}</th>
+                            <th>{{verificadordomodelo.cdVerificador.cadNivelDeAvaliacao.sigla}}</th>
+                            <th style="text-align: left">{{verificadordomodelo.cdVerificador.nmverificador}}</th>
                             <th>
 
                                 <button pButton icon="pi pi-trash" style="margin-left: 10px"

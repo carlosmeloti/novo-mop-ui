@@ -50,6 +50,16 @@ pesquisar(filtro: ModverificadoresdomodeloFiltro): Promise<any> {
 
   };  
 
+  listarQuantidade(cdTemplate:any): Promise<any> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.verificadoresdomodelourl}/count?cdTemplate=${cdTemplate}`, { headers })
+      .toPromise()
+      .then(response => response.json());
+  }
+
   pesquisarPorModelo(filtro: ModverificadoresdomodeloFiltro): Promise<any> {
 
     const params = new URLSearchParams;
@@ -60,9 +70,9 @@ pesquisar(filtro: ModverificadoresdomodeloFiltro): Promise<any> {
       params.set('cdTemplate', filtro.cdTemplate);
    }
 
-   return this.http.get(`${this.verificadoresdomodelourlresumo}`, { headers, search: filtro })
+   return this.http.get(`${this.verificadoresdomodelourl}`, { headers, search: filtro })
    .toPromise()
-   .then(response => response.json())
+   .then(response => response.json().content)
 
   }; 
 

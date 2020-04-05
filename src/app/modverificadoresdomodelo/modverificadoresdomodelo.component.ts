@@ -110,6 +110,14 @@ export class ModverificadoresdomodeloComponent  {
         }
              this.carregarNivel2(this.verificadoresDoModeloSalvar.cdNivel1.cdNivel1);
       }
+
+      carregarNivel2(cdNivel1:any) {
+        return this.modNivel2Service.listarPorNivel1(cdNivel1)
+          .then(modNivel2 => {
+            this.modNivel2 = modNivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
+          })
+          .catch(erro => this.errorHandler.handle(erro));
+      }
     
       pesquisarNivel3() {
     
@@ -120,6 +128,14 @@ export class ModverificadoresdomodeloComponent  {
              this.carregarNivel3(this.verificadoresDoModeloSalvar.cdNivel2.cdNivel2);
       }
 
+      carregarNivel3(cdNivel2:any) {
+        return this.modNivel3Service.listarPorNivel2(cdNivel2)
+          .then(modNivel3 => {
+            this.modNivel3 = modNivel3.map(c => ({ label: c.cdNivel3 + " - " + c.nmNivel3, value: c.cdNivel3 }));
+          })
+          .catch(erro => this.errorHandler.handle(erro));
+      }
+
       pesquisarNivel4() {
     
         const filtroNivel4: FiltroNivel4 = {
@@ -127,6 +143,14 @@ export class ModverificadoresdomodeloComponent  {
          
         }
              this.carregarNivel4(this.verificadoresDoModeloSalvar.cdNivel3.cdNivel3);
+      }
+
+      carregarNivel4(cdNivel3:any) {
+        return this.modNivel4Service.listarPorNivel3(cdNivel3)
+          .then(modNivel4 => {
+            this.modNivel4 = modNivel4.map(c => ({ label: c.cdNivel4 + " - " + c.nmNivel4, value: c.cdNivel4 }));
+          })
+          .catch(erro => this.errorHandler.handle(erro));
       }
 
       pesquisarPorModelo() {
@@ -140,31 +164,7 @@ export class ModverificadoresdomodeloComponent  {
       
       
       }
-      
-
-      carregarNivel2(cdNivel1:any) {
-        return this.modNivel2Service.listarPorNivel1(cdNivel1)
-          .then(modNivel2 => {
-            this.modNivel2 = modNivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-          })
-          .catch(erro => this.errorHandler.handle(erro));
-      }
-    
-      carregarNivel3(cdNivel2:any) {
-        return this.modNivel3Service.listarPorNivel2(cdNivel2)
-          .then(modNivel3 => {
-            this.modNivel3 = modNivel3.map(c => ({ label: c.cdNivel3 + " - " + c.nmNivel3, value: c.cdNivel3 }));
-          })
-          .catch(erro => this.errorHandler.handle(erro));
-      }
-
-      carregarNivel4(cdNivel3:any) {
-        return this.modNivel4Service.listarPorNivel3(cdNivel3)
-          .then(modNivel4 => {
-            this.modNivel4 = modNivel4.map(c => ({ label: c.cdNivel4 + " - " + c.nmNivel4, value: c.cdNivel4 }));
-          })
-          .catch(erro => this.errorHandler.handle(erro));
-      }
+         
 
       carregarVerificadoresPorTipo(cdTipoDeVerificador: any) {
         return this.verificadorM2.listarPorTipo(cdTipoDeVerificador)
@@ -218,7 +218,7 @@ export class ModverificadoresdomodeloComponent  {
   
       this.modverificadoresdomodeloService.excluir(verificadordomodelo.cdVeriMod)
         .then(() => {
-         this.pesquisar();
+         //this.pesquisar();
           this.toasty.success('Verificador excluído com sucesso!');
         })
         

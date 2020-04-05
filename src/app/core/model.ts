@@ -164,6 +164,10 @@ export class AppMonitoramento {
   txLocal: string;
 }
 
+export class qtd {
+  qtd: number;
+}
+
 export class AppAvaliacao {
   cdAvaliacao: number;
   cdMonitoramento = new AppMonitoramento();

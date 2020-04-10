@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/primeng';
-
-interface City {
-  name: string;
-  code: string;
-}
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SelectItem, ConfirmationService } from 'primeng/primeng';
+import { ToastyService } from 'ng2-toasty';
+import { ActivatedRoute } from '@angular/router';
+import { ErrorHandlerService } from '../core/error-handler.service';
+import { AppmonitoramentoService } from '../appmonitoramento/appmonitoramento.service';
 
 @Component({
   selector: 'app-appmonitoramentoverificador',
@@ -13,18 +12,27 @@ interface City {
 })
 export class AppmonitoramentoverificadorComponent {
 
-  cities1: SelectItem[];
-  selectedCity1: City;
+  monitoramentos = [];
 
-  constructor() {
-    this.cities1 = [
-      {label:'Tipo de Verificador', value:null},
-      {label:'Monitoramento Operacional', value:{id:1, name: 'New York', code: 'NY'}},
-      {label:'Avaliação de Impactos', value:{id:2, name: 'Rome', code: 'RM'}},
-      {label:'Vistoria de PMFS', value:{id:3, name: 'London', code: 'LDN'}},
-      {label:'Certificação Florestal', value:{id:4, name: 'Istanbul', code: 'IST'}},
-      {label:'Avaliação de Sustentabilidade ( Pesquisa )', value:{id:5, name: 'Paris', code: 'PRS'}}
-  ];
-}
+  @ViewChild('tabela') grid;
+  constructor(
+    private appmonitoramentoService: AppmonitoramentoService,
+    private toasty: ToastyService,
+    private confirmation: ConfirmationService,
+    private route: ActivatedRoute,
+    private errorHandler: ErrorHandlerService
+  ) {}
+
+  ngOnInit() {
+    this.carregarMonitoramentos();
+  }
+
+  carregarMonitoramentos() {
+    return this.appmonitoramentoService.listarTodas()
+      .then(monitoramentos => {
+        this.monitoramentos = monitoramentos.map(c => ({ label: c.cdMonitoramento + " - " + c.nmMonitoramento, value: c.cdMonitoramento }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
 
 }

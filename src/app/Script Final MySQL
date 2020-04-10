@@ -4404,6 +4404,7 @@ INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 17);
   DELIMITER ;
 
 
+
 DROP TRIGGER IF EXISTS Tgr_d24_empresa_populaparaempresa;
 DELIMITER $
 CREATE TRIGGER Tgr_d24_empresa_populaparaempresa AFTER INSERT
@@ -4414,4 +4415,78 @@ BEGIN
   CALL empresaamostragem();
   CALL empresafrequencia();
   CALL empresamaterial();
+END$
+
+
+DELIMITER $$
+  CREATE PROCEDURE mopapi.insereverificadormonitoramento ()
+  BEGIN
+  DECLARE cdMonitoramento INT DEFAULT 0;
+  DECLARE cdempresa INT DEFAULT 0;
+  DECLARE cdverificador INT DEFAULT 0;
+  DECLARE cdtipoverificador INT DEFAULT 0;
+  DECLARE cdnivel1 INT DEFAULT 0;
+  DECLARE cdnivel2 INT DEFAULT 0;
+  DECLARE cdnivel3 INT DEFAULT 0;
+  DECLARE cdnivel4 INT DEFAULT 0;
+  DECLARE lgdadosanaliticos BOOLEAN;
+  DECLARE lgdadosagrupados BOOLEAN;
+  DECLARE txcoletaanalitica varchar(200);
+  DECLARE txcoletaagrupada varchar(200);
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE cursorinsereverificadormonitoramento CURSOR FOR  
+  select 
+r17_cdempresa,
+r17_cdverificador,
+r17_cdtipoverificador,
+r17_cdnivel1,
+r17_cdnivel2,
+r17_cdnivel3,
+r17_cdnivel4,
+r17_lgdadosanaliticos,
+r17_lgdadosagrupados,
+r17_txcoletaanalitica,
+r17_txcoletaagrupada
+from r17_verificador_template_m vt where 
+vt.r17_cdtemplate = (select m.d18_cdtemplate from d18_monitoramento m where m.d18_cdmonitoramento = 
+(select MAX(m.d18_cdmonitoramento) from d18_monitoramento m));
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(m.d18_cdmonitoramento) into cdMonitoramento from d18_monitoramento m;
+  OPEN cursorinsereverificadormonitoramento;
+  meuLoop: LOOP
+  FETCH cursorinsereverificadormonitoramento INTO 
+  cdempresa,cdverificador,cdtipoverificador,cdnivel1,cdnivel2,cdnivel3,cdnivel4,lgdadosanaliticos,lgdadosagrupados,txcoletaanalitica,txcoletaagrupada;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  
+  INSERT INTO `mopapi`.`r17_verificador_monitoramento`
+(`r17_cdempresa`,
+`r17_cdverificador`,
+`r17_cdtipoverificador`,
+`r17_cdmonitoramento`,
+`r17_cdnivel1`,
+`r17_cdnivel2`,
+`r17_cdnivel3`,
+`r17_cdnivel4`,
+`r17_lgdadosanaliticos`,
+`r17_lgdadosagrupados`,
+`r17_txcoletaanalitica`,
+`r17_txcoletaagrupada`) 
+  
+  VALUES(cdempresa,cdverificador,cdtipoverificador,cdMonitoramento,cdnivel1,cdnivel2,cdnivel3,cdnivel4,lgdadosanaliticos,lgdadosagrupados,txcoletaanalitica,txcoletaagrupada);
+  
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+
+  
+DROP TRIGGER IF EXISTS Tgr_r17_verificador_monitoramento_populaverificadores;
+DELIMITER $
+CREATE TRIGGER Tgr_r17_verificador_monitoramento_populaverificadores AFTER INSERT
+ON d18_monitoramento
+FOR EACH ROW
+BEGIN
+  CALL insereverificadormonitoramento();
 END$

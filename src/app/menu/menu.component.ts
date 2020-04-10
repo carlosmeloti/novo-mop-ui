@@ -115,10 +115,10 @@ export class MenuComponent implements OnInit {
               routerLink: '/appmonitoramento'
             },
             {separator: true},
-            /*{
+            {
               label: 'Monitoramento',
               routerLink: '/appmonitoramentoverificador'
-            },*/
+            },
             {
               label: 'Avaliação',
               routerLink: '/appavaliacao'

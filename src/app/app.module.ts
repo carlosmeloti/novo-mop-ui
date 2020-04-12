@@ -96,6 +96,7 @@ import { AddverificadormodeloComponent } from './addverificadormodelo/addverific
 import { AppformulariocoletaService } from './appformulariocoleta/appformulariocoleta.service';
 import { TodosOsVerificadoresComponent } from './todos-os-verificadores/todos-os-verificadores.component';
 import { AppmonitoramentoverificadorComponent } from './appmonitoramentoverificador/appmonitoramentoverificador.component';
+import { AppmonitoramentoverificadorService } from './appmonitoramentoverificador/appmonitoramentoverificador.service';
 
 
 
@@ -248,6 +249,7 @@ const routes: Routes = [
     AppavaliacaoService,
     AssociarverificadorService,
     ErrorHandlerService,
+    AppmonitoramentoverificadorService,
     AppformulariocoletaService,
 
   ],

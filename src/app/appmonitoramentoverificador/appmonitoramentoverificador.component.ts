@@ -4,6 +4,8 @@ import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { AppmonitoramentoService } from '../appmonitoramento/appmonitoramento.service';
+import { VerificadoresMonitoramentoFiltro, AppmonitoramentoverificadorService } from './appmonitoramentoverificador.service';
+import { AppMonitoramentoVerificador } from '../core/model';
 
 @Component({
   selector: 'app-appmonitoramentoverificador',
@@ -13,10 +15,13 @@ import { AppmonitoramentoService } from '../appmonitoramento/appmonitoramento.se
 export class AppmonitoramentoverificadorComponent {
 
   monitoramentos = [];
+  verificadordoMonitoramentoTabela = [];
+  appMonitoramentoVerificadorSalvar = new AppMonitoramentoVerificador();
 
   @ViewChild('tabela') grid;
   constructor(
     private appmonitoramentoService: AppmonitoramentoService,
+    private appMonitoramentoVerificadorService: AppmonitoramentoverificadorService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
     private route: ActivatedRoute,
@@ -33,6 +38,17 @@ export class AppmonitoramentoverificadorComponent {
         this.monitoramentos = monitoramentos.map(c => ({ label: c.cdMonitoramento + " - " + c.nmMonitoramento, value: c.cdMonitoramento }));
       })
       .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  pesquisarPorMonitoramento() {
+      
+    const filtro: VerificadoresMonitoramentoFiltro = {
+      cdMonitoramento: this.appMonitoramentoVerificadorSalvar.cdMonitoramento.cdMonitoramento
+    }
+    this.appMonitoramentoVerificadorService.pesquisarPorMonitoramento(filtro)
+      .then(verificadordoMonitoramentoTabela => this.verificadordoMonitoramentoTabela = verificadordoMonitoramentoTabela);
+  
+  
   }
 
 }

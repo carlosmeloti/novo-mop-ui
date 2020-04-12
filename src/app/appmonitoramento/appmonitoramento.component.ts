@@ -13,10 +13,7 @@ import { FormControl } from '@angular/forms';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
 import { ModverificadoresdomodeloService } from '../modverificadoresdomodelo/modverificadoresdomodelo.service';
 
-interface City {
-  name: string;
-  code: string;
-}
+
 
 @Component({
   selector: 'app-appmonitoramento',

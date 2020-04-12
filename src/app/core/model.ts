@@ -198,6 +198,22 @@ export class Modverificadoresdomodelo {
 
 }
 
+export class AppMonitoramentoVerificador {
+
+  cdVeriMod: number;
+  cdEmpresa = new Cadempresa();
+  cdTipoDeVerificador = new Cadtipodeverificador();
+  cdMonitoramento = new AppMonitoramento();
+  cdVerificador = new Verificador_m();
+  cdNivel1 = new ModNivel1();
+  cdNivel2 = new ModNivel2();
+  cdNivel3 = new ModNivel3();
+  cdNivel4 = new ModNivel4();
+  txColetaAnalitica: string;
+  txColetaAgrupada: string;
+
+}
+
 
 
 

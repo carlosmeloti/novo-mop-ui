@@ -5,33 +5,68 @@
         <div class="ui-g-12">
           <h2>Coleta de Dados</h2>
         </div>
-        <div class="ui-g-6 ui-fluid">
-          <label style="display: block">Monitoramento: </label>
-          <p-dropdown [options]="MonitoramentoTemplate" name="MonitoramentoTemplate" placeholder="Selecione" [style]="{'width':'500px'}"></p-dropdown>
+        <div class="ui-g-4 ui-fluid">
+          <label style="display: block">Escolha um modelo de Monitoramento: </label>
+          <p-dropdown [options]="monitoramentos" name="monitoramentos" placeholder="Selecione"
+             [style]="{'width':'370px'}" ></p-dropdown>
         </div>
-        <div class="ui-g-6 ui-fluid">
+        <div class="ui-g-8 ui-fluid">
+          <br />
+          <button type="button" style="width: 200px" pButton label="Buscar Avaliação" (click)="pesquisarPorMonitoramento()">
+          </button>
+        </div>
+
+        <div class="ui-g-4 ui-fluid">
           <label style="display: block">Avaliação: </label>
-          <p-dropdown [options]="cadtipodeverificador" name="cadtipodeverificador" placeholder="Selecione"  [style]="{'width':'500px'}"></p-dropdown>
+          <p-dropdown [options]="cadtipodeverificador" name="cadtipodeverificador" placeholder="Selecione" 
+          [style]="{'width':'370px'}" ></p-dropdown>
         </div>
-
-        <div class="ui-g-12 ui-fluid">
-          <label style="display: block">N° de Observações: </label>
-          <input type="text" name="codigo" [readonly]="true" pInputText style="width: 100px" />
-        </div>
-        <div class="ui-g-12 ui-fluid">
-          <label style="display: block">N° de Não Conformidades: </label>
-          <input type="text" name="codigo" [readonly]="true" pInputText style="width: 100px" />
-        </div>
-
-        <div class="ui-g-12 ui-fluid">
-          <label style="display: block">Observação do Verificador desta Coleta: </label>
-          <textarea name="obscoleta" pInputTextarea ></textarea>
+        <div class="ui-g-8 ui-fluid">
+          <br />
+          <button type="button" style="width: 200px" pButton label="Listar Verificadores" (click)="pesquisarPorMonitoramento()">
+          </button>
         </div>
 
         <div class="ui-g-6">
           <br />
           <button pButton type="submit" label="Definir" class="ui-button-raised ui-button-success" [style]="{'width':'100px'}"></button>
         </div>
+ 
+        <div class="ui-g">
+          <div class="ui-g-12">
+              <p-table [value]="verificadordoMonitoramentoTabela" [paginator]="true" [rows]="5" [responsive]="true"
+                  [totalRecords]="totalRecords">
+    
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th style="width: 70px">COD</th>
+                          <th style="width: 100px">Cod Verificador</th>
+                          <th style="width: 150px">Alfanumérico</th>
+                          <th style="width: 150px">Sigla</th>
+                          <th style="margin-left: 10px">Descrição</th>
+                          <th style=" width: 140px"></th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-verificadordoMonitoramento>
+                      <tr>
+                          <th>{{verificadordoMonitoramento.cdVeriMod}}</th>
+                          <th>{{verificadordoMonitoramento.cdVerificador.codigo}}</th>
+                          <th>{{verificadordoMonitoramento.cdVerificador.codalfa}}</th>
+                          <th>{{verificadordoMonitoramento.cdVerificador.cadNivelDeAvaliacao.sigla}}</th>
+                          <th style="text-align: left">{{verificadordoMonitoramento.cdVerificador.nmverificador}}</th>
+                          <th>
+    
+                              <button pButton icon="pi pi-trash" style="margin-left: 10px"
+                                  pTooltip="Excluir Este Verificador" tooltipPosition="top" class="ui-button-danger"
+                                  (click)="confirmarExclusao(verificadordomodelo)"></button>
+                          </th>
+    
+                      </tr>
+                  </ng-template>
+              </p-table>
+    
+          </div>
+      </div>
         
     </div>
     </form>

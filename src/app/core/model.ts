@@ -177,11 +177,6 @@ export class AppAvaliacao {
   dtFim: Date;
 }
 
-export class AppFormularioColeta{
-  cdMonitoramento = new AppMonitoramento();
-  cdAvaliacao = new AppAvaliacao();
-}
-
 export class Modverificadoresdomodelo {
 
   cdVeriMod: number;
@@ -213,6 +208,24 @@ export class AppMonitoramentoVerificador {
   txColetaAgrupada: string;
 
 }
+
+export class AppFormularioColeta{
+  cdMonitoramento = new AppMonitoramento();
+  cdAvaliacao = new AppAvaliacao();
+}
+export class AppColetaDeDados{
+   
+  cdColetaDeDaDos: number;  
+  cdEmpresa = new Cadempresa();
+  id_Verificador_m = new Verificador_m();
+  cdMonitoramento = new AppMonitoramento();
+  cdAvaliacao = new AppAvaliacao();
+  nrObservacoes: number;
+  nrNaoConformidades: number;
+  txObservacao: string;
+}
+
+
 
 
 

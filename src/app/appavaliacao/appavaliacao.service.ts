@@ -4,6 +4,7 @@ import { AppAvaliacao } from '../core/model';
 
 
 
+
 export class AppAvaliacaoFiltro {
 
   cdMonitoramento: number;
@@ -29,6 +30,8 @@ export class AppavaliacaoService {
       .toPromise()
       .then(response => response.json().content);
   }
+
+  
 
 
   pesquisarMon(filtro: AppAvaliacaoFiltro): Promise<any> {
@@ -105,6 +108,8 @@ export class AppavaliacaoService {
       .toPromise()
       .then(response => response.json().content);
   }
+
+  
 
   buscarPorCodigo(cdAvaliacao: number): Promise<AppAvaliacao> {
     const headers = new Headers();

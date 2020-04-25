@@ -1,6 +1,7 @@
 Drop database if exists mopapi;
 CREATE database mopapi;
 USE mopapi;
+SET @@auto_increment_increment=1;
 
 -- CadEmpresa -------------------------
 
@@ -4202,7 +4203,7 @@ CONSTRAINT monitoramento_fk FOREIGN KEY (d19_cdmonitoramento) REFERENCES d18_mon
 -- App Coleta -------------------
 
  CREATE TABLE p21_coleta(
-	p21_cdColetaDeDados BIGINT(20) AUTO_INCREMENT,
+	p21_cdcoletadedados BIGINT(20) AUTO_INCREMENT,
 	p21_cdempresa BIGINT,
 	p21_id_Verificador_m BIGINT,
     p21_cdtipoverificador BIGINT,

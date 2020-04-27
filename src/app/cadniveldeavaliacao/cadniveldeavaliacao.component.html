@@ -52,19 +52,19 @@
                     <th>Categoria de Avaliação</th>
                     <th style="width: 100px">Sigla</th>
                     <th>Descrição</th>
-                    <th style=" width: 140px"></th>
+                    <th style=" width: 110px"></th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-nivelavaliacao>
                   <tr>
-                    <th>{{nivelavaliacao.cdNivelDeAvaliacao}}</th>
-                    <th style="text-align: left">{{nivelavaliacao.nmNivelDeAvaliacao}}</th>
-                    <th>{{nivelavaliacao.sigla}}</th>
-                    <th style="text-align: left">{{nivelavaliacao.txDescricao}}</th>
-                    <th>
+                    <td>{{nivelavaliacao.cdNivelDeAvaliacao}}</td>
+                    <td style="text-align: left">{{nivelavaliacao.nmNivelDeAvaliacao}}</td>
+                    <td>{{nivelavaliacao.sigla}}</td>
+                    <td style="text-align: left">{{nivelavaliacao.txDescricao}}</td>
+                    <td>
                         <a pButton icon="pi pi-pencil" pTooltip="Editar Categoria de Avaliação" tooltipPosition="top" [routerLink]="['/cadniveldeavaliacao', nivelavaliacao.cdNivelDeAvaliacao]"></a>
-                        <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Categoria de Avaliação" tooltipPosition="top" (click)="confirmarExclusao(nivelavaliacao)"></button>
-                    </th>
+                        <button pButton icon="pi pi-trash" class="ui-button-danger" style="margin-left: 10px" pTooltip="Excluir Categoria de Avaliação" tooltipPosition="top" (click)="confirmarExclusao(nivelavaliacao)"></button>
+                    </td>
                   </tr>
                 </ng-template>
               </p-table>

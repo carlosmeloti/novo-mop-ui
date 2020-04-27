@@ -67,32 +67,30 @@
                 <ng-template pTemplate="header">
                   <tr>
                     <th style=" width: 40px">Id</th>
-                    <th style=" width: 150px">Empresa</th>
-                    <th style=" width: 90px">Abreviado</th>
-                    <th style=" width: 110px">Telefone</th>
+                    <th>Empresa</th>
+                    <th>Abreviado</th>
+                    <th>Telefone</th>
                     <th>Endereço</th>
-                    <th style=" width: 100px">Contato</th>
-                    <th style=" width: 140px">CNPJ</th>
-                    <th style=" width: 100px">Diretório</th>
-                    <th style=" width: 100px"></th>
+                    <th>Contato</th>
+                    <th style=" width: 150px">CNPJ</th>
+                    <th style=" width: 110px"></th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-empresa>
                   <tr>
-                    <th>{{empresa.cdEmpresa}}</th>
-                    <th style="text-align: left">{{empresa.nmEmpresa}}</th>
-                    <th style="text-align: left">{{empresa.nmAbreviado}}</th>
-                    <th style="text-align: left">{{empresa.nrTelefone}}</th>
-                    <th style="text-align: left">{{empresa.enderecoCompleto}}</th>
-                    <th style="text-align: left">{{empresa.pessoContato}}</th>
-                    <th style="text-align: left">{{empresa.cnpjEmpresa}}</th>
-                    <th style="text-align: left">{{empresa.diretorioArquivos}}</th>
-                    <th>
-
-                        <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top" [routerLink]="['/cadempresa', empresa.cdEmpresa]"></a>
-                        <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Empresa" tooltipPosition="top" (click)="confirmarExclusao(empresa)"></button>
-
-                    </th>
+                    <td>{{empresa.cdEmpresa}}</td>
+                      <td style="text-align: left">{{empresa.nmEmpresa}}</td>
+                      <td style="text-align: left">{{empresa.nmAbreviado}}</td>
+                      <td style="text-align: left">{{empresa.nrTelefone}}</td>
+                      <td style="text-align: left">{{empresa.enderecoCompleto}}</td>
+                      <td style="text-align: left">{{empresa.pessoContato}}</td>
+                      <td style="text-align: left">{{empresa.cnpjEmpresa}}</td>
+                      <td>
+  
+                          <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top" [routerLink]="['/cadempresa', empresa.cdEmpresa]"></a>
+                          <button pButton icon="pi pi-trash" style="margin-left: 10px" class="ui-button-danger" pTooltip="Excluir Empresa" tooltipPosition="top" (click)="confirmarExclusao(empresa)"></button>
+  
+                      </td>
                   </tr>
                 </ng-template>
               </p-table>

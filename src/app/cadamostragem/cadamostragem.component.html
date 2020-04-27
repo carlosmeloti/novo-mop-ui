@@ -22,12 +22,7 @@
 
       </div>
         </div>
-        <div class="ui-g-2 ui-fluid">
-          <br />
-          <button type="button" style="width: 200px" pButton label="Buscar Amostragem"
-            (click)="pesquisar()"></button>
-
-        </div>
+       
         <div class="ui-g-12 ui-fluid">
           <label style="display: block">Amostragem: </label>
           <input type="text" name="nmAmostragem" pInputText [(ngModel)]="amostragemSalvar.nmAmostragem" />
@@ -49,27 +44,27 @@
 
     <div class="ui-g">
       <div class="ui-g-12">
-        <p-table [value]="cadamostragem" [paginator]="true" [rows]=100 [responsive]="true" [lazy]="true"
-          [totalRecords]="tatalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+        <p-table [value]="cadamostragem" [paginator]="true" [rows]=5 [responsive]="true" 
+           #tabela>
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 120px">Codigo</th>
               <th>Empresa</th>
               <th>Amostragem</th>
-              <th style=" width: 140px"></th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-amostragem>
             <tr>
-              <th>{{amostragem.cdAmostragem}}</th>
-              <th style="text-align: left">{{amostragem.cdEmpresa.nmEmpresa}}</th>
-              <th style="text-align: left">{{amostragem.nmAmostragem}}</th>
-              <th>
+              <td>{{amostragem.cdAmostragem}}</td>
+              <td style="text-align: left">{{amostragem.cdEmpresa.nmEmpresa}}</td>
+              <td style="text-align: left">{{amostragem.nmAmostragem}}</td>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Amostragem" tooltipPosition="top"
                   [routerLink]="['/cadamostragem', amostragem.cdAmostragem]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Amostragem"
-                  tooltipPosition="top" (click)="confirmarExclusao(amostragem)"></button>
-              </th>
+                  tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(amostragem)"></button>
+              </td>
             </tr>
           </ng-template>
         </p-table>

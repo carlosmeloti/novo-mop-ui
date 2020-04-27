@@ -18,6 +18,7 @@ export class Cadamostragem {
 
 
 export class MenuEmpresa {
+  id:number;
   cdEmpresa: number;
   nmEmpresa: string;
 }
@@ -166,6 +167,10 @@ export class AppMonitoramento {
 
 export class qtd {
   qtd: number;
+}
+
+export class empresaSelecionada {
+  cdEmpresa: number;
 }
 
 export class AppAvaliacao {

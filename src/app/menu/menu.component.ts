@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'src/primeng/components/common/menuitem';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
-import { MenuEmpresa } from '../core/model';
+import { MenuEmpresa, empresaSelecionada } from '../core/model';
 import { MenuempresaService } from '../menuempresa/menuempresa.service';
+import { FormControl } from '@angular/forms';
+import { ErrorHandlerService } from '../core/error-handler.service';
+import { ToastyService } from 'ng2-toasty';
+import { ConfirmationService } from 'primeng/api';
+import { MenuService } from './menu.service';
+import { CadfrequenciaService } from '../cadfrequencia/cadfrequencia.service';
 
 
 @Component({
@@ -18,10 +24,16 @@ export class MenuComponent implements OnInit {
   empresas = [];
 
   constructor(
-    private menuempresaService: MenuempresaService,
+    private cadEmpresaService: CadempresaService,
+    private menuService: MenuService,
+    private errorHandler: ErrorHandlerService,
+    private toasty: ToastyService,
+    private confirmation: ConfirmationService,
+    private route: ActivatedRoute
   ) { }
   items: MenuItem[];
   menuSalvar = new MenuEmpresa();
+  empresaSelecionada = new empresaSelecionada();
 
   ngOnInit() {
     this.carregarEmpresas();
@@ -160,11 +172,30 @@ export class MenuComponent implements OnInit {
   }
 
   carregarEmpresas() {
-    return this.menuempresaService.listarTodas()
+    return this.cadEmpresaService.listarTodas()
       .then(empresas => {
         this.empresas = empresas.map(c => ({ label: c.cdEmpresa + " - " + c.nmEmpresa, value: c.cdEmpresa }));
       })
       //.catch(erro => this.errorHandler.handle(erro));
+  }
+
+  adicionar(form: FormControl){
+    this.menuService.adicionar(this.menuSalvar)
+      .then(() => {
+        this.toasty.success("Empresa selecionada com sucesso!");
+        form.reset();
+        this.menuSalvar = new MenuEmpresa();
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        console.log(empresaSelecionada)
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
 }

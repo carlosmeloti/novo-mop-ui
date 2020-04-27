@@ -143,7 +143,7 @@ export class CadempresaComponent implements OnInit{
     this.cadempresaService.atualizar(this.empresasSalvar)
     .then(empresa => {
       this.empresasSalvar = empresa;
-
+      this.pesquisar();
       this.toasty.success('Empresa alterada com sucesso!');
 
     })

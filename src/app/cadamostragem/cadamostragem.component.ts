@@ -1,4 +1,4 @@
-import { Cadempresa, MenuEmpresa } from './../core/model';
+import { Cadempresa, MenuEmpresa, empresaSelecionada } from './../core/model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CadamostragemService, CadamostragemFiltro } from './cadamostragem.service';
 import { LazyLoadEvent } from 'src/primeng/api';
@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-cadamostragem',
@@ -29,12 +30,16 @@ tatalRegistros = 0;
   cadamostragem = [];
 
   empresas = [];
+  empresaSelecionada2 = [];
+
+  empresaSelecionada = new MenuEmpresa();
 
 
   @ViewChild('tabela') grid;
 
   constructor(
     private cadamostragemService: CadamostragemService,
+    private menuService: MenuService,
     private cadEmpresaService: CadempresaService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
@@ -45,7 +50,7 @@ tatalRegistros = 0;
   ) { }
 
   ngOnInit() {
-
+    this.carregarEmpresaSelecionada();
     this.carregarEmpresas();
     const codigoAmostragem = this.route.snapshot.params['codigo'];
 
@@ -55,6 +60,21 @@ tatalRegistros = 0;
     }
   }
 
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.pesquisar2(this.empresaSelecionada.cdEmpresa);
+        console.log(this.empresaSelecionada.cdEmpresa)
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  pesquisar2(cdEmpresa) {
+    this.cadamostragemService.pesquisar2(cdEmpresa)
+      .then(empresaSelecionada =>  this.cadamostragem  = empresaSelecionada);
+  }
+     
   get editando() {
     return Boolean(this.amostragemSalvar.cdAmostragem)
   }

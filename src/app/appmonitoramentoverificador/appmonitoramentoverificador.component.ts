@@ -15,7 +15,7 @@ import { AppMonitoramentoVerificador } from '../core/model';
 export class AppmonitoramentoverificadorComponent {
 
   monitoramentos = [];
-  verificadordoMonitoramentoTabela = [];
+  verificadordoMonitoramentoTabela: any;
   appMonitoramentoVerificadorSalvar = new AppMonitoramentoVerificador();
 
   @ViewChild('tabela') grid;
@@ -30,6 +30,10 @@ export class AppmonitoramentoverificadorComponent {
 
   ngOnInit() {
     this.carregarMonitoramentos();
+  }
+
+  onRowEditInit(verificadordoMonitoramentoTabela) {
+    console.log('Row edit initialized');
   }
 
   carregarMonitoramentos() {

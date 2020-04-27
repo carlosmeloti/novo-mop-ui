@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CadtipodemetodoFiltro, CadtipodemetodoService } from './cadtipodemetodo.service';
-import { Cadtipodemetodo } from '../core/model';
+import { Cadtipodemetodo, MenuEmpresa } from '../core/model';
 import { LazyLoadEvent } from 'src/primeng/api';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-cadtipodemetodo',
@@ -26,9 +27,13 @@ export class CadtipodemetodoComponent {
   @ViewChild('tabela') grid;
 
   cadtipodemetodo = []
+  
+  
+  empresaSelecionada = new MenuEmpresa();
 
   constructor(
     private cadtipodemetodoService: CadtipodemetodoService,
+    private menuService: MenuService,
     private cadEmpresaService: CadempresaService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
@@ -39,7 +44,7 @@ export class CadtipodemetodoComponent {
   ngOnInit() {
 
     //console.log(this.route.snapshot.params['codigo']);
-    this.carregarEmpresas();
+    this.carregarEmpresaSelecionada();
     const codigoTipoDeMetodo = this.route.snapshot.params['codigo'];
 
     //se houver um id entra no metodo de carregar valores
@@ -60,6 +65,21 @@ export class CadtipodemetodoComponent {
         this.tipodemetodoSalvar = tipodemetodo;
       })
       .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.pesquisar2(this.empresaSelecionada.cdEmpresa);
+        console.log(this.empresaSelecionada.cdEmpresa)
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  pesquisar2(cdEmpresa) {
+    this.cadtipodemetodoService.pesquisar2(cdEmpresa)
+      .then(empresaSelecionada =>  this.cadtipodemetodo  = empresaSelecionada);
   }
 
 

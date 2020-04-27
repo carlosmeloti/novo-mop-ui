@@ -10,17 +10,7 @@
           <input type="text" [readonly]="true" name="codigo" pInputText style="width: 50px"
             [(ngModel)]="tipodemetodoSalvar.cdTipoDeMetodo" />
         </div>
-        <div class="ui-g-3 ui-fluid">
-          <label>Empresa</label>
-          <p-dropdown name="empresa" [options]="empresas" [autoWidth]="false" placeholder= "Selecione a empresa" 
-          [(ngModel)]="tipodemetodoSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>
-        </div>
-        <div class="ui-g-2 ui-fluid">
-          <br />
-          <button type="button" style="width: 200px" pButton label="Buscar Tipos de Método"
-            (click)="pesquisar()"></button>
-
-        </div>
+        
         <div class="ui-g-12 ui-fluid">
           <label style="display: block">Tipo de Método: </label>
           <input type="text" name="tipometodo" pInputText [(ngModel)]="tipodemetodoSalvar.nmTipoDeMetodo" />
@@ -51,7 +41,7 @@
     <div class="ui-g">
       <div class="ui-g-12">
 
-        <p-table [value]="cadtipodemetodo" [paginator]="true" [rows]="100" [responsive]="true" [lazy]="true"
+        <p-table [value]="cadtipodemetodo" [paginator]="true" [rows]="5" [responsive]="true" 
           [totalRecords]="tatalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
 
           <ng-template pTemplate="header">
@@ -59,20 +49,20 @@
               <th style="width: 70px">Codigo</th>
               <th>Empresa</th>
               <th>Tipo de Método</th>
-              <th style=" width: 140px"></th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-tipodemetodo>
             <tr>
-              <th>{{tipodemetodo.cdTipoDeMetodo}}</th>
-              <th>{{tipodemetodo.cdEmpresa.nmEmpresa}}</th>
-              <th style="text-align: left">{{tipodemetodo.nmTipoDeMetodo}}</th>
-              <th>
+              <td>{{tipodemetodo.cdTipoDeMetodo}}</td>
+              <td style="text-align: left">{{tipodemetodo.cdEmpresa.nmEmpresa}}</td>
+              <td style="text-align: left">{{tipodemetodo.nmTipoDeMetodo}}</td>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Tipo de Metodo" tooltipPosition="top"
                   [routerLink]="['/cadtipodemetodo', tipodemetodo.cdTipoDeMetodo]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Tipo de Metodo"
-                  tooltipPosition="top" (click)="confirmarExclusao(tipodemetodo)"></button>
-              </th>
+                  tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(tipodemetodo)"></button>
+              </td>
             </tr>
           </ng-template>
         </p-table>

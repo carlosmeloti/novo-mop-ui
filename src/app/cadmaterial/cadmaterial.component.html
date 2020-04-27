@@ -9,13 +9,7 @@
           <label style="display: block">Código: {{ editando ? ' - Editando - ' : '' }} </label>
           <input type="text" name="codigo" [readonly]="true" style="width: 50px" [(ngModel)]="materialSalvar.cdMaterial" />
         </div>
-        <div class="ui-g-3 ui-fluid">
-          <label>Empresa</label>
-          <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
-
-          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="materialSalvar.cdEmpresa.cdEmpresa">
-          </p-selectButton>
-        </div>
+        
         <div class="ui-g-12 ui-fluid">
           <label style="display: block">Material: </label>
           <input type="text" name="nmmaterial" pInputText [(ngModel)]="materialSalvar.nmMaterial" />
@@ -45,26 +39,28 @@
     </div>
     <div class="ui-g">
       <div class="ui-g-12">
-        <p-table [value]="cadmaterial" [paginator]="true" [rows]="filtro.size" [responsive]="true" [lazy]="true"
+        <p-table [value]="cadmaterial" [paginator]="true" [rows]="5" [responsive]="true" 
           [totalRecords]="tatalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
 
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 70px">Codigo</th>
+              <th>Empresa</th>
               <th>Material</th>
-              <th style=" width: 140px"></th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-material>
             <tr>
-              <th>{{material.cdMaterial}}</th>
-              <th style="text-align: left">{{material.nmMaterial}}</th>
-              <th>
+              <td>{{material.cdMaterial}}</td>
+              <td>{{material.cdEmpresa.nmEmpresa}}</td>
+              <td style="text-align: left">{{material.nmMaterial}}</td>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Material" tooltipPosition="top"
                   [routerLink]="['/cadmaterial', material.cdMaterial]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Material"
-                  tooltipPosition="top" (click)="confirmarExclusao(material)"></button>
-              </th>
+                  tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(material)"></button>
+              </td>
             </tr>
           </ng-template>
         </p-table>

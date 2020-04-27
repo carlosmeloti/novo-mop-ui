@@ -17,6 +17,22 @@ export class CadmaterialService {
 
   constructor(private http: Http) { }
 
+  pesquisar2(cdEmpresa: any): Promise<any> {
+
+    const params = new URLSearchParams;
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    
+      params.set('cdEmpresa', cdEmpresa);
+    
+    return this.http.get(`${this.cadmaterialURL}?cdEmpresa=${cdEmpresa}`, { headers})
+    .toPromise()
+    .then(response => response.json().content)
+
+
+  };
+
   pesquisar(filtro: CadmaterialFiltro): Promise<any> {
 
     const params = new URLSearchParams;
@@ -29,7 +45,7 @@ export class CadmaterialService {
 
   }
 
-    return this.http.get(`${this.cadmaterialURL}?resumo`, {  headers, search: filtro })
+    return this.http.get(`${this.cadmaterialURL}`, {  headers, search: filtro })
     .toPromise()
       .then(response => {
 

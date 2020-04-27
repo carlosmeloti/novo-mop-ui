@@ -14,6 +14,22 @@ export class CadtipodemetodoService {
 
   constructor(private http: Http) { }
 
+  pesquisar2(cdEmpresa: any): Promise<any> {
+
+    const params = new URLSearchParams;
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    
+      params.set('cdEmpresa', cdEmpresa);
+    
+    return this.http.get(`${this.cadtipodemetodoURL}?cdEmpresa=${cdEmpresa}`, { headers})
+    .toPromise()
+    .then(response => response.json().content)
+
+
+  };
+
   pesquisar(filtro: CadtipodemetodoFiltro): Promise<any> {
 
     const params = new URLSearchParams;

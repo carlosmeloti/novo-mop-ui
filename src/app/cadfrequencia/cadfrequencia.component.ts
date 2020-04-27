@@ -4,10 +4,12 @@ import { CadfrequenciaFiltro, CadfrequenciaService } from './cadfrequencia.servi
 import { LazyLoadEvent } from 'src/primeng/api';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
-import { Cadfrequencia } from '../core/model';
+import { Cadfrequencia, MenuEmpresa } from '../core/model';
 import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
+import { MenuModule } from 'src/primeng/menu';
+import { MenuService } from '../menu/menu.service';
 
 
 @Component({
@@ -22,30 +24,17 @@ export class CadfrequenciaComponent {
   nmFrequencia: string;
   frequenciaSalvar = new Cadfrequencia();
 
-  
- 
-  
- 
-
- // teste2 = this.teste.cdEmpresa;
-  
-
-  
-  /*empresas = [
-    {
-      label: this.teste2.nmEmpresa,
-      value: this.teste2.cdEmpresa
-    }
-  ];*/
   @ViewChild('tabela') grid;
 
   cadfrequencia=[]
+
+  
+  empresaSelecionada = new MenuEmpresa();
   
 
   constructor(
-    private cadEmpresaService: CadempresaService,
     private cadfrequenciaService: CadfrequenciaService,
-    
+    private menuService: MenuService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
     private errorHandler: ErrorHandlerService,
@@ -55,12 +44,9 @@ export class CadfrequenciaComponent {
   ){}
 
   ngOnInit() {
-    //console.log(this.route.snapshot.params['codigo']);
-
-    //this.carregarEmpresas();
-
+    console.log(this.route.snapshot.params['codigo']);
+    this.carregarEmpresaSelecionada();
     const codigoFrequencia = this.route.snapshot.params['codigo'];
-
     //se houver um id entra no metodo de carregar valores
     if(codigoFrequencia){
       this.carregarFrequencia(codigoFrequencia);
@@ -80,6 +66,21 @@ export class CadfrequenciaComponent {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.pesquisar2(this.empresaSelecionada.cdEmpresa);
+        console.log(this.empresaSelecionada.cdEmpresa)
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  pesquisar2(cdEmpresa) {
+    this.cadfrequenciaService.pesquisar2(cdEmpresa)
+      .then(empresaSelecionada =>  this.cadfrequencia  = empresaSelecionada);
+  }
+
   pesquisar(){
 
     const filtro: CadfrequenciaFiltro = {
@@ -88,16 +89,6 @@ export class CadfrequenciaComponent {
     this.cadfrequenciaService.pesquisar(filtro)
       .then(frequencia => this.cadfrequencia = frequencia)
       .catch(erro => this.errorHandler.handle(erro));
-
-   // this.filtro.page = page;
-
-   // this.cadfrequenciaService.pesquisar(this.filtro)
-   //   .then(resultado => {
-   //     this.tatalRegistros = resultado.total;
-   //     this.cadfrequencia = resultado.cadfrequencia;
-
-  //    })
-  //    .catch(erro => this.errorHandler.handle(erro));
   }
   aoMudarPagina(event: LazyLoadEvent) {
     const page = event.first / event.rows;

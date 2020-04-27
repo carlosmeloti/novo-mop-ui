@@ -1,13 +1,14 @@
 import { CadempresaService } from './../cadempresa/cadempresa.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CadmaterialFiltro, CadmaterialService } from './cadmaterial.service';
-import { Cadmaterial } from '../core/model';
+import { Cadmaterial, MenuEmpresa } from '../core/model';
 import { LazyLoadEvent } from 'src/primeng/api';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-cadmaterial',
@@ -20,6 +21,7 @@ export class CadmaterialComponent {
   filtro = new CadmaterialFiltro();
   nmmaterial: string;
 
+  empresaSelecionada = new MenuEmpresa();
   materialSalvar = new Cadmaterial();
   empresas = [];
   @ViewChild('tabela') grid;
@@ -28,6 +30,7 @@ export class CadmaterialComponent {
 
   constructor(
     private cadmaterialService: CadmaterialService,
+    private menuService: MenuService,
     private cadEmpresaService: CadempresaService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
@@ -37,7 +40,7 @@ export class CadmaterialComponent {
 
   ngOnInit() {
     //console.log(this.route.snapshot.params['codigo']);
-    this.carregarEmpresas();
+    this.carregarEmpresaSelecionada();
     const codigoMaterial = this.route.snapshot.params['codigo'];
 
     //se houver um id entra no metodo de carregar valores
@@ -48,6 +51,21 @@ export class CadmaterialComponent {
 
   get editando() {
     return Boolean(this.materialSalvar.cdMaterial)
+  }
+
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.pesquisar2(this.empresaSelecionada.cdEmpresa);
+        console.log(this.empresaSelecionada.cdEmpresa)
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  pesquisar2(cdEmpresa) {
+    this.cadmaterialService.pesquisar2(cdEmpresa)
+      .then(empresaSelecionada =>  this.cadmaterial  = empresaSelecionada);
   }
 
   //Metodo para carregar valores

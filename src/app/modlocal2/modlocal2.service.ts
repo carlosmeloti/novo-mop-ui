@@ -5,6 +5,7 @@ import { Modlocal2 } from '../core/model';
 
 
 export class Modlocal2Filtro {
+  cdEmpresa: any;
   nmLocal2: string;
   cdLocal1: any;
 }

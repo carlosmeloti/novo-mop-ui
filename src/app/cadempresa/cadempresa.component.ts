@@ -112,7 +112,7 @@ export class CadempresaComponent implements OnInit{
 
         confirmarSalvar(empresa: any) {
           this.confirmation.confirm( {
-            message: 'Tem certeza que deseja salvar?',
+            message: 'Tem certeza que deseja salvar? - Os dados para a nova empresa serão carregados!',
             accept: () =>{
               this.adicionarEmpresa(empresa);
             }
@@ -134,7 +134,7 @@ export class CadempresaComponent implements OnInit{
         this.toasty.success("Empresa cadastrada com sucesso!");
         form.reset();
         this.empresasSalvar = new Cadempresa();
-        this.pesquisar();
+        this.refresh();
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -143,11 +143,15 @@ export class CadempresaComponent implements OnInit{
     this.cadempresaService.atualizar(this.empresasSalvar)
     .then(empresa => {
       this.empresasSalvar = empresa;
-      this.pesquisar();
+      
       this.toasty.success('Empresa alterada com sucesso!');
-
+      this.refresh();
     })
   .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   }

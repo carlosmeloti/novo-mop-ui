@@ -6,21 +6,22 @@ import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { Modlocal2Filtro, Modlocal2Service } from './modlocal2.service';
-import { Modlocal2 } from '../core/model';
+import { Modlocal2, MenuEmpresa } from '../core/model';
 import { Modlocal1Service } from '../modlocal1/modlocal1.service';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-modlocal2',
   templateUrl: './modlocal2.component.html',
   styleUrls: ['./modlocal2.component.css']
 })
-export class Modlocal2Component  {
+export class Modlocal2Component {
 
   tatalRegistros = 0;
   filtro = new Modlocal2Filtro();
   cdLocal1: number;
   nmLocal2: string;
-
+  empresaSelecionada = new MenuEmpresa();
   modLocal2Salvar = new Modlocal2();
 
   empresas = [
@@ -34,6 +35,7 @@ export class Modlocal2Component  {
 
   constructor(
     private modLocal1Service: Modlocal1Service,
+    private menuService: MenuService,
     private modLocal2Service: Modlocal2Service,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
@@ -67,16 +69,21 @@ export class Modlocal2Component  {
   }
 
   pesquisarModlocal1() {
-
-    const filtro: Modlocal2Filtro = {
-      cdLocal1: this.modLocal2Salvar.cdLocal1.cdLocal1,
-      nmLocal2: this.modLocal2Salvar.nmLocal2
-    }
-    this.modLocal2Service.pesquisarModlocal1(filtro)
-      .then(modlocal2 => this.modlocal2 = modlocal2);
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        const filtro: Modlocal2Filtro = {
+          cdEmpresa: this.empresaSelecionada.cdEmpresa,
+          cdLocal1: this.modLocal2Salvar.cdLocal1.cdLocal1,
+          nmLocal2: this.modLocal2Salvar.nmLocal2
+        }
+        this.modLocal2Service.pesquisarModlocal1(filtro)
+          .then(modlocal2 => this.modlocal2 = modlocal2);
+        console.log(this.empresaSelecionada.cdEmpresa)
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
- 
   aoMudarPagina(event: LazyLoadEvent) {
     const page = event.first / event.rows;
 

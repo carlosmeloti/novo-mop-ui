@@ -3,7 +3,7 @@ import { SelectItem, TreeNode, LazyLoadEvent, ConfirmationService } from 'primen
 import { NodeService } from 'src/service/nodeservice';
 import { Modlocal1Service } from '../modlocal1/modlocal1.service';
 import { ErrorHandlerService } from '../core/error-handler.service';
-import { Modlocal3 } from '../core/model';
+import { Modlocal3, MenuEmpresa } from '../core/model';
 import { Modlocal3Filtro, UnidadelocalsublocalService, subLocalFiltro, Filtro3 } from './unidadelocalsublocal.service';
 import { Modlocal2Service } from '../modlocal2/modlocal2.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +11,7 @@ import { CadempresaService } from '../cadempresa/cadempresa.service';
 import { ToastyService } from 'ng2-toasty';
 import { FormControl } from '@angular/forms';
 import {ListboxModule} from 'primeng/listbox';
+import { MenuService } from '../menu/menu.service';
 
 
 
@@ -37,7 +38,7 @@ export class UnidadelocalsublocalComponent implements OnInit {
   filtro2 = new subLocalFiltro();
   filtro3 = new Filtro3();
   cdLocal1:number;
-
+  empresaSelecionada = new MenuEmpresa();
   cdLocal2: number;
   nmLocal3: string;
 
@@ -50,21 +51,13 @@ export class UnidadelocalsublocalComponent implements OnInit {
 
   modlocal1 = [];
   modlocal2 = [];
-  modlocalFOD = [];
-  modlocalFOA = [];
-  modlocalPEO = [];
-  modlocalPATRANS = [];
-  modlocalINFRA = [];
-  modlocalMON = [];
-  modlocalACAM = [];
-  modlocalESCRI = [];
-  modlocalENTOR = [];
   modlocal3 = [];
 
 
 
   constructor(
     private nodeService: NodeService,
+    private menuService: MenuService,
     private cadEmpresaService: CadempresaService,
     private modLocal1Service: Modlocal1Service,
     private modLocal2Service: Modlocal2Service,
@@ -80,20 +73,12 @@ export class UnidadelocalsublocalComponent implements OnInit {
   ngOnInit() {
     this.nodeService.getFiles().then(files => this.files = files);
     this.carregarUnidadeDeAvaliacao();
-    
-    
-   
-  
     this.carregarEmpresas();
-    
-
     const codigoModlocal3 = this.route.snapshot.params['codigo'];
-
     //se houver um id entra no metodo de carregar valores
-    if (codigoModlocal3) {
-      this.carregarModlocal3(codigoModlocal3);
-    }
-
+      if (codigoModlocal3) {
+        this.carregarModlocal3(codigoModlocal3);
+      }
   }
 
   get editando() {
@@ -118,20 +103,22 @@ export class UnidadelocalsublocalComponent implements OnInit {
          this.carregarLocal2(this.cdLocal1);
   }
 
-
   pesquisarSubLocal() {
-
-    const filtro2: subLocalFiltro = {
-      cdLocal1: this.cdLocal1,
-      cdLocal2: this.cdLocal2,
-      nmLocal3: this.nmLocal3
-    }
-    this.unidadelocalsublocalService.pesquisarSubLocal(filtro2)
-      .then(modlocal3 => this.modlocal3 = modlocal3);
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        const filtro2: subLocalFiltro = {
+          cdEmpresa: this.empresaSelecionada.cdEmpresa,
+          cdLocal1: this.cdLocal1,
+          cdLocal2: this.cdLocal2,
+          nmLocal3: this.nmLocal3
+        }
+        this.unidadelocalsublocalService.pesquisarSubLocal(filtro2)
+          .then(modlocal3 => this.modlocal3 = modlocal3);
+        console.log(this.empresaSelecionada.cdEmpresa)
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
-
-
-
 
   carregarUnidadeDeAvaliacao() {
     return this.modLocal1Service.listarTodas()

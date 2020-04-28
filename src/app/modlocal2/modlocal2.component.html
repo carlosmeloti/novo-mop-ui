@@ -10,19 +10,6 @@
           <input type="text" name="codigo" pInputText style="width: 50px" [(ngModel)]="modLocal2Salvar.cdLocal2" />
         </div>
 
-        <div class="ui-g-3 ui-fluid">
-          <label>Empresa</label>
-          <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
-
-          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="modLocal2Salvar.cdEmpresa.cdEmpresa">
-          </p-selectButton>
-        </div>
-
-        <div class="ui-g-9 ui-fluid">
-
-        </div>
-
-
         <div class="ui-g-4 ui-fluid">
           <label>Unidade de Avaliação</label>
           <p-dropdown name="modlocal1" [options]="modlocal1" placeholder="Selecione" [autoWidth]="false"
@@ -64,19 +51,23 @@
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 70px">Codigo</th>
+              <th>Empresa</th>
               <th>Unidade de Avaliação</th>
-              <th style=" width: 140px"></th>
+              <th>LocaL de Avaliação</th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-modlocal2>
             <tr>
               <th>{{modlocal2.cdLocal2}}</th>
+              <th style="text-align: left">{{modlocal2.cdEmpresa.nmEmpresa}}</th>
+              <th style="text-align: left">{{modlocal2.cdLocal1.nmlocal1}}</th>
               <th style="text-align: left">{{modlocal2.nmLocal2}}</th>
               <th>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top"
                   [routerLink]="['/modlocal2', modlocal2.cdLocal2]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Unidade de Avaliação"
-                  tooltipPosition="top" (click)="confirmarExclusao(modlocal2)"></button>
+                  tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(modlocal2)"></button>
               </th>
             </tr>
           </ng-template>

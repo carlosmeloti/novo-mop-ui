@@ -38,33 +38,18 @@
           <label style="display: block">Código: </label>
           <input type="text" name="codigo" pInputText style="width: 50px" [(ngModel)]="modLocal3Salvar.cdLocal3" />
         </div>
-        <div class="ui-g-3 ui-fluid">
-          <label>Empresa</label>
-          <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
-
-          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="modLocal3Salvar.cdEmpresa.cdEmpresa">
-          </p-selectButton>
-        </div>
-        <div class="ui-g-9 ui-fluid"></div>
+        
 
         <div class="ui-g-12 ui-fluid">
           <label style="display: block">Sublocal: </label>
           <input type="text" name="local3" pInputText [(ngModel)]="modLocal3Salvar.nmLocal3" />
         </div>
 
-
-        <div class="ui-g-8">
-
-        </div>
-
         <div class="ui-g-2 ui-fluid">
           <br />
           <button pButton type="submit" label="Salvar" class="ui-button-raised ui-button-success"></button>
         </div>
-        <div class="ui-g-2 ui-fluid">
-          <br />
-          <button pButton type="button" label="Excluir" class="ui-button-raised ui-button-danger"></button>
-        </div>
+        
 
         <div *ngIf="editando" class="ui-g-2 ui-fluid ">
 
@@ -81,20 +66,26 @@
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 70px">Codigo</th>
+              <th>Empresa</th>
+              <th >Unidade de Avaliação</th>
+              <th>Local de Avaliação</th>
               <th>Sublocal</th>
-              <th style=" width: 140px"></th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-modlocal3>
             <tr>
-              <th>{{modlocal3.cdLocal3}}</th>
-              <th style="text-align: left">{{modlocal3.nmLocal3}}</th>
-              <th>
+              <td>{{modlocal3.cdLocal3}}</td>
+              <td>{{modlocal3.cdEmpresa.nmEmpresa}}</td>
+              <td>{{modlocal3.cdLocal1.nmlocal1}}</td>
+              <td>{{modlocal3.cdLocal2.nmLocal2}}</td>
+              <td style="text-align: left">{{modlocal3.nmLocal3}}</td>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top"
                   [routerLink]="['/unidadelocalsublocal', modlocal3.cdLocal3]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Empresa"
-                  tooltipPosition="top" (click)="confirmarExclusao(modlocal3)"></button>
-              </th>
+                  tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(modlocal3)"></button>
+              </td>
             </tr>
           </ng-template>
         </p-table>

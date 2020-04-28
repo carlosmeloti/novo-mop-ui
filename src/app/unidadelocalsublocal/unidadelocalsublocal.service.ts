@@ -21,7 +21,8 @@ export class Filtro3{
 export class subLocalFiltro{
   nmLocal3: string;
   cdLocal1: number;
-  cdLocal2: number
+  cdLocal2: number;
+  cdEmpresa: number;
 }
 
 @Injectable()

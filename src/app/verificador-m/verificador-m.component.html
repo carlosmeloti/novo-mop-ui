@@ -73,21 +73,21 @@
               <th style="width: 70px">Cód. Alf.</th>
               <th style="width: 70px">Graco. co. </th>
               <th>Verificador</th>
-              <th style=" width: 140px"></th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-verificador>
             <tr>
-              <th>{{verificador.cdVerificador}}</th>
-              <th>{{verificador.codalfa}}</th>
-              <th>{{verificador.p01_graco}}</th>
-              <th style="text-align: left">{{verificador.nmverificador}}</th>
-              <th>
+              <td>{{verificador.cdVerificador}}</td>
+              <td>{{verificador.codalfa}}</td>
+              <td>{{verificador.p01_graco}}</td>
+              <td style="text-align: left">{{verificador.nmverificador}}</td>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Verificador" tooltipPosition="top"
                   [routerLink]="['/verificador_m', verificador.codigo]"></a>
-                <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Verificador"
+                <button pButton icon="pi pi-trash" class="ui-button-danger" style="margin-left: 10px" pTooltip="Excluir Verificador"
                   tooltipPosition="top"></button>
-              </th>
+              </td>
             </tr>
           </ng-template>
         </p-table>

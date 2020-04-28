@@ -4426,6 +4426,74 @@ INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 17);
   END $$
   DELIMITER ;
 
+  -- // empresaLocal1 // --
+
+  DELIMITER $$
+  CREATE PROCEDURE mopapi.empresalocal1 ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmlocal1 varchar(200);
+  DECLARE cursorInsereEmpresaLocal1  CURSOR FOR select d03_nmlocal1 from d03_local1_m where d03_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaLocal1;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaLocal1 INTO nmlocal1;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d03_local1_m (`d03_cdempresa`,`d03_nmlocal1`) VALUES(idEmpresa, nmlocal1);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+  -- // empresaLocal2 // --
+
+   DELIMITER $$
+  CREATE PROCEDURE mopapi.empresalocal2 ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmlocal2 varchar(200);
+  DECLARE cdlocal1 INT DEFAULT 0;
+  DECLARE cursorInsereEmpresaLocal2  CURSOR FOR select d04_nmlocal2, d04_cdlocal1 from d04_local2_m where d04_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaLocal2;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaLocal2 INTO nmlocal2, cdlocal1;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d04_local2_m (`d04_cdempresa`,`d04_cdlocal1`, `d04_nmlocal2`) VALUES(idEmpresa, cdlocal1,nmlocal2);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+-- // empresaLocal3 // --
+
+DELIMITER $$
+  CREATE PROCEDURE mopapi.empresalocal3 ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmlocal3 varchar(200);
+  DECLARE cdlocal1 INT DEFAULT 0;
+  DECLARE cdlocal2 INT DEFAULT 0;
+  DECLARE cursorInsereEmpresaLocal3  CURSOR FOR select d05_nmlocal3, d05_cdlocal1, d05_cdlocal2 from d05_local3_m where d05_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaLocal3;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaLocal3 INTO nmlocal3, cdlocal1, cdlocal2;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d05_local3_m (`d05_cdempresa`,`d05_cdlocal1`, `d05_cdlocal2`,`d05_nmlocal3`) VALUES(idEmpresa, cdlocal1, cdlocal2,nmlocal3);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
 
 
 DROP TRIGGER IF EXISTS Tgr_d24_empresa_populaparaempresa;
@@ -4438,6 +4506,9 @@ BEGIN
   CALL empresaamostragem();
   CALL empresafrequencia();
   CALL empresamaterial();
+  CALL empresalocal1();
+  CALL empresalocal2();
+  CALL empresalocal3();
 END$
 
 

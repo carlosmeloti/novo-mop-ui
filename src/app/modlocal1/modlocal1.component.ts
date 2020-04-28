@@ -6,8 +6,9 @@ import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Modlocal1 } from 'src/app/core/model';
+import { Modlocal1, MenuEmpresa } from 'src/app/core/model';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-modlocal1',
@@ -18,7 +19,7 @@ export class Modlocal1Component implements OnInit {
 
   tatalRegistros = 0;
   filtro = new Modlocal1Filtro();
-
+  empresaSelecionada = new MenuEmpresa();
 
   modLocal1Salvar = new Modlocal1();
   empresas = [];
@@ -29,6 +30,7 @@ export class Modlocal1Component implements OnInit {
 
   constructor(
     private modLocal1Service: Modlocal1Service,
+    private menuService: MenuService,
     private cadEmpresaService: CadempresaService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
@@ -38,7 +40,7 @@ export class Modlocal1Component implements OnInit {
 
   ngOnInit() {
     //console.log(this.route.snapshot.params['codigo']);
-    this.carregarEmpresas();
+    this.carregarEmpresaSelecionada();
     const codigoModlocal1 = this.route.snapshot.params['codigo'];
     const cdempresaModlocal1 = this.route.snapshot.params['cdempresa'];
 
@@ -50,6 +52,21 @@ export class Modlocal1Component implements OnInit {
 
   get editando() {
     return Boolean(this.modLocal1Salvar.cdLocal1)
+  }
+
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.pesquisar2(this.empresaSelecionada.cdEmpresa);
+        console.log(this.empresaSelecionada.cdEmpresa)
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  pesquisar2(cdEmpresa) {
+    this.modLocal1Service.pesquisar2(cdEmpresa)
+      .then(empresaSelecionada =>  this.modlocal1  = empresaSelecionada);
   }
 
   //Metodo para carregar valores

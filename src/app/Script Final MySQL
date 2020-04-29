@@ -4407,24 +4407,50 @@ INSERT INTO usuario_permissao (codigo_usuario, codigo_permissao) values (2, 17);
 -- // empresap01verificador // --
   
   DELIMITER $$
-  CREATE PROCEDURE mopapi.empresap01verificador ()
+  CREATE PROCEDURE mopapi.empresaverificadormodelo ()
   BEGIN
   DECLARE idEmpresa INT DEFAULT 0;
   DECLARE existe_mais_linhas INT DEFAULT 0;
-  DECLARE nmverificador varchar(200);
-  DECLARE cursorInsereEmpresap01verificador  CURSOR FOR select p01_nmverificador from p01_verificador_m where p01_cdempresa = 1;
+  DECLARE cdverificador INT DEFAULT 0;
+  DECLARE cdtipodeverificador INT DEFAULT 0;
+  DECLARE codalfa varchar(200);
+  DECLARE cdnivelavaliacao INT DEFAULT 0;
+  DECLARE nmverificador varchar(1000);
+  DECLARE limiar varchar(100);
+  DECLARE graco NUMERIC(5,2);
+  DECLARE cursorInsereverificadormodelo  CURSOR FOR 
+  select p01_cdverificador, p01_cdtipoverificador, p01_codalfa, p01_cdnivelavaliacao, p01_nmverificador,
+  p01_limiar, p01_graco  from p01_verificador_m where p01_cdempresa = 1;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
   select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
-  OPEN cursorInsereEmpresap01verificador;
+  OPEN cursorInsereverificadormodelo;
   meuLoop: LOOP
-  FETCH cursorInsereEmpresap01verificador INTO nmverificador;
+  FETCH cursorInsereverificadormodelo 
+  INTO cdverificador, cdtipodeverificador,codalfa, cdnivelavaliacao, nmverificador,limiar,graco;
   IF existe_mais_linhas = 1 THEN
   LEAVE meuLoop;
   END IF;
-  INSERT INTO d09_material_m (`d09_cdempresa`,`d09_nmmaterial`) VALUES(idEmpresa, nmmaterial);
+  INSERT INTO `mopapi`.`p01_verificador_m`
+(`p01_cdempresa`,
+`p01_cdverificador`,
+`p01_cdtipoverificador`,
+`p01_codalfa`,
+`p01_cdnivelavaliacao`,
+`p01_nmverificador`,
+`p01_limiar`,
+`p01_graco`)
+VALUES
+(idEmpresa,
+cdverificador,
+cdtipodeverificador,
+codalfa,
+cdnivelavaliacao,
+nmverificador,
+limiar,
+graco);
   END LOOP meuLoop;
   END $$
-  DELIMITER ;
+DELIMITER ;
 
   -- // empresaLocal1 // --
 
@@ -4509,6 +4535,7 @@ BEGIN
   CALL empresalocal1();
   CALL empresalocal2();
   CALL empresalocal3();
+  CALL empresaverificadormodelo();
 END$
 
 

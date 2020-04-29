@@ -5,6 +5,7 @@ import { Http, Headers } from '@angular/http';
 export class CadverificadorFiltro{
   
   cdTipoDeVerificador: any;
+  cdEmpresa: any;
  // nmTipoDeVerificador: string;
 
 }

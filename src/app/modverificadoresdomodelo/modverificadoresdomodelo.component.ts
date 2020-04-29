@@ -47,6 +47,7 @@ export class ModverificadoresdomodeloComponent  {
   modNivel2 = [];
   modNivel3 = [];
   modNivel4 = [];
+  groupname: string[] = ['val1','val2']; 
   @ViewChild('tabela') grid;
 
   constructor(

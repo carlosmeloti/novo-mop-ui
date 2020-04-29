@@ -3,9 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { VerificadorMService, CadverificadorFiltro } from './verificador-m.service';
-import { Verificador_m } from '../core/model';
+import { Verificador_m, MenuEmpresa } from '../core/model';
 import { ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
+import { MenuService } from '../menu/menu.service';
 
 
 
@@ -25,12 +26,14 @@ export class VerificadorMComponent implements OnInit {
 
   verificadorMSalvar = new Verificador_m;
 
+  empresaSelecionada = new MenuEmpresa();
 
   filtro = new CadverificadorFiltro;
 
   @ViewChild('tabela') grid;
   constructor(
     private verificadorMService: VerificadorMService,
+    private menuService: MenuService,
     private toasty: ToastyService,
     private tipoDeVerificadores: CadtipodeverificadorService,
     private errorHandler: ErrorHandlerService,
@@ -57,17 +60,19 @@ export class VerificadorMComponent implements OnInit {
   }
 
   pesquisar() {
-
-    const filtro: CadverificadorFiltro = {
-      cdTipoDeVerificador: this.verificadorMSalvar.cdTipoDeVerificador
-     // nmTipoDeVerificador: this.verificadorMSalvar.cdTipoDeVerificador.nmTipoDeVerificador,
-      
-    }
-    this.verificadorMService.pesquisar(filtro)
-      .then(verificadorm => this.verificadorm = verificadorm);
-  
-  
-    }
+    return this.menuService.carregarEmpresaSelecionada()
+    .then(empresaSelecionada => {
+      this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+      const filtro: CadverificadorFiltro = {
+        cdEmpresa: this.empresaSelecionada.cdEmpresa,
+        cdTipoDeVerificador: this.verificadorMSalvar.cdTipoDeVerificador
+      }
+      this.verificadorMService.pesquisar(filtro)
+        .then(modlocal2 => this.verificadorm = modlocal2);
+      console.log(this.empresaSelecionada.cdEmpresa)
+    })
+    .catch(erro => this.errorHandler.handle(erro));
+  }
 
   carregarTipoDeVerificadores() {
     return this.tipoDeVerificadores.listarTodas()

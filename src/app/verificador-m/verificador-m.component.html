@@ -70,15 +70,17 @@
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 70px">Cód. Ver.</th>
+              <th style="width: 220px">Empresa.</th>
               <th style="width: 70px">Cód. Alf.</th>
               <th style="width: 70px">Graco. co. </th>
               <th>Verificador</th>
               <th style=" width: 110px"></th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-verificador>
+          <ng-template pTemplate="body" let-verificador> 
             <tr>
               <td>{{verificador.cdVerificador}}</td>
+              <td>{{verificador.cdEmpresa.nmEmpresa}}</td>
               <td>{{verificador.codalfa}}</td>
               <td>{{verificador.p01_graco}}</td>
               <td style="text-align: left">{{verificador.nmverificador}}</td>

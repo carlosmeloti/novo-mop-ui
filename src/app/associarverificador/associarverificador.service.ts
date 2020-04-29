@@ -6,6 +6,9 @@ export class CadverificadorLocalFiltro{
   nmTipoVerificador : string;
 
 }
+export class FiltroModelosPorTipo2{
+  cdTipoDeVerificador: any;
+}
 
 @Injectable()
 export class AssociarverificadorService {

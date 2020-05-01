@@ -22,6 +22,16 @@ export class MenuService {
       .then(response => response.json());
   }
 
+  carregarEmpresaSelecionadaNome(): Promise<any> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.menuempresa}/empresaselecionadanome`, { headers })
+      .toPromise()
+      .then(response => response.text());
+  }
+
   carregarEmpresaSelecionada(): Promise<any> {
     const headers = new Headers;
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
@@ -31,4 +41,7 @@ export class MenuService {
       .toPromise()
       .then(response => response.json());
   }
+
+  
+
 }

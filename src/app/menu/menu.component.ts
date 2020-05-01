@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'src/primeng/components/common/menuitem';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
-import { MenuEmpresa, empresaSelecionada } from '../core/model';
+import { MenuEmpresa, empresaSelecionada, EmpresaSelecionadaExibicao } from '../core/model';
 import { MenuempresaService } from '../menuempresa/menuempresa.service';
 import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
@@ -22,6 +22,7 @@ export class MenuComponent implements OnInit {
   cdEmpresa: number;
 
   empresas = [];
+  empresaSelecionadaExibicao= new EmpresaSelecionadaExibicao();
 
   constructor(
     private cadEmpresaService: CadempresaService,
@@ -37,6 +38,8 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.carregarEmpresas();
+    this.carregarEmpresaSelecionada();
+    
     this.items = [
       {
           label: 'Cadastro Geral',
@@ -185,17 +188,27 @@ export class MenuComponent implements OnInit {
         this.toasty.success("Empresa selecionada com sucesso!");
         form.reset();
         this.menuSalvar = new MenuEmpresa();
+        this.refresh();
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
+ 
   carregarEmpresaSelecionada() {
-    return this.menuService.carregarEmpresaSelecionada()
+    return this.menuService.carregarEmpresaSelecionadaNome()
       .then(empresaSelecionada => {
-        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
-        console.log(empresaSelecionada)
+        this.empresaSelecionadaExibicao.nmempresa = empresaSelecionada;
+        
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
+
+  
+
+  refresh(): void {
+    window.location.reload();
+  }
+
+ 
 
 }

@@ -7,7 +7,7 @@ import { ErrorHandlerService } from '../core/error-handler.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
-import { CadverificadorLocalFiltro, AssociarverificadorService, FiltroModelosPorTipo2 } from './associarverificador.service';
+import { CadverificadorLocalFiltro, AssociarverificadorService, FiltroModelosPorTipo2, FiltroLocal2 } from './associarverificador.service';
 import { VerificadorMService } from '../verificador-m/verificador-m.service';
 import { CadtipodemetodoService } from '../cadtipodemetodo/cadtipodemetodo.service';
 import { CadamostragemService } from '../cadamostragem/cadamostragem.service';
@@ -31,12 +31,12 @@ export class AssociarverificadorComponent implements OnInit {
   cadamostragem = [];
   cadfrequencia = [];
   modlocal1 = [];
-
+  modlocal2 = [];
   cadmaterial = [];
   cadmaterial2 = [];
   cadmaterial3 = [];
   cadTipoDeVerificador = [];
-
+  cdLocal1:number;
   associarVerificadorSalvar = new Verificador_Local_m;
 
 
@@ -66,15 +66,12 @@ export class AssociarverificadorComponent implements OnInit {
 
   ngOnInit() {
     this.carregarTipoVerificadores();
-   
-   // this.pesquisar();
+    this.carregarUnidadeDeAvaliacao();
     const codigoVerificadorLocalM = this.route.snapshot.params['codigo'];
-
     //  se houver um id entra no metodo de carregar valores
     if (codigoVerificadorLocalM) {
     //  this.carregarVerificadorLocalM(codigoVerificadorLocalM);
     }
-
   }
 
   carregarTipoVerificadores() {
@@ -102,6 +99,31 @@ export class AssociarverificadorComponent implements OnInit {
   //  this.carregarModelosPorTipo(this.verificadoresDoModeloSalvar.cdTipoDeVerificador.cdTipoDeVerificador);  
     this.carregarVerificadoresPorTipo(this.associarVerificadorSalvar.cdTipoDeVerificador.cdTipoDeVerificador);
    // this.carregarModNivel1();
+  }
+
+  carregarUnidadeDeAvaliacao() {
+    return this.modLocal1Service.listarTodas()
+      .then(modlocal1 => {
+        this.modlocal1 = modlocal1.map(c => ({ label: c.cdLocal1 + " - " + c.nmlocal1, value: c.cdLocal1 }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  pesquisarLocal2() {
+
+    const filtro3: FiltroLocal2 = {
+      cdLocal1: this.cdLocal1,
+     
+    }
+         this.carregarLocal2(this.cdLocal1);
+  }
+
+  carregarLocal2(cdLocal1:any) {
+    return this.modLocal2Service.listarPorLocal1(cdLocal1)
+      .then(modlocal2 => {
+        this.modlocal2 = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
 

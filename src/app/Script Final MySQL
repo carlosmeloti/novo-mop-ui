@@ -2467,9 +2467,6 @@ CREATE TABLE r15_verificador_local_m (
 	r15_txmetodologia VARCHAR(700),
 	r15_cdfrequencia BIGINT,
 	r15_cdamostragem BIGINT,
-	r15_cdmaterial1 BIGINT,
-	r15_cdmaterial2 BIGINT,
-	r15_cdmaterial3 BIGINT,
 
 PRIMARY KEY(r15_id_verificador_local),
 
@@ -2481,11 +2478,7 @@ CONSTRAINT verificador_local_local2_fk FOREIGN KEY (r15_cdlocal2) REFERENCES d04
 CONSTRAINT verificador_local_local3_fk FOREIGN KEY (r15_cdlocal3) REFERENCES d05_local3_m(d05_cdlocal3),
 CONSTRAINT verificador_local_tipodemetodo_fk FOREIGN KEY (r15_cdtipometodo) REFERENCES d07_tipo_metodo_m(d07_cdtipometodo),
 CONSTRAINT verificador_local_amostragem_fk FOREIGN KEY (r15_cdamostragem) REFERENCES d06_amostragem_m(d06_cdamostragem),
-CONSTRAINT verificador_local_frequencia_fk FOREIGN KEY (r15_cdfrequencia) REFERENCES d08_frequencia_m(d08_cdfrequencia),
-CONSTRAINT material1_fk FOREIGN KEY (r15_cdmaterial1) REFERENCES d09_material_m(d09_cdmaterial),
-CONSTRAINT material2_fk FOREIGN KEY (r15_cdmaterial2) REFERENCES d09_material_m(d09_cdmaterial),
-CONSTRAINT material3_fk FOREIGN KEY (r15_cdmaterial3) REFERENCES d09_material_m(d09_cdmaterial)
-
+CONSTRAINT verificador_local_frequencia_fk FOREIGN KEY (r15_cdfrequencia) REFERENCES d08_frequencia_m(d08_cdfrequencia)
 );
 
 

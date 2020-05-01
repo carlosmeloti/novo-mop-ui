@@ -230,6 +230,10 @@ export class AppColetaDeDados{
   txObservacao: string;
 }
 
+export class EmpresaSelecionadaExibicao{
+  nmempresa: string;
+}
+
 
 
 

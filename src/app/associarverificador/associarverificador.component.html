@@ -14,7 +14,7 @@
         </div>
         <div class="ui-g-8 ui-fluid">
             <br />
-            <button type="button" style="width: 200px" pButton label="Modelos e Verificadores" (click)="pesquisarModelosPorTipo()">
+            <button type="button" style="width: 200px" pButton label="Buscar verificadores" (click)="pesquisarModelosPorTipo()">
             </button>
         </div>
 
@@ -24,6 +24,39 @@
               [style]="{'width':'1100px'}" [(ngModel)]="associarVerificadorSalvar.r15_id_Verificador_m.codigo">
              
           </p-dropdown>
+      </div>
+
+      <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
+        <label>Unidade de Avaliação</label>
+        <p-dropdown name="modlocal1" [options]="modlocal1" placeholder="Selecione" [autoWidth]="false"
+          [(ngModel)]="cdLocal1" [showClear]="true" required></p-dropdown>
+      </div>
+      <div class="ui-g-6 ui-fluid">
+        <br>
+        <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Local"
+          (click)="pesquisarLocal2()"></button>
+      </div>
+     
+       
+      <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
+
+        <label style="display: block">Local de Avaliação: </label>
+        <p-dropdown name="modlocal2" [options]="modlocal2" placeholder="Selecione" [autoWidth]="false"
+          [(ngModel)]="cdLocal2" [showClear]="true" required></p-dropdown>
+
+      </div>
+      <div class="ui-g-6 ui-fluid">
+        <br />
+      <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Sublocal"
+      (click)="pesquisarLocal3()"></button>
+      </div>
+
+      <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
+
+        <label style="display: block">Sublocal: </label>
+        <p-dropdown name="modlocal3" [options]="modlocal3" placeholder="Selecione" [autoWidth]="false"
+          [(ngModel)]="cdLocal3" [showClear]="true" required></p-dropdown>
+
       </div>
 
         <div class="ui-g-2 ui-fluid">

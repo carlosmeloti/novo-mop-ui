@@ -10,6 +10,11 @@ export class FiltroModelosPorTipo2{
   cdTipoDeVerificador: any;
 }
 
+
+export class FiltroLocal2{
+  cdLocal1: any;
+}
+
 @Injectable()
 export class AssociarverificadorService {
 

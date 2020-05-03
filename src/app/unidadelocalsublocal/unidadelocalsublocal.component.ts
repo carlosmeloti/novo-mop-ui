@@ -4,8 +4,8 @@ import { NodeService } from 'src/service/nodeservice';
 import { Modlocal1Service } from '../modlocal1/modlocal1.service';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { Modlocal3, MenuEmpresa } from '../core/model';
-import { Modlocal3Filtro, UnidadelocalsublocalService, subLocalFiltro, Filtro3 } from './unidadelocalsublocal.service';
-import { Modlocal2Service } from '../modlocal2/modlocal2.service';
+import { Modlocal3Filtro, UnidadelocalsublocalService, subLocalFiltro, Filtro3} from './unidadelocalsublocal.service';
+import { Modlocal2Service, filtroAvaliacao } from '../modlocal2/modlocal2.service';
 import { ActivatedRoute } from '@angular/router';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
 import { ToastyService } from 'ng2-toasty';
@@ -100,7 +100,24 @@ export class UnidadelocalsublocalComponent implements OnInit {
       cdLocal1: this.cdLocal1,
      
     }
-         this.carregarLocal2(this.cdLocal1);
+         this.carregarLocal2();
+  }
+
+  carregarLocal2() {
+    return this.menuService.carregarEmpresaSelecionada()
+    .then(empresaSelecionada => {
+      this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+      const filtro: filtroAvaliacao = {
+        cdEmpresa: this.empresaSelecionada.cdEmpresa,
+        cdLocal1: this.cdLocal1,
+
+      }
+      this.modLocal2Service.listarPorLocal1Filtro(filtro) 
+      .then(modlocal2 => {
+        this.modlocal2 = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+    })
   }
 
   pesquisarSubLocal() {
@@ -121,20 +138,18 @@ export class UnidadelocalsublocalComponent implements OnInit {
   }
 
   carregarUnidadeDeAvaliacao() {
-    return this.modLocal1Service.listarTodas()
-      .then(modlocal1 => {
-        this.modlocal1 = modlocal1.map(c => ({ label: c.cdLocal1 + " - " + c.nmlocal1, value: c.cdLocal1 }));
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.modLocal1Service.pesquisar2(this.empresaSelecionada.cdEmpresa) 
+        .then(modlocal1 => {
+            this.modlocal1 = modlocal1.map(c => ({ label: c.cdLocal1 + " - " + c.nmlocal1, value: c.cdLocal1 }));
+          })
+          .catch(erro => this.errorHandler.handle(erro));
       })
-      .catch(erro => this.errorHandler.handle(erro));
   }
 
-  carregarLocal2(cdLocal1:any) {
-    return this.modLocal2Service.listarPorLocal1(cdLocal1)
-      .then(modlocal2 => {
-        this.modlocal2 = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
+  
 
 
 

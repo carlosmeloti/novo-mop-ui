@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
-import { Modlocal2Filtro, Modlocal2Service } from './modlocal2.service';
+import { Modlocal2Filtro, Modlocal2Service, Modlocal2Filtro2 } from './modlocal2.service';
 import { Modlocal2, MenuEmpresa } from '../core/model';
 import { Modlocal1Service } from '../modlocal1/modlocal1.service';
 import { MenuService } from '../menu/menu.service';
@@ -68,7 +68,7 @@ export class Modlocal2Component {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  pesquisarModlocal1() {
+  pesquisarModlocal2() {
     return this.menuService.carregarEmpresaSelecionada()
       .then(empresaSelecionada => {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
@@ -77,7 +77,7 @@ export class Modlocal2Component {
           cdLocal1: this.modLocal2Salvar.cdLocal1.cdLocal1,
           nmLocal2: this.modLocal2Salvar.nmLocal2
         }
-        this.modLocal2Service.pesquisarModlocal1(filtro)
+        this.modLocal2Service.pesquisarModlocal2(filtro)
           .then(modlocal2 => this.modlocal2 = modlocal2);
         console.log(this.empresaSelecionada.cdEmpresa)
       })
@@ -124,6 +124,18 @@ export class Modlocal2Component {
 
   }
 
+  carregarUnidadeDeAvaliacao() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.modLocal1Service.pesquisar2(this.empresaSelecionada.cdEmpresa) 
+        .then(modlocal1 => {
+            this.modlocal1 = modlocal1.map(c => ({ label: c.cdLocal1 + " - " + c.nmlocal1, value: c.cdLocal1 }));
+          })
+          .catch(erro => this.errorHandler.handle(erro));
+      })
+  }
+
 
 
   adicionarModLocal2(form: FormControl) {
@@ -138,16 +150,4 @@ export class Modlocal2Component {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-
-
-  carregarUnidadeDeAvaliacao() {
-    return this.modLocal1Service.listarTodas()
-      .then(modlocal1 => {
-        this.modlocal1 = modlocal1.map(c => ({ label: c.cdLocal1 + " - " + c.nmlocal1, value: c.cdLocal1 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
   }
-
-
-
-}

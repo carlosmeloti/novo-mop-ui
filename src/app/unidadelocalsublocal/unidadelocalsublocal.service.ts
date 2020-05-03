@@ -18,6 +18,8 @@ export class Filtro3{
    cdLocal1: any;
 }
 
+
+
 export class subLocalFiltro{
   nmLocal3: string;
   cdLocal1: number;

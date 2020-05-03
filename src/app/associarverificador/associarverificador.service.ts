@@ -15,6 +15,13 @@ export class FiltroLocal2{
   cdLocal1: any;
 }
 
+export class subLocalFiltro2{
+  nmLocal3: string;
+  cdLocal1: number;
+  cdLocal2: number;
+  cdEmpresa: number;
+}
+
 @Injectable()
 export class AssociarverificadorService {
 

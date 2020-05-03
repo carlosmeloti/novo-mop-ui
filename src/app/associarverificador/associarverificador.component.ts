@@ -1,4 +1,4 @@
-import { Verificador_m, Verificador_Local_m, Cadtipodemetodo } from './../core/model';
+import { Verificador_m, Verificador_Local_m, Cadtipodemetodo, MenuEmpresa } from './../core/model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CadtipodeverificadorService } from './../cadtipodeverificador/cadtipodeverificador.service';
 
@@ -7,7 +7,7 @@ import { ErrorHandlerService } from '../core/error-handler.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
-import { CadverificadorLocalFiltro, AssociarverificadorService, FiltroModelosPorTipo2, FiltroLocal2 } from './associarverificador.service';
+import { CadverificadorLocalFiltro, AssociarverificadorService, FiltroModelosPorTipo2, FiltroLocal2, subLocalFiltro2 } from './associarverificador.service';
 import { VerificadorMService } from '../verificador-m/verificador-m.service';
 import { CadtipodemetodoService } from '../cadtipodemetodo/cadtipodemetodo.service';
 import { CadamostragemService } from '../cadamostragem/cadamostragem.service';
@@ -16,6 +16,7 @@ import { Modlocal1Service } from '../modlocal1/modlocal1.service';
 import { Modlocal2Service } from '../modlocal2/modlocal2.service';
 import { UnidadelocalsublocalService } from '../unidadelocalsublocal/unidadelocalsublocal.service';
 import { CadmaterialService } from '../cadmaterial/cadmaterial.service';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-associarverificador',
@@ -32,13 +33,16 @@ export class AssociarverificadorComponent implements OnInit {
   cadfrequencia = [];
   modlocal1 = [];
   modlocal2 = [];
+  modlocal3 = [];
   cadmaterial = [];
   cadmaterial2 = [];
   cadmaterial3 = [];
   cadTipoDeVerificador = [];
   cdLocal1:number;
+  cdLocal2:number;
+  nmLocal3:string;
   associarVerificadorSalvar = new Verificador_Local_m;
-
+  empresaSelecionada = new MenuEmpresa();
 
   filtro = new CadverificadorLocalFiltro;
 
@@ -49,8 +53,7 @@ export class AssociarverificadorComponent implements OnInit {
     private unidadelocalsublocalService: UnidadelocalsublocalService,
     private cadMaterialService: CadmaterialService,
     private verificadorMService: VerificadorMService,
-    
-
+    private menuService: MenuService,
     private toasty: ToastyService,
     private modLocal1Service: Modlocal1Service,
     private modLocal2Service: Modlocal2Service,
@@ -122,6 +125,25 @@ export class AssociarverificadorComponent implements OnInit {
     return this.modLocal2Service.listarPorLocal1(cdLocal1)
       .then(modlocal2 => {
         this.modlocal2 = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  pesquisarSubLocal() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        const filtro2: subLocalFiltro2 = {
+          cdEmpresa: this.empresaSelecionada.cdEmpresa,
+          cdLocal1: this.cdLocal1,
+          cdLocal2: this.cdLocal2,
+          nmLocal3: this.nmLocal3
+        }
+        this.unidadelocalsublocalService.pesquisarSubLocal(filtro2)
+          .then(modlocal3 => {
+            this.modlocal3 = modlocal3.map(c => ({ label: c.cdLocal3 + " - " + c.nmLocal3, value: c.cdLocal3 }));
+          })
+        console.log(this.empresaSelecionada.cdEmpresa)
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

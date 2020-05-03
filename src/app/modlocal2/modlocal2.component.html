@@ -19,7 +19,7 @@
         <div class="ui-g-2 ui-fluid">
           <br />
           <button type="button" style="width: 200px" pButton label="Buscar Local"
-            (click)="pesquisarModlocal1()"></button>
+            (click)="pesquisarModlocal2()"></button>
 
         </div>
 
@@ -59,16 +59,16 @@
           </ng-template>
           <ng-template pTemplate="body" let-modlocal2>
             <tr>
-              <th>{{modlocal2.cdLocal2}}</th>
-              <th style="text-align: left">{{modlocal2.cdEmpresa.nmEmpresa}}</th>
-              <th style="text-align: left">{{modlocal2.cdLocal1.nmlocal1}}</th>
-              <th style="text-align: left">{{modlocal2.nmLocal2}}</th>
-              <th>
+              <td>{{modlocal2.cdLocal2}}</td>
+              <td style="text-align: left">{{modlocal2.cdEmpresa.nmEmpresa}}</td>
+              <td style="text-align: left">{{modlocal2.cdLocal1.nmlocal1}}</td>
+              <td style="text-align: left">{{modlocal2.nmLocal2}}</td>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top"
                   [routerLink]="['/modlocal2', modlocal2.cdLocal2]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Unidade de Avaliação"
                   tooltipPosition="top" class="ui-button-danger" (click)="confirmarExclusao(modlocal2)"></button>
-              </th>
+              </td>
             </tr>
           </ng-template>
         </p-table>

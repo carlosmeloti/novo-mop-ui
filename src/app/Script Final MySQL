@@ -4469,19 +4469,23 @@ DELIMITER ;
 
   -- // empresaLocal2 // --
 
-   DELIMITER $$
+  DELIMITER $$
   CREATE PROCEDURE mopapi.empresalocal2 ()
   BEGIN
   DECLARE idEmpresa INT DEFAULT 0;
   DECLARE existe_mais_linhas INT DEFAULT 0;
   DECLARE nmlocal2 varchar(200);
   DECLARE cdlocal1 INT DEFAULT 0;
-  DECLARE cursorInsereEmpresaLocal2  CURSOR FOR select d04_nmlocal2, d04_cdlocal1 from d04_local2_m where d04_cdempresa = 1;
+  DECLARE cursorInsereEmpresaLocal2  CURSOR FOR select d04_nmlocal2 from d04_local2_m where d04_cdempresa = 1;
+  DECLARE cursorInsereCdLocal1  CURSOR FOR 
+  select d04_cdlocal1 + (select count(*) from d03_local1_m where d03_cdempresa = ( select MAX(d24_cdempresa) from d24_empresa) - 1 ) from d04_local2_m where d04_cdempresa = ( select MAX(d24_cdempresa) from d24_empresa) - 1;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
   select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
   OPEN cursorInsereEmpresaLocal2;
+  OPEN cursorInsereCdLocal1;
   meuLoop: LOOP
-  FETCH cursorInsereEmpresaLocal2 INTO nmlocal2, cdlocal1;
+  FETCH cursorInsereEmpresaLocal2 INTO nmlocal2;
+  FETCH cursorInsereCdLocal1 into cdlocal1;
   IF existe_mais_linhas = 1 THEN
   LEAVE meuLoop;
   END IF;
@@ -4500,12 +4504,21 @@ DELIMITER $$
   DECLARE nmlocal3 varchar(200);
   DECLARE cdlocal1 INT DEFAULT 0;
   DECLARE cdlocal2 INT DEFAULT 0;
-  DECLARE cursorInsereEmpresaLocal3  CURSOR FOR select d05_nmlocal3, d05_cdlocal1, d05_cdlocal2 from d05_local3_m where d05_cdempresa = 1;
+  DECLARE cdlocal3 INT DEFAULT 0;
+  DECLARE cursorInsereEmpresaLocal3  CURSOR FOR select d05_nmlocal3 from d05_local3_m where d05_cdempresa =1;
+  DECLARE cursorInsereEmpresaLocal3IdLocal1  CURSOR FOR 
+  select d05_cdlocal1 + (select count(*) from d03_local1_m where d03_cdempresa = ( select MAX(d24_cdempresa) from d24_empresa) - 1 ) from d05_local3_m where d05_cdempresa =  1;
+  DECLARE cursorInsereEmpresaLocal3IdLocal2  CURSOR FOR 
+  select d05_cdlocal2 + (select count(*) from d04_local2_m where d04_cdempresa = ( select MAX(d24_cdempresa) from d24_empresa) - 1 ) from d05_local3_m where d05_cdempresa = 1;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
   select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
   OPEN cursorInsereEmpresaLocal3;
+  OPEN cursorInsereEmpresaLocal3IdLocal1;
+  OPEN cursorInsereEmpresaLocal3IdLocal2;
   meuLoop: LOOP
-  FETCH cursorInsereEmpresaLocal3 INTO nmlocal3, cdlocal1, cdlocal2;
+  FETCH cursorInsereEmpresaLocal3 INTO nmlocal3;  
+  FETCH cursorInsereEmpresaLocal3IdLocal1 INTO cdlocal1;
+  FETCH cursorInsereEmpresaLocal3IdLocal2 INTO cdlocal2;
   IF existe_mais_linhas = 1 THEN
   LEAVE meuLoop;
   END IF;
@@ -4513,6 +4526,7 @@ DELIMITER $$
   END LOOP meuLoop;
   END $$
   DELIMITER ;
+
 
 
 DROP TRIGGER IF EXISTS Tgr_d24_empresa_populaparaempresa;

@@ -3,11 +3,24 @@ import { Http, Headers } from '@angular/http';
 import { URLSearchParams } from '@angular/http';
 import { Modlocal2 } from '../core/model';
 
+export class Modlocal3Filtro {
+  cdEmpresa: any;
+  cdLocal1: any;
+  cdLocal2: any;
+}
 
 export class Modlocal2Filtro {
   cdEmpresa: any;
   nmLocal2: string;
   cdLocal1: any;
+}
+export class Modlocal2Filtro2 {
+  cdEmpresa: any;
+}
+
+export class filtroAvaliacao{
+  cdLocal1: number;
+  cdEmpresa: number;
 }
 
 @Injectable()
@@ -18,7 +31,7 @@ export class Modlocal2Service {
   constructor(private http: Http) { }
 
 
-  pesquisarModlocal1(filtro: Modlocal2Filtro): Promise<any> {
+  pesquisarModlocal2(filtro: Modlocal2Filtro): Promise<any> {
 
     const params = new URLSearchParams;
     const headers = new Headers;
@@ -102,6 +115,18 @@ export class Modlocal2Service {
       .toPromise()
       .then(response => response.json().content);
   }
+
+  listarPorLocal1Filtro(filtro:filtroAvaliacao): Promise<any> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.modlocal2URL}`, { headers, search: filtro })
+      .toPromise()
+      .then(response => response.json().content);
+  }
+
+  
 
 
 

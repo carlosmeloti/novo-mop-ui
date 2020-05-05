@@ -9,66 +9,159 @@
         <div class="ui-g-4 ui-fluid">
           <label style="display: block">Tipo de Verificador </label>
           <p-dropdown [options]="cadTipoDeVerificador" name="cadTipoDeVerificador" placeholder="Selecione"
-              [style]="{'width':'370px'}" [(ngModel)]="associarVerificadorSalvar.cdTipoDeVerificador.cdTipoDeVerificador">
+            [style]="{'width':'370px'}" [(ngModel)]="associarVerificadorSalvar.cdTipoDeVerificador.cdTipoDeVerificador">
           </p-dropdown>
         </div>
         <div class="ui-g-8 ui-fluid">
-            <br />
-            <button type="button" style="width: 200px" pButton label="Buscar verificadores" (click)="pesquisarModelosPorTipo()">
-            </button>
+          <br />
+          <button type="button" style="width: 200px" pButton label="Buscar verificadores"
+            (click)="pesquisarModelosPorTipo()">
+          </button>
         </div>
 
         <div class="ui-g-12 ui-fluid">
           <label style="display: block">Escolha um Verificador: </label>
-          <p-dropdown [options]="verificadorM" name="verificadorM" placeholder="Selecione"
-              [style]="{'width':'1100px'}" [(ngModel)]="associarVerificadorSalvar.r15_id_Verificador_m.codigo">
-             
+          <p-dropdown [options]="verificadorM" name="verificadorM" placeholder="Selecione" [style]="{'width':'1100px'}"
+            [(ngModel)]="associarVerificadorSalvar.r15_id_Verificador_m.codigo">
+
           </p-dropdown>
-      </div>
-
-      <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
-        <label>Unidade de Avaliação</label>
-        <p-dropdown name="modlocal1" [options]="modlocal1" placeholder="Selecione" [autoWidth]="false"
-          [(ngModel)]="cdLocal1" [showClear]="true" required></p-dropdown>
-      </div>
-      <div class="ui-g-6 ui-fluid">
-        <br>
-        <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Local"
-          (click)="pesquisarLocal2()"></button>
-      </div>
-     
+        </div>
+        <p-fieldset legend="Locais de Avaliação">
        
-      <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
-
-        <label style="display: block">Local de Avaliação: </label>
-        <p-dropdown name="modlocal2" [options]="modlocal2" placeholder="Selecione" [autoWidth]="false"
-          [(ngModel)]="cdLocal2" [showClear]="true" required></p-dropdown>
-
+       <div class="ui-g-12 ui-fluid">
+       
+        <div class="ui-g-6" style="padding-top:10px ">
+          <label>Unidade de Avaliação</label>
+          <p-dropdown name="modlocal1" [options]="modlocal1" placeholder="Selecione" [autoWidth]="false"
+            [style]="{'width':'500px'}" [(ngModel)]="cdLocal1" [showClear]="true" required></p-dropdown>
+        </div>
+        <div class="ui-g-6">
+          <br>
+          <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Local"
+            (click)="carregarLocal2()"></button>
+        </div>
+       </div>
+       <div class="ui-g-12 ui-fluid">
+        <div class="ui-g-6" style="padding-top:10px ">
+          <label style="display: block">Local de Avaliação: </label>
+          <p-dropdown name="modlocal2" [options]="modlocal2" placeholder="Selecione" [autoWidth]="false"
+            [style]="{'width':'500px'}" [(ngModel)]="cdLocal2" [showClear]="true" required></p-dropdown>
+        </div>
+        <div class="ui-g-6">
+          <br />
+          <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Sublocal"
+            (click)="pesquisarSubLocal()"></button>
+        </div>
       </div>
-      <div class="ui-g-6 ui-fluid">
-        <br />
-      <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Sublocal"
-      (click)="pesquisarSubLocal()"></button>
-      </div>
+      <div class="ui-g-12 ui-fluid">
+       <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
+          <label style="display: block">Sublocal: </label>
+          <p-dropdown name="modlocal3" [options]="modlocal3" placeholder="Selecione" [autoWidth]="false"
+            [style]="{'width':'500px'}" [(ngModel)]="cdLocal3" [showClear]="true" required></p-dropdown>
+        </div>
 
-      <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
+        
+          </div>
+      </p-fieldset>
+        <div class="ui-g-12 ui-fluid">
+          <p-fieldset legend="Metodologias">
+            <div class="ui-g-6 ui-fluid">
 
-        <label style="display: block">Sublocal: </label>
-        <p-dropdown name="modlocal3" [options]="modlocal3" placeholder="Selecione" [autoWidth]="false"
-          [(ngModel)]="cdLocal3" [showClear]="true" required></p-dropdown>
+              <div class="ui-g-12 ui-fluid">
+                <label style="display: block">Tipo de Método </label>
+                <p-dropdown [options]="cadTipoDeMetodo" name="cadTipoDeMetodo" placeholder="Selecione"
+                  [style]="{'width':'500px'}" [(ngModel)]="associarVerificadorSalvar.cdTipoDeMetodo.cdTipoDeMetodo">
+                </p-dropdown>
+              </div>
 
-      </div>
+              <div class="ui-g-12 ui-fluid">
+                <label style="display: block">Frequência </label>
+                <p-dropdown [options]="cadfrequencia" name="cadfrequencia" placeholder="Selecione"
+                  [style]="{'width':'500px'}" [(ngModel)]="associarVerificadorSalvar.cdFrequencia.cdFrequencia">
+                </p-dropdown>
+              </div>
+
+              <div class="ui-g-12 ui-fluid">
+                <label style="display: block">Amostragem </label>
+                <p-dropdown [options]="cadamostragem" name="cadamostragem" placeholder="Selecione"
+                  [style]="{'width':'500px'}" [(ngModel)]="associarVerificadorSalvar.cdAmostragem.cdAmostragem">
+                </p-dropdown>
+              </div>
+            </div>
+
+
+            <div class="ui-g-6 ui-fluid">
+              <div class="ui-g-12 ui-fluid">
+                <label style="display: block">Materiais </label>
+                <p-listbox [options]="cadmaterial"></p-listbox>
+              </div>
+            </div>
+          <div class="ui-g-4 ui-fluid"></div>
+          <div class="ui-g-2 ui-fluid">
+               <button style="width: 150px" type="button" (click)="showDialog()" pButton label="Adicionar"></button>
+          </div>
+            <p-dialog header="Materiais utilizados" [(visible)]="display" [maximizable]="true" height="1000" width="650">
+              
+              <div class="ui-g-6 ui-fluid">
+                <label style="display: block">Amostragem </label>
+                <p-dropdown [options]="cadamostragem" name="cadamostragem" placeholder="Selecione"
+                  [style]="{'width':'280px'}" [(ngModel)]="associarVerificadorSalvar.cdAmostragem.cdAmostragem">
+                </p-dropdown>
+              </div>
+              <div class="ui-g-6 ui-fluid"> 
+                <br />
+                <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Sublocal"
+                  (click)="pesquisarSubLocal()"></button>
+              </div>
+              <div class="ui-g-2 ui-fluid">
+                <br />
+                <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-success"></button>
+              </div>
+              <div class="ui-g-12">
+                <p-table [value]="verificadorm" [paginator]="true" [rows]="10" [responsive]="true"
+                  [totalRecords]="totalRecords">
+        
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th style="width: 70px">Cód. Mat.</th>
+                      <th style="width: 350px">Material</th>
+                      <th ></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-verificador>
+                    <tr>
+                      <th>{{verificador.cdVerificador}}</th>
+                      <th>{{verificador.codalfa}}</th>
+                      <th>
+                        <a pButton icon="pi pi-pencil" pTooltip="Editar Verificador" tooltipPosition="top"
+                          [routerLink]="['/associarverificador', verificador.codigo]"></a>
+                        <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Verificador"
+                          tooltipPosition="top"></button>
+                      </th>
+                    </tr>
+                  </ng-template>
+                </p-table>
+        
+              </div>
+
+            
+            </p-dialog>
+          
+         
+
+
+          </p-fieldset>
+        </div>
 
         <div class="ui-g-2 ui-fluid">
           <br />
-          <button pButton type="button" label="Salvar"
-            class="ui-button-raised ui-button-success"></button>
+          <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-success"></button>
         </div>
 
         <div *ngIf="editando" class="ui-g-2 ui-fluid ">
           <br />
           <h3><strong><a routerLink="/verificador_m">Sair da edição</a></strong></h3>
-        </div> 
+        </div>
       </div>
     </form>
 
@@ -107,4 +200,3 @@
     </div>
   </p-card>
 </div>
-

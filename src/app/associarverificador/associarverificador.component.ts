@@ -4,7 +4,7 @@ import { CadtipodeverificadorService } from './../cadtipodeverificador/cadtipode
 
 import { FormControl } from '@angular/forms';
 import { ErrorHandlerService } from '../core/error-handler.service';
-
+import {FieldsetModule} from 'primeng/fieldset';
 import { ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { CadverificadorLocalFiltro, AssociarverificadorService, FiltroModelosPorTipo2, FiltroLocal2, subLocalFiltro2 } from './associarverificador.service';
@@ -13,11 +13,11 @@ import { CadtipodemetodoService } from '../cadtipodemetodo/cadtipodemetodo.servi
 import { CadamostragemService } from '../cadamostragem/cadamostragem.service';
 import { CadfrequenciaService } from '../cadfrequencia/cadfrequencia.service';
 import { Modlocal1Service } from '../modlocal1/modlocal1.service';
-import { Modlocal2Service } from '../modlocal2/modlocal2.service';
-import { UnidadelocalsublocalService } from '../unidadelocalsublocal/unidadelocalsublocal.service';
+import { Modlocal2Service, filtroAvaliacao } from '../modlocal2/modlocal2.service';
+import { UnidadelocalsublocalService, Filtro3 } from '../unidadelocalsublocal/unidadelocalsublocal.service';
 import { CadmaterialService } from '../cadmaterial/cadmaterial.service';
 import { MenuService } from '../menu/menu.service';
-
+import {SelectItem} from 'primeng/api';
 @Component({
   selector: 'app-associarverificador',
   templateUrl: './associarverificador.component.html',
@@ -34,9 +34,11 @@ export class AssociarverificadorComponent implements OnInit {
   modlocal1 = [];
   modlocal2 = [];
   modlocal3 = [];
-  cadmaterial = [];
-  cadmaterial2 = [];
-  cadmaterial3 = [];
+  cadmaterial = [
+    {label:'New York', value:{id:1, name: 'New York', code: 'NY'}},
+    {label:'Rome', value:{id:2, name: 'Rome', code: 'RM'}},
+    {label:'London', value:{id:3, name: 'London', code: 'LDN'}}
+  ];
   cadTipoDeVerificador = [];
   cdLocal1:number;
   cdLocal2:number;
@@ -50,6 +52,7 @@ export class AssociarverificadorComponent implements OnInit {
   constructor(
 
     private associarverificadorService: AssociarverificadorService,
+    private cadTipoDeMetodo: CadtipodemetodoService,
     private unidadelocalsublocalService: UnidadelocalsublocalService,
     private cadMaterialService: CadmaterialService,
     private verificadorMService: VerificadorMService,
@@ -58,9 +61,8 @@ export class AssociarverificadorComponent implements OnInit {
     private modLocal1Service: Modlocal1Service,
     private modLocal2Service: Modlocal2Service,
     private cadTipoDeVerificadorService: CadtipodeverificadorService,
-    private amostragem: CadamostragemService,
-    private frequencia: CadfrequenciaService,
-    private tipoDeMetodo: CadtipodemetodoService,
+    private cadAmostragem: CadamostragemService,
+    private cadFrequencia: CadfrequenciaService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute
 
@@ -70,6 +72,9 @@ export class AssociarverificadorComponent implements OnInit {
   ngOnInit() {
     this.carregarTipoVerificadores();
     this.carregarUnidadeDeAvaliacao();
+    this.carregarTipoDeMetodo();
+    this.carregarFrequencia();
+    this.carregarAmostragem();
     const codigoVerificadorLocalM = this.route.snapshot.params['codigo'];
     //  se houver um id entra no metodo de carregar valores
     if (codigoVerificadorLocalM) {
@@ -77,12 +82,54 @@ export class AssociarverificadorComponent implements OnInit {
     }
   }
 
+  display: boolean = false;
+
+    showDialog() {
+        this.display = true;
+    }
+
   carregarTipoVerificadores() {
     return this.cadTipoDeVerificadorService.listarTodas()
       .then(cadTipoDeVerificador => {
         this.cadTipoDeVerificador = cadTipoDeVerificador.map(c => ({ label: c.cdTipoDeVerificador + " - " + c.nmTipoDeVerificador, value: c.cdTipoDeVerificador }));
       })
       .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarTipoDeMetodo() {
+    this.menuService.carregarEmpresaSelecionada()
+    .then(empresaSelecionada => {
+      this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+      this.cadTipoDeMetodo.listarTodas(this.empresaSelecionada.cdEmpresa)
+      .then(cadTipoDeMetodo => {
+        this.cadTipoDeMetodo = cadTipoDeMetodo.map(c => ({ label: c.cdTipoDeMetodo + " - " + c.nmTipoDeMetodo, value: c.cdTipoDeMetodo }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+    })
+  }
+
+  carregarFrequencia() {
+    this.menuService.carregarEmpresaSelecionada()
+    .then(empresaSelecionada => {
+      this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+      this.cadFrequencia.listarTodas(this.empresaSelecionada.cdEmpresa)
+      .then(cadfrequencia => {
+        this.cadfrequencia = cadfrequencia.map(c => ({ label: c.cdFrequencia + " - " + c.nmFrequencia, value: c.cdFrequencia }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+    })
+  }
+
+  carregarAmostragem() {
+    this.menuService.carregarEmpresaSelecionada()
+    .then(empresaSelecionada => {
+      this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+      this.cadAmostragem.listarTodas(this.empresaSelecionada.cdEmpresa)
+      .then(cadamostragem => {
+        this.cadamostragem = cadamostragem.map(c => ({ label: c.cdAmostragem + " - " + c.nmAmostragem, value: c.cdAmostragem }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+    })
   }
 
   carregarVerificadoresPorTipo(cdTipoDeVerificador: any) {
@@ -105,28 +152,42 @@ export class AssociarverificadorComponent implements OnInit {
   }
 
   carregarUnidadeDeAvaliacao() {
-    return this.modLocal1Service.listarTodas()
-      .then(modlocal1 => {
-        this.modlocal1 = modlocal1.map(c => ({ label: c.cdLocal1 + " - " + c.nmlocal1, value: c.cdLocal1 }));
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        
+        
+        this.modLocal1Service.pesquisar2(this.empresaSelecionada.cdEmpresa) 
+        .then(modlocal1 => {
+            this.modlocal1 = modlocal1.map(c => ({ label: c.cdLocal1 + " - " + c.nmlocal1, value: c.cdLocal1 }));
+          })
+          .catch(erro => this.errorHandler.handle(erro));
       })
-      .catch(erro => this.errorHandler.handle(erro));
   }
 
   pesquisarLocal2() {
 
-    const filtro3: FiltroLocal2 = {
+    const filtro3: Filtro3 = {
       cdLocal1: this.cdLocal1,
-     
     }
-         this.carregarLocal2(this.cdLocal1);
+         this.carregarLocal2();
   }
 
-  carregarLocal2(cdLocal1:any) {
-    return this.modLocal2Service.listarPorLocal1(cdLocal1)
+  carregarLocal2() {
+    return this.menuService.carregarEmpresaSelecionada()
+    .then(empresaSelecionada => {
+      this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+      const filtro: filtroAvaliacao = {
+        cdEmpresa: this.empresaSelecionada.cdEmpresa,
+        cdLocal1: this.cdLocal1,
+
+      }
+      this.modLocal2Service.listarPorLocal1Filtro(filtro) 
       .then(modlocal2 => {
         this.modlocal2 = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));
       })
       .catch(erro => this.errorHandler.handle(erro));
+    })
   }
 
   pesquisarSubLocal() {

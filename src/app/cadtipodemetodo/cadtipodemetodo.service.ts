@@ -63,12 +63,12 @@ export class CadtipodemetodoService {
         .toPromise()
         .then(response => response.json());
     }
-    listarTodas(): Promise<any> {
+    listarTodas(cdEmpresa:any): Promise<any> {
       const headers = new Headers;
        headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
        headers.append('Content-Type', 'application/json');
 
-       return this.http.get(this.cadtipodemetodoURL, { headers })
+       return this.http.get(`${this.cadtipodemetodoURL}?cdEmpresa=${cdEmpresa}`, { headers })
          .toPromise()
          .then(response => response.json().content);
    }

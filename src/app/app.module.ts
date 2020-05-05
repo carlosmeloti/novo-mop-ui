@@ -97,7 +97,7 @@ import { AppformulariocoletaService } from './appformulariocoleta/appformularioc
 import { TodosOsVerificadoresComponent } from './todos-os-verificadores/todos-os-verificadores.component';
 import { AppmonitoramentoverificadorComponent } from './appmonitoramentoverificador/appmonitoramentoverificador.component';
 import { AppmonitoramentoverificadorService } from './appmonitoramentoverificador/appmonitoramentoverificador.service';
-
+import {FieldsetModule} from 'primeng/fieldset';
 
 
 const routes: Routes = [
@@ -220,7 +220,9 @@ const routes: Routes = [
     ToastyModule.forRoot(),
     ConfirmDialogModule,
     AppRoutingModule,
-    ListboxModule
+    ListboxModule,
+    FieldsetModule,
+    DialogModule
   ],
   providers: [
     NodeService,

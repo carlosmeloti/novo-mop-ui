@@ -71,12 +71,12 @@ export class CadamostragemService {
       .then(response => response.json());
   }
 
-  listarTodas(): Promise<any> {
+  listarTodas(cdEmpresa:any): Promise<any> {
     const headers = new Headers;
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
     headers.append('Content-Type', 'application/json');
 
-    return this.http.get(this.cadamostragemurl, { headers })
+    return this.http.get(`${this.cadamostragemurl}?cdEmpresa=${cdEmpresa}`, { headers })
       .toPromise()
       .then(response => response.json().content);
   }

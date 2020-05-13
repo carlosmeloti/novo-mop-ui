@@ -74,7 +74,7 @@ export class Verificador_m {
 export class Verificador_Local_m {
   codigo: number;
   cdEmpresa = new Cadempresa();
-  r15_id_Verificador_m = new Verificador_m();
+  idVerificador = new Verificador_m();
   cdTipoDeVerificador = new Cadtipodeverificador();
   cdLocal1 = new Modlocal1();
   cdLocal2 = new Modlocal2();

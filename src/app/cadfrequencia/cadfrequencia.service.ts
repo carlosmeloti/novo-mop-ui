@@ -35,7 +35,6 @@ export class CadfrequenciaService {
   };
 
   pesquisar(filtro: CadfrequenciaFiltro): Promise<any> {
-
     
     const params = new URLSearchParams;
     const headers = new Headers;

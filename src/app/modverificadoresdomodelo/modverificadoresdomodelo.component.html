@@ -27,7 +27,7 @@
                 <div class="ui-g-12 ui-fluid">
                     <label style="display: block">Escolha um Verificador: </label>
                     <p-dropdown [options]="verificadorM" name="verificadorM" placeholder="Selecione"
-                        [style]="{'width':'1100px'}" [(ngModel)]="verificadoresDoModeloSalvar.cdVerificador.codigo">
+                        [style]="{'width':'1100px'}" filter="true" [(ngModel)]="verificadoresDoModeloSalvar.cdVerificador.codigo">
                     </p-dropdown>
                 </div>
 

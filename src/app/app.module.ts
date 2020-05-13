@@ -6,6 +6,7 @@ import { AssociarverificadorService } from './associarverificador/associarverifi
 import { ModmonitoramentoComponent } from './modmonitoramento/modmonitoramento.component';
 import { Modnivel1Service } from './modnivel1/modnivel1.service';
 import {ListboxModule} from 'primeng/listbox';
+
 import { UnidadelocalsublocalService } from './unidadelocalsublocal/unidadelocalsublocal.service';
 import { CadtipodeverificadorService } from './cadtipodeverificador/cadtipodeverificador.service';
 import { CadmaterialService } from './cadmaterial/cadmaterial.service';

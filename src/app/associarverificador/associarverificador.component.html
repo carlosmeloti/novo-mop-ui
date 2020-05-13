@@ -5,11 +5,11 @@
         <div class="ui-g-12">
           <h2>Associar Verificadores a locais {{ editando ? ' - Editando - ' : '' }}</h2>
         </div>
-
+        <p-fieldset legend="Locais de Avaliação">
         <div class="ui-g-4 ui-fluid">
-          <label style="display: block">Tipo de Verificador </label>
+          <label style="display: block">Verificadores </label>
           <p-dropdown [options]="cadTipoDeVerificador" name="cadTipoDeVerificador" placeholder="Selecione"
-            [style]="{'width':'370px'}" [(ngModel)]="associarVerificadorSalvar.cdTipoDeVerificador.cdTipoDeVerificador">
+            [style]="{'width':'350px'}" [(ngModel)]="associarVerificadorSalvar.cdTipoDeVerificador.cdTipoDeVerificador">
           </p-dropdown>
         </div>
         <div class="ui-g-8 ui-fluid">
@@ -19,13 +19,20 @@
           </button>
         </div>
 
-        <div class="ui-g-12 ui-fluid">
+        <div class="ui-g-10 ui-fluid">
           <label style="display: block">Escolha um Verificador: </label>
-          <p-dropdown [options]="verificadorM" name="verificadorM" placeholder="Selecione" [style]="{'width':'1100px'}"
-            [(ngModel)]="associarVerificadorSalvar.r15_id_Verificador_m.codigo">
+          <p-dropdown [options]="verificadorM" name="verificadorM" placeholder="Selecione" [style]="{'width':'900px'}"
+            [(ngModel)]="associarVerificadorSalvar.idVerificador.codigo" filter="true">
 
           </p-dropdown>
         </div>
+        <div class="ui-g-2 ui-fluid">
+          <br />
+          <button type="button" style="width: 150px" pButton label="Carregar"
+            (click)="pesquisar()">
+          </button>
+        </div>
+        </p-fieldset>
         <p-fieldset legend="Locais de Avaliação">
        
        <div class="ui-g-12 ui-fluid">
@@ -33,7 +40,7 @@
         <div class="ui-g-6" style="padding-top:10px ">
           <label>Unidade de Avaliação</label>
           <p-dropdown name="modlocal1" [options]="modlocal1" placeholder="Selecione" [autoWidth]="false"
-            [style]="{'width':'500px'}" [(ngModel)]="cdLocal1" [showClear]="true" required></p-dropdown>
+            [style]="{'width':'500px'}" [(ngModel)]="associarVerificadorSalvar.cdLocal1.cdLocal1" [showClear]="true" required></p-dropdown>
         </div>
         <div class="ui-g-6">
           <br>
@@ -45,7 +52,7 @@
         <div class="ui-g-6" style="padding-top:10px ">
           <label style="display: block">Local de Avaliação: </label>
           <p-dropdown name="modlocal2" [options]="modlocal2" placeholder="Selecione" [autoWidth]="false"
-            [style]="{'width':'500px'}" [(ngModel)]="cdLocal2" [showClear]="true" required></p-dropdown>
+            [style]="{'width':'500px'}" [(ngModel)]="associarVerificadorSalvar.cdLocal2.cdLocal2" [showClear]="true" required></p-dropdown>
         </div>
         <div class="ui-g-6">
           <br />
@@ -57,7 +64,7 @@
        <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
           <label style="display: block">Sublocal: </label>
           <p-dropdown name="modlocal3" [options]="modlocal3" placeholder="Selecione" [autoWidth]="false"
-            [style]="{'width':'500px'}" [(ngModel)]="cdLocal3" [showClear]="true" required></p-dropdown>
+            [style]="{'width':'500px'}" [(ngModel)]="associarVerificadorSalvar.cdLocal3.cdLocal3" [showClear]="true" required></p-dropdown>
         </div>
 
         

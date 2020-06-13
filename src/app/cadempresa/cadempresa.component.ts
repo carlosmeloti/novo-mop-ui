@@ -1,6 +1,6 @@
 import { Cadempresa } from './../core/model';
-import { CadempresaService, CadempresaFiltro,  } from './cadempresa.service';
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { CadempresaService, CadempresaFiltro, } from './cadempresa.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from 'src/primeng/api';
 import { ToastyService } from 'ng2-toasty/src/toasty.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './cadempresa.component.html',
   styleUrls: ['./cadempresa.component.css']
 })
-export class CadempresaComponent implements OnInit{
+export class CadempresaComponent implements OnInit {
 
   tatalRegistros = 0;
   filtro = new CadempresaFiltro();
@@ -30,25 +30,22 @@ export class CadempresaComponent implements OnInit{
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
     private route: ActivatedRoute
-    ) {}
+  ) { }
 
   ngOnInit() {
-   // this.pesquisar();
-   const codigoEmpresa = this.route.snapshot.params['codigo'];
+    // this.pesquisar();
+    const codigoEmpresa = this.route.snapshot.params['codigo'];
 
-   //se houver um id entra no metodo de carregar valores
-   if(codigoEmpresa){
+    //se houver um id entra no metodo de carregar valores
+    if (codigoEmpresa) {
       this.carregarEmpresa(codigoEmpresa);
-   }
-
-
+    }
   }
-
-  get editando(){
+  get editando() {
     return Boolean(this.empresasSalvar.cdEmpresa)
   }
-//Metodo para carregar valores
-  carregarEmpresa(cdEmpresa: number){
+  //Metodo para carregar valores
+  carregarEmpresa(cdEmpresa: number) {
     this.cadempresaService.buscarPorCodigo(cdEmpresa)
       .then(empresa => {
         this.empresasSalvar = empresa;
@@ -56,7 +53,7 @@ export class CadempresaComponent implements OnInit{
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  pesquisar(page = 0){
+  pesquisar(page = 0) {
 
     this.filtro.page = page;
 
@@ -66,19 +63,19 @@ export class CadempresaComponent implements OnInit{
         this.empresas = resultado.cadempresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
-    }
+  }
 
 
 
-    aoMudarPagina(event: LazyLoadEvent){
-      const page = event.first / event.rows;
-      this.pesquisar(page);
-    }
+  aoMudarPagina(event: LazyLoadEvent) {
+    const page = event.first / event.rows;
+    this.pesquisar(page);
+  }
 
 
-    excluir(empresa: any){
+  excluir(empresa: any) {
 
-      this.cadempresaService.excluir(empresa.cdEmpresa)
+    this.cadempresaService.excluir(empresa.cdEmpresa)
       .then(() => {
         if (this.grid.first === 0) {
           this.pesquisar();
@@ -90,45 +87,50 @@ export class CadempresaComponent implements OnInit{
       })
       .catch(erro => this.errorHandler.handle(erro));
 
+  }
+
+  salvar(form: FormControl) {
+
+    if (this.editando) {
+      this.confirmarAlterar(form);
+    } else {
+      this.confirmarSalvar(form);
     }
 
-    salvar(form: FormControl){
+  }
+  confirmarExclusao(empresa: any) {
+    if(empresa.cdEmpresa != 1){
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja excluir?',
+        accept: () => {
+           this.excluir(empresa);
+        }
+      })
+    } else {
+      this.toasty.warning('Você não pode excluir a Empresa Exemplo!');
+    }
+    
+  }
 
-      if(this.editando){
-        this.confirmarAlterar(form);
-      } else {
-        this.confirmarSalvar(form);
+  confirmarSalvar(empresa: any) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja salvar? - Os dados para a nova empresa serão carregados!',
+      accept: () => {
+        this.adicionarEmpresa(empresa);
       }
+    });
+  }
 
-    }
-        confirmarExclusao(empresa: any) {
-          this.confirmation.confirm( {
-            message: 'Tem certeza que deseja excluir?',
-            accept: () =>{
-              this.excluir(empresa);
-            }
-          });
-        }
+  confirmarAlterar(empresa: any) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja alterar?',
+      accept: () => {
+        this.atualizarEmpresa(empresa);
+      }
+    });
+  }
 
-        confirmarSalvar(empresa: any) {
-          this.confirmation.confirm( {
-            message: 'Tem certeza que deseja salvar? - Os dados para a nova empresa serão carregados!',
-            accept: () =>{
-              this.adicionarEmpresa(empresa);
-            }
-          });
-        }
-
-        confirmarAlterar(empresa: any) {
-          this.confirmation.confirm( {
-            message: 'Tem certeza que deseja alterar?',
-            accept: () =>{
-              this.atualizarEmpresa(empresa);
-            }
-          });
-        }
-
-  adicionarEmpresa(form: FormControl){
+  adicionarEmpresa(form: FormControl) {
     this.cadempresaService.adicionar(this.empresasSalvar)
       .then(() => {
         this.toasty.success("Empresa cadastrada com sucesso!");
@@ -139,20 +141,20 @@ export class CadempresaComponent implements OnInit{
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  atualizarEmpresa(form: FormControl){
+  atualizarEmpresa(form: FormControl) {
     this.cadempresaService.atualizar(this.empresasSalvar)
-    .then(empresa => {
-      this.empresasSalvar = empresa;
-      
-      this.toasty.success('Empresa alterada com sucesso!');
-      this.refresh();
-    })
-  .catch(erro => this.errorHandler.handle(erro));
+      .then(empresa => {
+        this.empresasSalvar = empresa;
+
+        this.toasty.success('Empresa alterada com sucesso!');
+        this.refresh();
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   refresh(): void {
     window.location.reload();
   }
 
-  }
+}
 

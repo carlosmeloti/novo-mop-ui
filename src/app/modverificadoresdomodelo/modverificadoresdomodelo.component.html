@@ -6,12 +6,6 @@
                     <h2>Verificadores de Modelo {{ editando ? ' - Editando - ' : '' }}</h2>
                 </div>
 
-                <div class="ui-g-12 ui-fluid">
-                    <label>Empresa</label>
-                    <p-dropdown name="empresa" [options]="empresas" [autoWidth]="false" placeholder= "Selecione a empresa" 
-                    [(ngModel)]="verificadoresDoModeloSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>
-                  </div>
-
                   <div class="ui-g-4 ui-fluid">
                     <label style="display: block">Tipo de Verificador </label>
                     <p-dropdown [options]="cadTipoDeVerificador" name="cadTipoDeVerificador" placeholder="Selecione"
@@ -126,22 +120,22 @@
                             <th style="width: 150px">Alfanumérico</th>
                             <th style="width: 150px">Sigla</th>
                             <th style="margin-left: 10px">Descrição</th>
-                            <th style=" width: 140px"></th>
+                            <th style=" width: 70px"></th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-verificadordomodelo>
                         <tr>
-                            <th>{{verificadordomodelo.cdVeriMod}}</th>
-                            <th>{{verificadordomodelo.cdVerificador.codigo}}</th>
-                            <th>{{verificadordomodelo.cdVerificador.codalfa}}</th>
-                            <th>{{verificadordomodelo.cdVerificador.cadNivelDeAvaliacao.sigla}}</th>
-                            <th style="text-align: left">{{verificadordomodelo.cdVerificador.nmverificador}}</th>
-                            <th>
+                            <td>{{verificadordomodelo.cdVeriMod}}</td>
+                            <td>{{verificadordomodelo.cdVerificador.codigo}}</td>
+                            <td>{{verificadordomodelo.cdVerificador.codalfa}}</td>
+                            <td>{{verificadordomodelo.cdVerificador.cadNivelDeAvaliacao.sigla}}</td>
+                            <td style="text-align: left">{{verificadordomodelo.cdVerificador.nmverificador}}</td>
+                            <td>
 
                                 <button pButton icon="pi pi-trash" style="margin-left: 10px"
                                     pTooltip="Excluir Este Verificador" tooltipPosition="top" class="ui-button-danger"
-                                    (click)="confirmarExclusao(verificadordomodelo)"></button>
-                            </th>
+                                    class="ui-button-danger"   (click)="confirmarExclusao(verificadordomodelo)"></button>
+                            </td>
 
                         </tr>
                     </ng-template>

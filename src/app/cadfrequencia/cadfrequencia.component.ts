@@ -96,12 +96,17 @@ export class CadfrequenciaComponent {
   }
 
   confirmarExclusao(frequencia: any) {
-    this.confirmation.confirm( {
-      message: 'Tem certeza que deseja excluir?',
-      accept: () =>{
-        this.excluir(frequencia);
-      }
-    });
+    if(frequencia.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm( {
+        message: 'Tem certeza que deseja excluir?',
+        accept: () =>{
+          this.excluir(frequencia);
+        }
+      });
+    }else {
+      this.toasty.warning('Você não pode excluir dados da Empresa Exemplo!');
+    }
+    
   }
 
   excluir(frequencia: any){
@@ -120,13 +125,15 @@ export class CadfrequenciaComponent {
 
   }
   salvar(form: FormControl){
-
-    if(this.editando){
-      this.confirmarAlterar(form);
-    } else {
-      this.confirmarSalvar(form);
+    if(this.frequenciaSalvar.cdEmpresa.cdEmpresa != 1){
+      if(this.editando){
+        this.confirmarAlterar(form);
+      } else {
+        this.confirmarSalvar(form);
+      }
+    }else {
+      this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
     }
-
   }
 
 

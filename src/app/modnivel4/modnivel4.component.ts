@@ -137,6 +137,59 @@ export class Modnivel4Component implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
+  aoMudarPagina(event: LazyLoadEvent) {
+    const page = event.first / event.rows;
+
+  }
+
+  confirmarExclusao(modnivel4: any) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.excluir(modnivel4);
+      }
+    });
+  }
+
+  excluir(modnivel4: any) {
+
+    this.modNivel4Service.excluir(modnivel4.cdNivel4)
+      .then(() => {
+        if (this.grid.first === 0) {
+          //this.pesquisar();
+        } else {
+          this.grid.first = 0;
+          // this.pesquisar();
+        }
+        this.toasty.success('Etapa excluída com sucesso!');
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+
+  }
+  salvar(modnivel4: any) {
+
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja salvar?',
+      accept: () => {
+        this.adicionarModNivel4(modnivel4);
+      }
+    });
+
+  }
+
+
+
+  adicionarModNivel4(form: FormControl) {
+    this.modNivel4Service.adicionar(this.modNivel4Salvar)
+      .then(() => {
+        this.toasty.success("Subitem cadastrado com sucesso!");
+        form.reset();
+        this.modNivel4Salvar = new ModNivel4();
+        //this.pesquisar();
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
 
 
 }

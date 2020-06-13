@@ -81,6 +81,10 @@ tatalRegistros = 0;
     return Boolean(this.amostragemSalvar.cdAmostragem)
   }
 
+ 
+    
+ 
+
   //Metodo para carregar valores
   carregarAmostragem(cdAmostragem: number) {
     this.cadamostragemService.buscarPorCodigo(cdAmostragem)
@@ -114,12 +118,16 @@ tatalRegistros = 0;
   }
 
   confirmarExclusao(amostragem: any) {
-    this.confirmation.confirm({
-      message: 'Tem certeza que deseja excluir?',
-      accept: () => {
-        this.excluir(amostragem);
-      }
-    });
+    if(amostragem.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja excluir?',
+        accept: () => {
+           this.excluir(amostragem);
+        }
+      })
+    } else {
+      this.toasty.warning('Você não pode excluir dados da Empresa Exemplo!');
+    }
   }
 
   excluir(amostragem: any) {
@@ -139,12 +147,17 @@ tatalRegistros = 0;
   }
 
   salvar(form: FormControl) {
-
-    if (this.editando) {
-      this.confirmarAlterar(form);
+  
+    if(this.amostragemSalvar.cdEmpresa.cdEmpresa != 1){
+      if (this.editando) {
+        this.confirmarAlterar(form);
+      } else {
+        this.confirmarSalvar(form);
+      }
     } else {
-      this.confirmarSalvar(form);
+      this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
     }
+    
 
   }
 

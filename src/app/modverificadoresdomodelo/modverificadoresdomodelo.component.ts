@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { Modverificadoresdomodelo } from '../core/model';
+import { Modverificadoresdomodelo, MenuEmpresa } from '../core/model';
 import { SelectItem } from 'primeng/primeng';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorHandlerService } from '../core/error-handler.service';
@@ -16,6 +16,7 @@ import { Modnivel2Service } from '../modnivel2/modnivel2.service';
 import { Modnivel3Service } from '../modnivel3/modnivel3.service';
 import { Modnivel4Service } from '../modnivel4/modnivel4.service';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
+import { MenuService } from '../menu/menu.service';
 @Component({
   selector: 'app-modverificadoresdomodelo',
   templateUrl: './modverificadoresdomodelo.component.html',
@@ -47,11 +48,13 @@ export class ModverificadoresdomodeloComponent  {
   modNivel2 = [];
   modNivel3 = [];
   modNivel4 = [];
+  empresaSelecionada = new MenuEmpresa();
   groupname: string[] = ['val1','val2']; 
   @ViewChild('tabela') grid;
 
   constructor(
     private modmonitoramentotemplateService: ModmonitoramentotemplateService,
+    private menuService: MenuService,
     private modverificadoresdomodeloService: ModverificadoresdomodeloService,
     private cadTipoDeVerificadorService: CadtipodeverificadorService,
     private cadEmpresaService: CadempresaService,
@@ -68,14 +71,15 @@ export class ModverificadoresdomodeloComponent  {
 
     ngOnInit() {
       this.carregarTipoVerificadores();
-      this.carregarEmpresas();
+      this.carregarEmpresaSelecionada();
       const codigoAppMonitoramento = this.route.snapshot.params['codigo'];
     }
 
-    carregarEmpresas() {
-      return this.cadEmpresaService.listarTodas()
-        .then(empresas => {
-          this.empresas = empresas.map(c => ({ label: c.cdEmpresa + " - " + c.nmEmpresa, value: c.cdEmpresa }));
+    carregarEmpresaSelecionada() {
+      return this.menuService.carregarEmpresaSelecionada()
+        .then(empresaSelecionada => {
+          this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+          this.verificadoresDoModeloSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
         })
         .catch(erro => this.errorHandler.handle(erro));
     }

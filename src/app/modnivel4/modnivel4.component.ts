@@ -8,8 +8,9 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { ModNivel4 } from '../core/model';
+import { ModNivel4, MenuEmpresa } from '../core/model';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-modnivel4',
@@ -26,7 +27,7 @@ export class Modnivel4Component implements OnInit {
   cdNivel2:number;
   cdNivel3:number;
   nmNivel4:string;
-
+  empresaSelecionada = new MenuEmpresa();
 
   modNivel4Salvar = new ModNivel4();
 
@@ -41,6 +42,7 @@ export class Modnivel4Component implements OnInit {
 
   constructor(
     private modNivel1Service: Modnivel1Service,
+    private menuService: MenuService,
     private modNivel2Service: Modnivel2Service,
     private modNivel3Service: Modnivel3Service,
     private modNivel4Service: Modnivel4Service,
@@ -52,10 +54,8 @@ export class Modnivel4Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.carregarModNivel1();
     this.carregarEmpresas();
-    //console.log(this.route.snapshot.params['codigo']);
-
+    this.carregarEmpresaSelecionada();
     const codigoModnivel4 = this.route.snapshot.params['codigo'];
 
     //se houver um id entra no metodo de carregar valores
@@ -68,6 +68,16 @@ export class Modnivel4Component implements OnInit {
     return Boolean(this.modNivel4Salvar.cdNivel4)
   }
 
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.modNivel4Salvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+        this.carregarModNivel1(this.modNivel4Salvar.cdEmpresa.cdEmpresa);
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
   //Metodo para carregar valores
   carregarModNivel4(codigo: number) {
     this.modNivel4Service.buscarPorCodigo(codigo)
@@ -77,29 +87,19 @@ export class Modnivel4Component implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
   pesquisarNivel2() {
-
-    const filtro2: Filtro2 = {
-      cdNivel1: this.cdNivel1,
-     
-    }
-         this.carregarNivel2(this.cdNivel1);
+      this.carregarNivel2(this.modNivel4Salvar.cdNivel1.cdNivel1);
   }
 
   pesquisarNivel3() {
-
-    const filtro3: Filtro3 = {
-      cdNivel2: this.cdNivel2,
-     
-    }
-         this.carregarNivel3(this.cdNivel2);
+      this.carregarNivel3(this.modNivel4Salvar.cdNivel2.cdNivel2);
   }
 
   pesquisarNivel4() {
 
     const filtro: Modnivel4Filtro = {
       //cdNivel1: this.cdNivel1,
-      cdNivel3: this.cdNivel3,
-      nmNivel4: this.nmNivel4
+      cdNivel3: this.modNivel4Salvar.cdNivel3.cdNivel3,
+      nmNivel4: this.modNivel4Salvar.nmNivel4
     }
     this.modNivel4Service.pesquisarNivel4(filtro)
       .then(modNivel4 => this.modNivel4 = modNivel4);
@@ -121,10 +121,10 @@ export class Modnivel4Component implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  carregarModNivel1() {
-    return this.modNivel1Service.listarTodas()
-      .then(modNivel1 => {
-        this.modNivel1 = modNivel1.map(c => ({ label: c.cdNivel1 + " - " + c.nmNivel1, value: c.cdNivel1 }));
+  carregarModNivel1(cdEmpresa: any) {
+    return this.modNivel1Service.listarTodas2(cdEmpresa)
+      .then(modnivel1 => {
+        this.modNivel1 = modnivel1.map(c => ({ label: c.cdNivel1 + " - " + c.nmNivel1, value: c.cdNivel1 }));
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

@@ -71,7 +71,7 @@ export class CadfrequenciaComponent {
       .then(empresaSelecionada => {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         this.pesquisar2(this.empresaSelecionada.cdEmpresa);
-        console.log(this.empresaSelecionada.cdEmpresa)
+        this.frequenciaSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

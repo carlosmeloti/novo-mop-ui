@@ -33,6 +33,9 @@ export class AppmonitoramentoService {
       });
 }
 
+
+
+
 listarPorTipo(cdTemplate:any): Promise<any> {
   const headers = new Headers;
   headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');

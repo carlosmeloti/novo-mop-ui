@@ -4,7 +4,7 @@ import { ModNivel2 } from '../core/model';
 
 
 export class Modnivel2Filtro {
- 
+  cdEmpresa: any;
   cdNivel1: any;
 }
 
@@ -14,6 +14,22 @@ export class Modnivel2Service {
   modnivel2URL = 'http://localhost:8081/modnivel2';
 
   constructor(private http: Http) { }
+
+  pesquisar2(cdEmpresa: any): Promise<any> {
+
+    const params = new URLSearchParams;
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    
+      params.set('cdEmpresa', cdEmpresa);
+    
+    return this.http.get(`${this.modnivel2URL}?cdEmpresa=${cdEmpresa}`, { headers})
+    .toPromise()
+    .then(response => response.json().content)
+
+
+  };
 
   pesquisarNivel2(filtro: Modnivel2Filtro): Promise<any> {
 

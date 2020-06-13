@@ -1,5 +1,6 @@
 <div class="container">
   <p-card [style]="{width: 'px'}" styleClass="ui-card-shadow">
+    <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
     <div class="ui-g">
       <div class="ui-g-12">
         <h2>SubItem {{ editando ? ' - Editando - ' : '' }}</h2>
@@ -9,7 +10,7 @@
         <div class="ui-g-4 ui-fluid">
           <label>Assunto: <strong><a routerLink="/modnivel1"> Editar</a></strong></label>
           <p-dropdown name="modNivel1" [options]="modNivel1" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="cdNivel1" required></p-dropdown>
+            [(ngModel)]="modNivel4Salvar.cdNivel1.cdNivel1" required></p-dropdown>
         </div>
 
         <div class="ui-g-8 ui-fluid">
@@ -22,7 +23,7 @@
         <div class="ui-g-4 ui-fluid">
           <label style="display: block">Etapa: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
           <p-dropdown name="modNivel2" [options]="modNivel2" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="cdNivel2" [showClear]="true" required></p-dropdown>
+            [(ngModel)]="modNivel4Salvar.cdNivel2.cdNivel2" [showClear]="true" required></p-dropdown>
         </div>
 
         <div class="ui-g-8 ui-fluid">
@@ -32,9 +33,9 @@
         </div>
 
         <div class="ui-g-4 ui-fluid">
-          <label style="display: block">Ítem: <strong><a routerLink="/modnivel2">Editar</a></strong></label>
+          <label style="display: block">Ítem: <strong><a routerLink="/modnivel3">Editar</a></strong></label>
           <p-dropdown name="modNivel3" [options]="modNivel3" placeholder="Selecione" [autoWidth]="false"
-            [(ngModel)]="cdNivel3" [showClear]="true" required></p-dropdown>
+            [(ngModel)]="modNivel4Salvar.cdNivel3.cdNivel3" [showClear]="true" required></p-dropdown>
         </div>
 
         <div class="ui-g-8 ui-fluid">
@@ -42,35 +43,25 @@
           <button type="button" style="width: 200px" pButton label="Buscar SubÍtem" (click)="pesquisarNivel4()">
           </button>
         </div>
-
-
       </div>
-
-
-
       <div class="ui-g-12 ui-fluid" style="padding-top:10px ">
         <div class="ui-g-12 ui-fluid" style="padding-top:10px ">
           <label style="display: block">Código: </label>
-          <input type="text" pInputText style="width: 50px" [(ngModel)]="modNivel4Salvar.cdNivel4" />
+          <input type="text" name="cdNivel4" pInputText style="width: 50px" [(ngModel)]="modNivel4Salvar.cdNivel4" />
         </div>
-        <div class="ui-g-3 ui-fluid">
-          <label>Empresa</label>
-
-          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="modNivel4Salvar.cdEmpresa.cdEmpresa">
-          </p-selectButton>
-        </div>
+       
         <div class="ui-g-9 ui-fluid"></div>
 
         <div class="ui-g-10 ui-fluid" style="padding-top:10px ">
           <label style="display: block">Descrição: </label>
-          <input type="text" [(ngModel)]="modNivel4Salvar.nmNivel4" pInputText />
+          <input type="text" name="nmNivel4"  [(ngModel)]="modNivel4Salvar.nmNivel4" pInputText />
         </div>
       </div>
 
 
       <div class="ui-g-2 ui-fluid">
         <br />
-        <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-success"></button>
+        <button [disabled]="!modNivel4Salvar.nmNivel4" pButton type="submit" label="Salvar" class="ui-button-raised ui-button-success"></button>
       </div>
       <div class="ui-g-2 ui-fluid">
         <br />
@@ -83,6 +74,8 @@
       </div>
     </div>
 
+  </form>
+
     <div class="ui-g">
       <div class="ui-g-12">
         <p-table [value]="modNivel4" [paginator]="true" [rows]="5" [responsive]="true"
@@ -91,20 +84,22 @@
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 70px">Codigo</th>
+              <th>Empresa</th>
               <th>Subitem</th>
-              <th style=" width: 140px"></th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-modnivel4>
             <tr>
-              <th>{{modnivel4.cdNivel4}}</th>
-              <th style="text-align: left">{{modnivel4.nmNivel4}}</th>
-              <th>
+              <td>{{modnivel4.cdNivel4}}</td>
+              <td style="text-align: left">{{modnivel4.cdNivel1.cdEmpresa.nmEmpresa}}</td>
+              <td style="text-align: left">{{modnivel4.nmNivel4}}</td>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Item" tooltipPosition="top"
                   [routerLink]="['/modnivel4', modnivel4.cdNivel4]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Item"
-                  tooltipPosition="top" (click)="confirmarExclusao(modnivel4)"></button>
-              </th>
+                class="ui-button-danger"  tooltipPosition="top" (click)="confirmarExclusao(modnivel4)"></button>
+              </td>
             </tr>
           </ng-template>
         </p-table>

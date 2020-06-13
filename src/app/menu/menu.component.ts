@@ -149,7 +149,7 @@ export class MenuComponent implements OnInit {
             }
         ]
       },
-      {
+     /* {
           label: 'Relatório',
           icon: 'pi pi-chart-bar',
           items: [
@@ -166,7 +166,7 @@ export class MenuComponent implements OnInit {
             {label: 'Como utilizar o MOP'},
             {label: 'Sobre...'}
         ]
-      },
+      },*/
       {
           label: 'Início', icon: 'pi pi-fw pi-times',
           routerLink:'/inicio'

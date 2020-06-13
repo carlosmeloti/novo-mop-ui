@@ -9,12 +9,7 @@
           <label style="display: block">Código: </label>
           <input type="text" name="codigo" pInputText style="width: 50px" [(ngModel)]="modNivel1Salvar.cdNivel1" />
         </div>
-        <div class="ui-g-3 ui-fluid">
-          <label>Empresa</label>
-         
-          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="modNivel1Salvar.cdEmpresa.cdEmpresa">
-          </p-selectButton>
-        </div>
+       
         <div class="ui-g-12 ui-fluid">
           <label style="display: block">Assunto: </label>
           <input type="text" name="nmnivel1" pInputText [(ngModel)]="modNivel1Salvar.nmNivel1" />
@@ -56,20 +51,22 @@
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 70px">Codigo</th>
+              <th>Empresa</th>
               <th>Assunto</th>
-              <th style=" width: 140px"></th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-modnivel1>
             <tr>
-              <th>{{modnivel1.cdNivel1}}</th>
-              <th style="text-align: left">{{modnivel1.nmNivel1}}</th>
-              <th>
+              <td>{{modnivel1.cdNivel1}}</td>
+              <td style="text-align: left">{{modnivel1.cdEmpresa.nmEmpresa}}</td>
+              <td style="text-align: left">{{modnivel1.nmNivel1}}</td>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top"
                   [routerLink]="['/modnivel1', modnivel1.cdNivel1]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Empresa"
-                  tooltipPosition="top" (click)="confirmarExclusao(modnivel1)"></button>
-            </tr>
+                class="ui-button-danger"  tooltipPosition="top" (click)="confirmarExclusao(modnivel1)"></button>
+            </td>
           </ng-template>
         </p-table>
 

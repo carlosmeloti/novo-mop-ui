@@ -79,7 +79,7 @@ export class Modlocal2Component {
         }
         this.modLocal2Service.pesquisarModlocal2(filtro)
           .then(modlocal2 => this.modlocal2 = modlocal2);
-        console.log(this.empresaSelecionada.cdEmpresa)
+          this.modLocal2Salvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

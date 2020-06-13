@@ -66,6 +66,7 @@ tatalRegistros = 0;
       .then(empresaSelecionada => {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         this.pesquisar2(this.empresaSelecionada.cdEmpresa);
+        this.amostragemSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
         console.log(this.empresaSelecionada.cdEmpresa)
       })
       .catch(erro => this.errorHandler.handle(erro));

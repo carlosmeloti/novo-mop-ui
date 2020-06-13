@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModNivel3 } from '../core/model';
+import { ModNivel3, MenuEmpresa } from '../core/model';
 import { Modnivel1Service } from '../modnivel1/modnivel1.service';
 import { Modnivel2Service } from '../modnivel2/modnivel2.service';
 import { Modnivel3Service, Modnivel3Filtro, Filtro2 } from './modnivel3.service';
@@ -9,6 +9,7 @@ import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-modnivel3',
@@ -24,7 +25,7 @@ export class Modnivel3Component implements OnInit {
   cdNivel2: number;
   nmNivel3: string;
   modNivel3Salvar = new ModNivel3();
-
+  empresaSelecionada = new MenuEmpresa();
   empresas = [];
 
   @ViewChild('tabela') grid;
@@ -35,6 +36,7 @@ export class Modnivel3Component implements OnInit {
 
   constructor(
     private modNivel1Service: Modnivel1Service,
+    private menuService: MenuService,
     private modNivel2Service: Modnivel2Service,
     private modNivel3Service: Modnivel3Service,
     private cadEmpresaService: CadempresaService,
@@ -45,9 +47,8 @@ export class Modnivel3Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.carregarModNivel1();
     this.carregarEmpresas();
-    //console.log(this.route.snapshot.params['codigo']);
+    this.carregarEmpresaSelecionada();
 
     const codigoModnivel3 = this.route.snapshot.params['codigo'];
 
@@ -73,10 +74,10 @@ export class Modnivel3Component implements OnInit {
   pesquisarNivel2() {
 
     const filtro2: Filtro2 = {
-      cdNivel1: this.cdNivel1,
+      cdNivel1: this.modNivel3Salvar.cdNivel1.cdNivel1,
      
     }
-         this.carregarNivel2(this.cdNivel1);
+         this.carregarNivel2(this.modNivel3Salvar.cdNivel1.cdNivel1);
   }
 
   carregarNivel2(cdNivel1:any) {
@@ -91,8 +92,8 @@ export class Modnivel3Component implements OnInit {
 
     const filtro: Modnivel3Filtro = {
       //cdNivel1: this.cdNivel1,
-      cdNivel2: this.cdNivel2,
-      nmNivel3: this.nmNivel3
+      cdNivel2: this.modNivel3Salvar.cdNivel2.cdNivel2,
+      nmNivel3: this.modNivel3Salvar.nmNivel3
     }
     this.modNivel3Service.pesquisarNivel3(filtro)
       .then(modNivel3 => this.modNivel3 = modNivel3);
@@ -153,10 +154,20 @@ export class Modnivel3Component implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.modNivel3Salvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+        this.carregarModNivel1(this.modNivel3Salvar.cdEmpresa.cdEmpresa);
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
 
 
-  carregarModNivel1() {
-    return this.modNivel1Service.listarTodas()
+
+  carregarModNivel1(cdEmpresa: any) {
+    return this.modNivel1Service.listarTodas2(cdEmpresa)
       .then(modnivel1 => {
         this.modNivel1 = modnivel1.map(c => ({ label: c.cdNivel1 + " - " + c.nmNivel1, value: c.cdNivel1 }));
       })

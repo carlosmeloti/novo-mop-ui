@@ -4527,6 +4527,127 @@ DELIMITER $$
   END $$
   DELIMITER ;
 
+  -- // empresaNivel1 // --
+
+  DELIMITER $$
+  CREATE PROCEDURE mopapi.empresanivel1 ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmnivel1 varchar(200);
+  DECLARE cursorInsereEmpresaNivel1  CURSOR FOR select d10_nmnivel1 from d10_nivel1_m where d10_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaNivel1;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaNivel1 INTO nmnivel1;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d10_nivel1_m (`d10_cdempresa`,`d10_nmnivel1`) VALUES(idEmpresa, nmnivel1);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+
+-- // empresaNivel2 // --
+
+  DELIMITER $$
+  CREATE PROCEDURE mopapi.empresanivel2 ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmnivel2 varchar(200);
+  DECLARE cdnivel1 INT DEFAULT 0;
+  DECLARE cursorInsereEmpresaNivel2  CURSOR FOR select d11_nmnivel2 from d11_nivel2_m where d11_cdempresa = 1;
+  DECLARE cursorInsereCdNivel1  CURSOR FOR 
+  SELECT d11_cdnivel1 + (SELECT COUNT(*) FROM d10_nivel1_m WHERE d10_cdempresa = (SELECT MAX(d24_cdempresa) FROM d24_empresa) - 1) FROM d11_nivel2_m WHERE d11_cdempresa = (SELECT MAX(d24_cdempresa) FROM d24_empresa) - 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaNivel2;
+  OPEN cursorInsereCdNivel1;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaNivel2 INTO nmnivel2;
+  FETCH cursorInsereCdNivel1 into cdnivel1;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d11_nivel2_m (`d11_cdempresa`,`d11_cdnivel1`, `d11_nmnivel2`) VALUES(idEmpresa, cdnivel1,nmnivel2);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+  -- // empresaNivel3 // --
+
+DELIMITER $$
+  CREATE PROCEDURE mopapi.empresanivel3 ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmnivel3 varchar(200);
+  DECLARE cdnivel1 INT DEFAULT 0;
+  DECLARE cdnivel2 INT DEFAULT 0;
+  DECLARE cdnivel3 INT DEFAULT 0;
+  DECLARE cursorInsereEmpresaNivel3  CURSOR FOR select d12_nmnivel3 from d12_nivel3_m where d12_cdempresa =1;
+  DECLARE cursorInsereEmpresaNivel3IdNivel1  CURSOR FOR 
+  SELECT d12_cdnivel1 + (SELECT COUNT(*) FROM d10_nivel1_m WHERE d10_cdempresa = (SELECT MAX(d24_cdempresa) FROM d24_empresa) - 1) FROM d12_nivel3_m WHERE d12_cdempresa = 1;
+  DECLARE cursorInsereEmpresaNivel3IdNivel2  CURSOR FOR 
+  SELECT d12_cdnivel2 + (SELECT COUNT(*) FROM d11_nivel2_m WHERE d11_cdempresa = (SELECT MAX(d24_cdempresa) FROM d24_empresa) - 1) FROM d12_nivel3_m WHERE d12_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaNivel3;
+  OPEN cursorInsereEmpresaNivel3IdNivel1;
+  OPEN cursorInsereEmpresaNivel3IdNivel2;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaNivel3 INTO nmnivel3;  
+  FETCH cursorInsereEmpresaNivel3IdNivel1 INTO cdnivel1;
+  FETCH cursorInsereEmpresaNivel3IdNivel2 INTO cdnivel2;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d12_nivel3_m (`d12_cdempresa`,`d12_cdnivel1`, `d12_cdnivel2`,`d12_nmnivel3`) VALUES(idEmpresa, cdnivel1, cdnivel2,nmnivel3);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+  -- // empresaNivel4 // --
+
+DELIMITER $$
+  CREATE PROCEDURE mopapi.empresanivel4 ()
+  BEGIN
+  DECLARE idEmpresa INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE nmnivel4 varchar(200);
+  DECLARE cdnivel1 INT DEFAULT 0;
+  DECLARE cdnivel2 INT DEFAULT 0;
+  DECLARE cdnivel3 INT DEFAULT 0;
+  DECLARE cdnivel4 INT DEFAULT 0;
+  DECLARE cursorInsereEmpresaNivel4  CURSOR FOR select d13_nmnivel4 from d13_nivel4_m where d13_cdempresa =1;
+  DECLARE cursorInsereEmpresaNivel4IdNivel1  CURSOR FOR 
+  SELECT d13_cdnivel1 + (SELECT COUNT(*) FROM d10_nivel1_m WHERE d10_cdempresa = (SELECT MAX(d24_cdempresa) FROM d24_empresa) - 1) FROM d13_nivel4_m WHERE d13_cdempresa = 1;
+  DECLARE cursorInsereEmpresaNivel4IdNivel2  CURSOR FOR 
+  SELECT d13_cdnivel2 + (SELECT COUNT(*) FROM d11_nivel2_m WHERE d11_cdempresa = (SELECT MAX(d24_cdempresa) FROM d24_empresa) - 1) FROM d13_nivel4_m WHERE d13_cdempresa = 1;
+  DECLARE cursorInsereEmpresaNivel4IdNivel3  CURSOR FOR 
+  SELECT d13_cdnivel3 + (SELECT COUNT(*) FROM d12_nivel3_m WHERE d12_cdempresa = (SELECT MAX(d24_cdempresa) FROM d24_empresa) - 1) FROM d13_nivel4_m WHERE d13_cdempresa = 1;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d24_cdempresa) INTO idEmpresa from d24_empresa;
+  OPEN cursorInsereEmpresaNivel4;
+  OPEN cursorInsereEmpresaNivel4IdNivel1;
+  OPEN cursorInsereEmpresaNivel4IdNivel2;
+  OPEN cursorInsereEmpresaNivel4IdNivel3;
+  meuLoop: LOOP
+  FETCH cursorInsereEmpresaNivel4 INTO nmnivel4;  
+  FETCH cursorInsereEmpresaNivel4IdNivel1 INTO cdnivel1;
+  FETCH cursorInsereEmpresaNivel4IdNivel2 INTO cdnivel2;
+  FETCH cursorInsereEmpresaNivel4IdNivel3 INTO cdnivel3;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  INSERT INTO d13_nivel4_m (`d13_cdempresa`,`d13_cdnivel1`, `d13_cdnivel2`, `d13_cdnivel3`,`d13_nmnivel4`) VALUES(idEmpresa, cdnivel1, cdnivel2,cdnivel3,nmnivel4);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
 
 
 DROP TRIGGER IF EXISTS Tgr_d24_empresa_populaparaempresa;
@@ -4543,6 +4664,10 @@ BEGIN
   CALL empresalocal2();
   CALL empresalocal3();
   CALL empresaverificadormodelo();
+  CALL empresanivel1();
+  CALL empresanivel2();
+  CALL empresanivel3();
+  CALL empresanivel4();
 END$
 
 

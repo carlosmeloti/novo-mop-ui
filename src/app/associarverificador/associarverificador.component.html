@@ -107,57 +107,55 @@
           <div class="ui-g-2 ui-fluid">
                <button style="width: 150px" type="button" (click)="showDialog()" pButton label="Adicionar"></button>
           </div>
-            <p-dialog header="Materiais utilizados" [(visible)]="display" [maximizable]="true" height="1000" width="650">
-              
-              <div class="ui-g-6 ui-fluid">
-                <label style="display: block">Amostragem </label>
-                <p-dropdown [options]="cadamostragem" name="cadamostragem" placeholder="Selecione"
-                  [style]="{'width':'280px'}" [(ngModel)]="associarVerificadorSalvar.cdAmostragem.cdAmostragem">
-                </p-dropdown>
-              </div>
-              <div class="ui-g-6 ui-fluid"> 
-                <br />
-                <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Buscar Sublocal"
-                  (click)="pesquisarSubLocal()"></button>
-              </div>
-              <div class="ui-g-2 ui-fluid">
-                <br />
-                <button pButton type="button" label="Salvar" class="ui-button-raised ui-button-success"></button>
-              </div>
-              <div class="ui-g-12">
-                <p-table [value]="verificadorm" [paginator]="true" [rows]="10" [responsive]="true"
-                  [totalRecords]="totalRecords">
-        
-                  <ng-template pTemplate="header">
-                    <tr>
-                      <th style="width: 70px">Cód. Mat.</th>
-                      <th style="width: 350px">Material</th>
-                      <th ></th>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-verificador>
-                    <tr>
-                      <th>{{verificador.cdVerificador}}</th>
-                      <th>{{verificador.codalfa}}</th>
-                      <th>
-                        <a pButton icon="pi pi-pencil" pTooltip="Editar Verificador" tooltipPosition="top"
-                          [routerLink]="['/associarverificador', verificador.codigo]"></a>
-                        <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Verificador"
-                          tooltipPosition="top"></button>
-                      </th>
-                    </tr>
-                  </ng-template>
-                </p-table>
-        
-              </div>
-
             
-            </p-dialog>
           
          
 
 
           </p-fieldset>
+
+          <p-dialog header="Materiais utilizados" [(visible)]="display" [maximizable]="true" height="1000" width="650">
+              
+            <div class="ui-g-6 ui-fluid">
+              <label style="display: block">Materiais </label>
+              <p-dropdown [options]="materiais" name="materiais" placeholder="Selecione"
+                [style]="{'width':'280px'}" >
+              </p-dropdown>
+            </div>
+            <div class="ui-g-6 ui-fluid"> 
+              <br />
+              <button name="botaopesquisar" type="button" style="width: 150px" pButton label="Inserir"
+                (click)="inserirMaterial()"></button>
+            </div>
+            
+            <div class="ui-g-12">
+              <p-table [value]="materiaisTabelaModal" [paginator]="true" [rows]="10" [responsive]="true"
+                [totalRecords]="totalRecords">
+      
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width: 70px">Cód. Mat.</th>
+                    <th style="width: 350px">Material</th>
+                    <th ></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-materiais>
+                  <tr>
+                    <th>{{materiais.id_material}}</th>
+                    <th>{{materiais.nm_material}}</th>
+                    <th>
+                      <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Material"
+                        tooltipPosition="top"></button>
+                    </th>
+                  </tr>
+                </ng-template>
+              </p-table>
+      
+            </div>
+
+          
+          </p-dialog>
+
         </div>
 
         <div class="ui-g-2 ui-fluid">

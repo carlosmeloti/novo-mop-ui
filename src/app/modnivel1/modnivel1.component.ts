@@ -1,12 +1,13 @@
 import { CadempresaService } from './../cadempresa/cadempresa.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModNivel1 } from '../core/model';
+import { ModNivel1, MenuEmpresa } from '../core/model';
 import { Modnivel1Service, ModNivel1Filtro } from './modnivel1.service';
 import { ToastyService } from 'ng2-toasty';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { ErrorHandlerService } from '../core/error-handler.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-modnivel1',
@@ -19,7 +20,7 @@ export class Modnivel1Component implements OnInit {
   filtro = new ModNivel1Filtro();
 
   modNivel1Salvar = new ModNivel1();
-
+  empresaSelecionada = new MenuEmpresa();
   modnivel1 = [];
   empresas = [];
 
@@ -29,6 +30,7 @@ export class Modnivel1Component implements OnInit {
 
   constructor(
     private modNivel1Service: Modnivel1Service,
+    private menuService: MenuService,
     private cadEmpresaService: CadempresaService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
@@ -38,7 +40,7 @@ export class Modnivel1Component implements OnInit {
 
   ngOnInit() {
     //console.log(this.route.snapshot.params['codigo']);
-
+this.carregarEmpresaSelecionada();
     this.carregarEmpresas();
     const codigoModnivel1 = this.route.snapshot.params['codigo'];
 
@@ -61,22 +63,22 @@ export class Modnivel1Component implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  pesquisar(page = 0) {
-
-    this.filtro.page = page;
-
-    this.modNivel1Service.pesquisar(this.filtro)
-      .then(resultado => {
-        this.tatalRegistros = resultado.total;
-        this.modnivel1 = resultado.modnivel1;
-
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.pesquisar2(this.empresaSelecionada.cdEmpresa);
+        this.modNivel1Salvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
-  aoMudarPagina(event: LazyLoadEvent) {
-    const page = event.first / event.rows;
-    this.pesquisar(page);
+
+  pesquisar2(cdEmpresa) {
+    this.modNivel1Service.pesquisar2(cdEmpresa)
+      .then(empresaSelecionada =>  this.modnivel1  = empresaSelecionada);
   }
+
+  
 
   confirmarExclusao(modnivel1: any) {
     this.confirmation.confirm({
@@ -92,10 +94,10 @@ export class Modnivel1Component implements OnInit {
     this.modNivel1Service.excluir(modnivel1.cdNivel1)
       .then(() => {
         if (this.grid.first === 0) {
-          this.pesquisar();
+          this.pesquisar2(this.empresaSelecionada.cdEmpresa);
         } else {
           this.grid.first = 0;
-          this.pesquisar();
+          this.pesquisar2(this.empresaSelecionada.cdEmpresa);
         }
         this.toasty.success('Unidade de Avaliação excluída com sucesso!');
       })
@@ -137,7 +139,7 @@ export class Modnivel1Component implements OnInit {
         this.toasty.success("Assunto cadastrado com sucesso!");
         form.reset();
         this.modNivel1Salvar = new ModNivel1();
-        this.pesquisar();
+        this.pesquisar2(this.empresaSelecionada.cdEmpresa);
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

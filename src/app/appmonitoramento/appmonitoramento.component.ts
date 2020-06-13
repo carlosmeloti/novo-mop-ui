@@ -1,4 +1,4 @@
-import { AppMonitoramento, qtd } from './../core/model';
+import { AppMonitoramento, qtd, MenuEmpresa } from './../core/model';
 import { AppmonitoramentoService, AppMonitoramentoFiltro, FiltroPorMedelo } from './appmonitoramento.service';
 import { ModmonitoramentotemplateService } from './../modmonitoramentotemplate/modmonitoramentotemplate.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -12,6 +12,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { FormControl } from '@angular/forms';
 import { CadempresaService } from '../cadempresa/cadempresa.service';
 import { ModverificadoresdomodeloService } from '../modverificadoresdomodelo/modverificadoresdomodelo.service';
+import { MenuService } from '../menu/menu.service';
 
 
 
@@ -31,12 +32,13 @@ export class AppmonitoramentoComponent  {
   empresas = [];
   tipodevirificador = [];
   qtddevirificador = [];
-
+  empresaSelecionada = new MenuEmpresa();
   appmonitoramentoSalvar = new AppMonitoramento;
   appmonitoramentoSalvar2 = new qtd;
 
   @ViewChild('tabela') grid;
   constructor(
+    private menuService: MenuService,
     private modverificadoresdomodeloService: ModverificadoresdomodeloService,
     private modmonitoramentotemplateService: ModmonitoramentotemplateService,
     private appmonitoramentoService: AppmonitoramentoService,
@@ -50,7 +52,7 @@ export class AppmonitoramentoComponent  {
   ) {}
 
   ngOnInit() {
-
+    this.carregarEmpresaSelecionada();
     this.carregarMonitoramentoTemplate();
     this.carregarTipoDeVerificadores();
     this.carregarEmpresas();
@@ -62,6 +64,15 @@ export class AppmonitoramentoComponent  {
   }
   get editando() {
     return Boolean(this.appmonitoramentoSalvar.cdMonitoramento)
+  }
+
+  carregarEmpresaSelecionada() {
+    return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.appmonitoramentoSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+       })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   pesquisarPorModelo() {

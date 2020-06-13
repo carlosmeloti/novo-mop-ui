@@ -72,7 +72,7 @@ export class CadtipodemetodoComponent {
       .then(empresaSelecionada => {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         this.pesquisar2(this.empresaSelecionada.cdEmpresa);
-        console.log(this.empresaSelecionada.cdEmpresa)
+        this.tipodemetodoSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -92,14 +92,6 @@ export class CadtipodemetodoComponent {
       .then(tipometodo => this.cadtipodemetodo = tipometodo)
       .catch(erro => this.errorHandler.handle(erro));
    
-
-    //this.cadamostragemService.pesquisar(this.filtro)
-     // .then(resultado => {
-      //  this.tatalRegistros = resultado.total;
-      //  this.cadamostragem = resultado.cadamostragem;
-
-      //})
-      //.catch(erro => this.errorHandler.handle(erro));
   }
   aoMudarPagina(event: LazyLoadEvent) {
     const page = event.first / event.rows;

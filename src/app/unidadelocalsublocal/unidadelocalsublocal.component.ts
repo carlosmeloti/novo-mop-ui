@@ -97,7 +97,7 @@ export class UnidadelocalsublocalComponent implements OnInit {
   pesquisarLocal2() {
 
     const filtro3: Filtro3 = {
-      cdLocal1: this.cdLocal1,
+      cdLocal1: this.modLocal3Salvar.cdLocal1.cdLocal1,
      
     }
          this.carregarLocal2();
@@ -126,13 +126,13 @@ export class UnidadelocalsublocalComponent implements OnInit {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         const filtro2: subLocalFiltro = {
           cdEmpresa: this.empresaSelecionada.cdEmpresa,
-          cdLocal1: this.cdLocal1,
-          cdLocal2: this.cdLocal2,
-          nmLocal3: this.nmLocal3
+          cdLocal1:  this.modLocal3Salvar.cdLocal1.cdLocal1,
+          cdLocal2:  this.modLocal3Salvar.cdLocal2.cdLocal2,
+          nmLocal3:  this.modLocal3Salvar.nmLocal3
         }
         this.unidadelocalsublocalService.pesquisarSubLocal(filtro2)
           .then(modlocal3 => this.modlocal3 = modlocal3);
-        console.log(this.empresaSelecionada.cdEmpresa)
+        this.modLocal3Salvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

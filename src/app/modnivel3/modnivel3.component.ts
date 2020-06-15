@@ -18,6 +18,8 @@ import { MenuService } from '../menu/menu.service';
 })
 export class Modnivel3Component implements OnInit {
 
+  cdNiv1: any;
+  cdNiv2: any;
   tatalRegistros = 0;
   filtro = new Modnivel3Filtro();
   filtro2 = new Filtro2()
@@ -73,30 +75,39 @@ export class Modnivel3Component implements OnInit {
 
   pesquisarNivel2() {
 
-    const filtro2: Filtro2 = {
+    const filtroN2: Filtro2 = {
       cdNivel1: this.modNivel3Salvar.cdNivel1.cdNivel1,
-     
+      cdEmpresa: this.modNivel3Salvar.cdEmpresa.cdEmpresa,
     }
-         this.carregarNivel2(this.modNivel3Salvar.cdNivel1.cdNivel1);
+    this.modNivel2Service.pesquisarNivel2(filtroN2)
+      .then(modNivel2 =>  this.modNivel2 = modNivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 })));
+        
   }
 
-  carregarNivel2(cdNivel1:any) {
-    return this.modNivel2Service.listarPorNivel1(cdNivel1)
-      .then(modNivel2 => {
-        this.modNivel2 = modNivel2.map(c => ({ label: c.cdNivel2 + " - " + c.nmNivel2, value: c.cdNivel2 }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
-  }
 
   pesquisarNivel3() {
-
-    const filtro: Modnivel3Filtro = {
-      //cdNivel1: this.cdNivel1,
-      cdNivel2: this.modNivel3Salvar.cdNivel2.cdNivel2,
-      nmNivel3: this.modNivel3Salvar.nmNivel3
+    console.log("this.cdNiv1:" + this.cdNiv1);
+    console.log("this.cdNiv2" + this.cdNiv2);
+    if(this.cdNiv1 != null && this.cdNiv2 != null){
+      const filtro: Modnivel3Filtro = {
+        cdEmpresa: this.modNivel3Salvar.cdEmpresa.cdEmpresa,
+        cdNivel1: this.cdNiv1,
+        cdNivel2: this.cdNiv2,
+        nmNivel3: this.modNivel3Salvar.nmNivel3
+      }
+      this.modNivel3Service.pesquisarNivel3(filtro)
+        .then(modNivel3 => this.modNivel3 = modNivel3);
+    } else {
+      const filtro: Modnivel3Filtro = {
+        cdEmpresa: this.modNivel3Salvar.cdEmpresa.cdEmpresa,
+        cdNivel1: this.modNivel3Salvar.cdNivel1.cdNivel1,
+        cdNivel2: this.modNivel3Salvar.cdNivel2.cdNivel2,
+        nmNivel3: this.modNivel3Salvar.nmNivel3
+      }
+      this.modNivel3Service.pesquisarNivel3(filtro)
+        .then(modNivel3 => this.modNivel3 = modNivel3);
     }
-    this.modNivel3Service.pesquisarNivel3(filtro)
-      .then(modNivel3 => this.modNivel3 = modNivel3);
+    
   }
   
 
@@ -107,23 +118,29 @@ export class Modnivel3Component implements OnInit {
   }
 
   confirmarExclusao(modnivel3: any) {
-    this.confirmation.confirm({
-      message: 'Tem certeza que deseja excluir?',
-      accept: () => {
-        this.excluir(modnivel3);
-      }
-    });
+    if(modnivel3.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja excluir?',
+        accept: () => {
+          this.excluir(modnivel3);
+        }
+      });
+    }else {
+      this.toasty.warning('Você não pode excluir dados da Empresa Exemplo!');
+    }
+    
   }
 
   excluir(modnivel3: any) {
-
+    this.cdNiv1 = this.modNivel3Salvar.cdNivel1.cdNivel1;
+    this.cdNiv2 = this.modNivel3Salvar.cdNivel2.cdNivel2;
     this.modNivel3Service.excluir(modnivel3.cdNivel3)
       .then(() => {
         if (this.grid.first === 0) {
-          //this.pesquisar();
+          this.pesquisarNivel3();
         } else {
           this.grid.first = 0;
-          // this.pesquisar();
+          this.pesquisarNivel3();
         }
         this.toasty.success('Etapa excluída com sucesso!');
       })
@@ -131,25 +148,31 @@ export class Modnivel3Component implements OnInit {
 
   }
   salvar(modnivel3: any) {
-
-    this.confirmation.confirm({
-      message: 'Tem certeza que deseja salvar?',
-      accept: () => {
-        this.adicionarModNivel3(modnivel3);
-      }
-    });
+    if(this.modNivel3Salvar.cdEmpresa.cdEmpresa != 1) {
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja salvar?',
+        accept: () => {
+          this.adicionarModNivel3(modnivel3);
+        }
+      });
+    } else {
+      this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
+    }
+    
 
   }
 
 
 
   adicionarModNivel3(form: FormControl) {
+    this.cdNiv1 = this.modNivel3Salvar.cdNivel1.cdNivel1;
+    this.cdNiv2 = this.modNivel3Salvar.cdNivel2.cdNivel2;
     this.modNivel3Service.adicionar(this.modNivel3Salvar)
       .then(() => {
         this.toasty.success("Local de Avaliação cadastrada com sucesso!");
         form.reset();
         this.modNivel3Salvar = new ModNivel3();
-        //this.pesquisar();
+        this.pesquisarNivel3();
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

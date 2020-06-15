@@ -23,7 +23,7 @@ export class CadfrequenciaComponent {
   filtro = new CadfrequenciaFiltro();
   nmFrequencia: string;
   frequenciaSalvar = new Cadfrequencia();
-
+  cdEmp: any;
   @ViewChild('tabela') grid;
 
   cadfrequencia=[]
@@ -72,6 +72,7 @@ export class CadfrequenciaComponent {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         this.pesquisar2(this.empresaSelecionada.cdEmpresa);
         this.frequenciaSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+        this.cdEmp = this.frequenciaSalvar.cdEmpresa.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -84,7 +85,7 @@ export class CadfrequenciaComponent {
   pesquisar(){
 
     const filtro: CadfrequenciaFiltro = {
-      cdEmpresa: this.frequenciaSalvar.cdEmpresa.cdEmpresa,
+      cdEmpresa: this.cdEmp,
       }
     this.cadfrequenciaService.pesquisar(filtro)
       .then(frequencia => this.cadfrequencia = frequencia)
@@ -156,6 +157,7 @@ export class CadfrequenciaComponent {
       }
 
       adicionarFrequencia(form: FormControl){
+        this.frequenciaSalvar.cdEmpresa.cdEmpresa = this.cdEmp;
         this.cadfrequenciaService.adicionar(this.frequenciaSalvar)
           .then(() => {
             this.toasty.success("Frequencia cadastrada com sucesso!");
@@ -176,16 +178,5 @@ export class CadfrequenciaComponent {
         })
       .catch(erro => this.errorHandler.handle(erro));
       }
-
-    /*  carregarEmpresas() {
-        return this.cadEmpresaService.listarTodas()
-          .then(empresas => {
-            this.empresas = empresas.map(c => ({ label: c.cdEmpresa + " - " + c.nmEmpresa, value: c.cdEmpresa }));
-          })
-          .catch(erro => this.errorHandler.handle(erro));
-      }*/
-
-
-
 
 }

@@ -65,10 +65,6 @@ import { UnidadelocalsublocalComponent } from './unidadelocalsublocal/unidadeloc
 import { CadniveldeavaliacaoService } from './cadniveldeavaliacao/cadniveldeavaliacao.service';
 import { ErrorHandlerService } from './core/error-handler.service';
 import { VerificadorMService } from './verificador-m/verificador-m.service';
-import { VerificadorMEditandoComponent } from './verificador-m/verificador-m-editando/verificador-m-editando.component';
-import { VerificadorMEditandoService } from './verificador-m/verificador-m-editando/verificador-m-editando.service';
-import { VerificadorMAssociarComponent } from './verificador-m/verificador-m-associar/verificador-m-associar.component';
-import { VerificadorMAssociarService } from './verificador-m/verificador-m-associar/verificador-m-associar.service';
 
 import { Modlocal1Component } from './modlocal1/modlocal1.component';
 import { Modlocal1Service } from './modlocal1/modlocal1.service';
@@ -98,6 +94,7 @@ import { AppformulariocoletaService } from './appformulariocoleta/appformularioc
 import { TodosOsVerificadoresComponent } from './todos-os-verificadores/todos-os-verificadores.component';
 import { AppmonitoramentoverificadorComponent } from './appmonitoramentoverificador/appmonitoramentoverificador.component';
 import { AppmonitoramentoverificadorService } from './appmonitoramentoverificador/appmonitoramentoverificador.service';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {FieldsetModule} from 'primeng/fieldset';
 
 
@@ -119,7 +116,6 @@ const routes: Routes = [
   { path: 'cadmaterial/:codigo', component:CadmaterialComponent},
   { path: 'verificador_m', component:VerificadorMComponent},
   { path: 'verificador_m/:codigo', component:VerificadorMComponent},
-  { path: 'verificador_m/associar', component:VerificadorMAssociarComponent},
   { path: 'unidadelocalsublocal', component:UnidadelocalsublocalComponent},
   { path: 'modlocal1', component:Modlocal1Component},
   { path: 'modlocal1/:codigo', component:Modlocal1Component},
@@ -172,8 +168,6 @@ const routes: Routes = [
     InicioComponent,
     VerificadorMComponent,
     UnidadelocalsublocalComponent,
-    VerificadorMEditandoComponent,
-    VerificadorMAssociarComponent,
     Modlocal1Component,
     Modlocal2Component,
     Modnivel1Component,
@@ -216,6 +210,7 @@ const routes: Routes = [
     InputTextareaModule,
     DropdownModule,
     TreeModule,
+    ProgressSpinnerModule,
     CheckboxModule,
     CalendarModule,
     ToastyModule.forRoot(),
@@ -236,8 +231,6 @@ const routes: Routes = [
     CadniveldeavaliacaoService,
     ConfirmationService,
     VerificadorMService,
-    VerificadorMEditandoService,
-    VerificadorMAssociarService,
     Modlocal1Service,
     Modlocal2Service,
     UnidadelocalsublocalService,

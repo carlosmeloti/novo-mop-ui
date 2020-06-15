@@ -17,6 +17,7 @@ import { MenuService } from '../menu/menu.service';
 })
 export class Modnivel2Component implements OnInit {
 
+  cdNiv1: any;
   cdNivel1: number;
   filtro = new Modnivel2Filtro();
 
@@ -79,14 +80,26 @@ export class Modnivel2Component implements OnInit {
   }
 
   pesquisarNivel2() {
+    console.log("Empresa: " + this.empresaSelecionada.cdEmpresa)
+    console.log("this.cdNiv1: " + this.cdNiv1)
+    if(this.cdNiv1 != null) {
+      const filtro: Modnivel2Filtro = {
+        cdNivel1: this.cdNiv1,
+        cdEmpresa: this.empresaSelecionada.cdEmpresa
+      }
+      this.modNivel2Service.pesquisarNivel2(filtro)
+        .then(modnivel2 => this.modnivel2 = modnivel2);
+        this.carregarEmpresaSelecionada();
 
-    const filtro: Modnivel2Filtro = {
-      cdNivel1: this.modNivel2Salvar.cdNivel1.cdNivel1,
-      cdEmpresa: this.empresaSelecionada.cdEmpresa
+    } else {
+      const filtro: Modnivel2Filtro = {
+        cdNivel1: this.modNivel2Salvar.cdNivel1.cdNivel1,
+        cdEmpresa: this.empresaSelecionada.cdEmpresa
+      }
+      this.modNivel2Service.pesquisarNivel2(filtro)
+        .then(modnivel2 => this.modnivel2 = modnivel2);
+        this.carregarEmpresaSelecionada();
     }
-    this.modNivel2Service.pesquisarNivel2(filtro)
-      .then(modnivel2 => this.modnivel2 = modnivel2);
-     // this.carregarLocal2(this.cdLocal1);
   }
 
  
@@ -97,49 +110,57 @@ export class Modnivel2Component implements OnInit {
   }
 
   confirmarExclusao(modnivel2: any) {
-    this.confirmation.confirm({
-      message: 'Tem certeza que deseja excluir?',
-      accept: () => {
-        this.excluir(modnivel2);
-      }
-    });
+    if(modnivel2.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja excluir?',
+        accept: () => {
+          this.excluir(modnivel2);
+        }
+      })
+    } else {
+      this.toasty.warning('Você não pode excluir dados da Empresa Exemplo!');
+    }
+    
   }
 
   excluir(modnivel2: any) {
-
-    this.modNivel2Service.excluir(modnivel2.cdNivel2)
+     this.modNivel2Service.excluir(modnivel2.cdNivel2)
       .then(() => {
         if (this.grid.first === 0) {
           this.pesquisarNivel2();
+        
         } else {
           this.grid.first = 0;
           this.pesquisarNivel2();
+         
         }
         this.toasty.success('Etapa excluída com sucesso!');
       })
       .catch(erro => this.errorHandler.handle(erro));
-
-  }
-  salvar(modnivel2: any) {
-
-    this.confirmation.confirm({
-      message: 'Tem certeza que deseja salvar?',
-      accept: () => {
-        this.adicionarModNivel2(modnivel2);
-      }
-    });
-
-  }
-
-
-
-  adicionarModNivel2(form: FormControl) {
+    }
     
+  salvar(modnivel2: any) {
+    if(this.modNivel2Salvar.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja salvar?',
+        accept: () => {
+          this.adicionarModNivel2(modnivel2);
+         
+        }
+      });
+    } else {
+      this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
+    }
+    
+  }
+  adicionarModNivel2(form: FormControl) {
+    this.cdNiv1 = this.modNivel2Salvar.cdNivel1.cdNivel1;
     this.modNivel2Service.adicionar(this.modNivel2Salvar)
       .then(() => {
         this.toasty.success("Local de Avaliação cadastrada com sucesso!");
         form.reset();
         this.modNivel2Salvar = new ModNivel2();
+        this.pesquisarNivel2();
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

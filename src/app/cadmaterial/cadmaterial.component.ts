@@ -20,7 +20,7 @@ export class CadmaterialComponent {
   tatalRegistros = 0;
   filtro = new CadmaterialFiltro();
   nmmaterial: string;
-
+  cdEmp: any;
   empresaSelecionada = new MenuEmpresa();
   materialSalvar = new Cadmaterial();
   empresas = [];
@@ -59,6 +59,7 @@ export class CadmaterialComponent {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         this.pesquisar2(this.empresaSelecionada.cdEmpresa);
         this.materialSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+        this.cdEmp = this.materialSalvar.cdEmpresa.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -76,9 +77,9 @@ export class CadmaterialComponent {
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
-  pesquisar(page = 0) {
+    pesquisar() {
 
-    this.filtro.page = page;
+    this.filtro.cdEmpresa = this.cdEmp;
 
     this.cadmaterialService.pesquisar(this.filtro)
       .then(resultado => {
@@ -88,18 +89,18 @@ export class CadmaterialComponent {
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
-  aoMudarPagina(event: LazyLoadEvent) {
-    const page = event.first / event.rows;
-    this.pesquisar(page);
-  }
-
+ 
   confirmarExclusao(material: any) {
-    this.confirmation.confirm({
-      message: 'Tem certeza que deseja excluir?',
-      accept: () => {
-        this.excluir(material);
-      }
-    });
+    if(material.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja excluir?',
+        accept: () => {
+          this.excluir(material);
+        }
+      })
+    }else {
+      this.toasty.warning('Você não pode excluir dados da Empresa Exemplo!');
+    }
   }
 
   excluir(material: any) {
@@ -119,13 +120,15 @@ export class CadmaterialComponent {
   }
 
   salvar(form: FormControl) {
-
-    if (this.editando) {
-      this.confirmarAlterar(form);
-    } else {
-      this.confirmarSalvar(form);
-    }
-
+    if(this.materialSalvar.cdEmpresa.cdEmpresa != 1){
+      if (this.editando) {
+        this.confirmarAlterar(form);
+      } else {
+        this.confirmarSalvar(form);
+      }
+   }else {
+    this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
+   }
   }
 
 
@@ -147,6 +150,7 @@ export class CadmaterialComponent {
     });
   }
   adicionarMaterial(form: FormControl) {
+    this.materialSalvar.cdEmpresa.cdEmpresa = this.cdEmp;
     this.cadmaterialService.adicionar(this.materialSalvar)
       .then(() => {
         this.toasty.success("Material cadastrado com sucesso!");

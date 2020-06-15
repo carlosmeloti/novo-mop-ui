@@ -6,8 +6,7 @@ import { Cadmaterial } from '../core/model';
 
 export class CadmaterialFiltro{
   nmmaterial : string;
-  page = 0;
-  size = 5;
+  cdEmpresa: any;
 }
 @Injectable()
 export class CadmaterialService {

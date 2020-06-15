@@ -4,6 +4,7 @@ import { ModNivel3 } from '../core/model';
 
 export class Filtro2 {
   cdNivel1: any;
+  cdEmpresa:any;
 }
 
 export class Filtro23 {
@@ -12,9 +13,9 @@ export class Filtro23 {
 
 
 export class Modnivel3Filtro {
-
+  cdEmpresa: any;
   nmNivel3: string;
-  //cdNivel1: any;
+  cdNivel1: any;
   cdNivel2: any;
 }
 

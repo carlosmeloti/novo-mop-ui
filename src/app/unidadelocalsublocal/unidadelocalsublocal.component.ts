@@ -27,7 +27,9 @@ interface City {
 })
 export class UnidadelocalsublocalComponent implements OnInit {
 
-
+  cdLoc1: any;
+  cdLoc2: any;
+  cdEmp: any;
   cities1: SelectItem[];
   selectedCity1: City;
 
@@ -95,11 +97,7 @@ export class UnidadelocalsublocalComponent implements OnInit {
   }
 
   pesquisarLocal2() {
-
-    const filtro3: Filtro3 = {
-      cdLocal1: this.modLocal3Salvar.cdLocal1.cdLocal1,
-     
-    }
+  
          this.carregarLocal2();
   }
 
@@ -121,7 +119,26 @@ export class UnidadelocalsublocalComponent implements OnInit {
   }
 
   pesquisarSubLocal() {
-    return this.menuService.carregarEmpresaSelecionada()
+    if(this.cdLoc1 != null && this.cdLoc2 != null){
+      return this.menuService.carregarEmpresaSelecionada()
+      .then(empresaSelecionada => {
+        this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        const filtro2: subLocalFiltro = {
+          cdEmpresa: this.empresaSelecionada.cdEmpresa,
+          cdLocal1:  this.cdLoc1,
+          cdLocal2:  this.cdLoc2,
+          nmLocal3:  this.modLocal3Salvar.nmLocal3
+        }
+        this.unidadelocalsublocalService.pesquisarSubLocal(filtro2)
+          .then(modlocal3 => this.modlocal3 = modlocal3);
+        this.modLocal3Salvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+
+    }else{
+      this.cdLoc1 = this.modLocal3Salvar.cdLocal1.cdLocal1;
+      this.cdLoc2 = this.modLocal3Salvar.cdLocal2.cdLocal2;
+      return this.menuService.carregarEmpresaSelecionada()
       .then(empresaSelecionada => {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         const filtro2: subLocalFiltro = {
@@ -135,12 +152,16 @@ export class UnidadelocalsublocalComponent implements OnInit {
         this.modLocal3Salvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
+
+    }
+    
   }
 
   carregarUnidadeDeAvaliacao() {
     return this.menuService.carregarEmpresaSelecionada()
       .then(empresaSelecionada => {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
+        this.cdEmp = this.empresaSelecionada.cdEmpresa;
         this.modLocal1Service.pesquisar2(this.empresaSelecionada.cdEmpresa) 
         .then(modlocal1 => {
             this.modlocal1 = modlocal1.map(c => ({ label: c.cdLocal1 + " - " + c.nmlocal1, value: c.cdLocal1 }));
@@ -148,10 +169,6 @@ export class UnidadelocalsublocalComponent implements OnInit {
           .catch(erro => this.errorHandler.handle(erro));
       })
   }
-
-  
-
-
 
   carregarEmpresas() {
     return this.cadEmpresaService.listarTodas()
@@ -162,14 +179,16 @@ export class UnidadelocalsublocalComponent implements OnInit {
   }
 
   excluir(unidadelocalsublocalService: any) {
-
-    this.modLocal2Service.excluir(unidadelocalsublocalService.cdLocal3)
+    this.modLocal3Salvar.cdLocal1.cdLocal1 = this.cdLoc1;
+    this.modLocal3Salvar.cdLocal2.cdLocal2 = this.cdLoc2;
+    this.modLocal3Salvar.cdEmpresa.cdEmpresa = this.cdEmp;
+    this.unidadelocalsublocalService.excluir(unidadelocalsublocalService.cdLocal3)
       .then(() => {
         if (this.grid.first === 0) {
-          //this.pesquisar();
+          this.pesquisarSubLocal()
         } else {
           this.grid.first = 0;
-          // this.pesquisar();
+          this.pesquisarSubLocal()
         }
         this.toasty.success('Local 3 excluído com sucesso!');
       })
@@ -177,37 +196,41 @@ export class UnidadelocalsublocalComponent implements OnInit {
 
   }
   salvar(unidadelocalsublocalService: any) {
-
-    this.confirmation.confirm({
-      message: 'Tem certeza que deseja salvar?',
-      accept: () => {
-        this.adicionarModLocal3(unidadelocalsublocalService);
-      }
-    });
-
+    if(this.modLocal3Salvar.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja salvar?',
+        accept: () => {
+          this.adicionarModLocal3(unidadelocalsublocalService);
+        }
+      });
+    }else {
+      this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
+    }
   }
 
   confirmarExclusao(modlocal3: any) {
-    this.confirmation.confirm( {
-      message: 'Tem certeza que deseja excluir?',
-      accept: () =>{
-        this.excluir(modlocal3);
-      }
-    });
+    if(modlocal3.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm( {
+        message: 'Tem certeza que deseja excluir?',
+        accept: () =>{
+          this.excluir(modlocal3);
+        }
+      });
+    }else {
+      this.toasty.warning('Você não pode excluir dados da Empresa Exemplo!');
+    }
   }
 
-
-
-
-
-
   adicionarModLocal3(form: FormControl) {
+    this.modLocal3Salvar.cdLocal1.cdLocal1 = this.cdLoc1;
+    this.modLocal3Salvar.cdLocal2.cdLocal2 = this.cdLoc2;
+    this.modLocal3Salvar.cdEmpresa.cdEmpresa = this.cdEmp;
     this.unidadelocalsublocalService.adicionar(this.modLocal3Salvar)
       .then(() => {
         this.toasty.success("Local de Avaliação cadastrado com sucesso!");
         form.reset();
         this.modLocal3Salvar = new Modlocal3();
-
+        this.pesquisarSubLocal()
 
       })
       .catch(erro => this.errorHandler.handle(erro));

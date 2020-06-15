@@ -3,10 +3,14 @@ import { Http, Headers } from '@angular/http';
 import { ModNivel4 } from '../core/model';
 
 export class Filtro2 {
+  cdEmpresa: any;
   cdNivel1: any;
 }
 
 export class Filtro3 {
+  cdEmpresa: any;
+  nmNivel3:string;
+  cdNivel1: any;
   cdNivel2: any;
 }
 
@@ -18,9 +22,11 @@ export class Modnivel3Filtro {
 }
 
 export class Modnivel4Filtro {
-
-  nmNivel4: string;
+  cdEmpresa:any;
+  cdNivel1:any;
+  cdNivel2:any;
   cdNivel3: any;
+  nmNivel4: string;
 }
 
 @Injectable()

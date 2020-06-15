@@ -20,7 +20,7 @@ export class Modlocal1Component implements OnInit {
   tatalRegistros = 0;
   filtro = new Modlocal1Filtro();
   empresaSelecionada = new MenuEmpresa();
-
+  cdEmp: any;
   modLocal1Salvar = new Modlocal1();
   empresas = [];
 
@@ -60,6 +60,7 @@ export class Modlocal1Component implements OnInit {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         this.pesquisar2(this.empresaSelecionada.cdEmpresa);
         this.modLocal1Salvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+        this.cdEmp = this.modLocal1Salvar.cdEmpresa.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -81,7 +82,7 @@ export class Modlocal1Component implements OnInit {
   pesquisar(page = 0) {
 
     this.filtro.page = page;
-
+    this.filtro.cdEmpresa = this.cdEmp;
     this.modLocal1Service.pesquisar(this.filtro)
       .then(resultado => {
         this.tatalRegistros = resultado.total;
@@ -96,12 +97,16 @@ export class Modlocal1Component implements OnInit {
   }
 
   confirmarExclusao(modlocal1: any) {
+    if(modlocal1.cdEmpresa.cdEmpresa != 1) {
     this.confirmation.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
         this.excluir(modlocal1);
       }
-    });
+    })
+   }else {
+    this.toasty.warning('Você não pode excluir dados da Empresa Exemplo!');
+  }
   }
 
   excluir(modlocal1: any) {
@@ -120,12 +125,15 @@ export class Modlocal1Component implements OnInit {
 
   }
   salvar(form: FormControl) {
-
-    if (this.editando) {
-      this.confirmarAlterar(form);
-    } else {
-      this.confirmarSalvar(form);
-    }
+   if(this.modLocal1Salvar.cdEmpresa.cdEmpresa != 1){
+      if (this.editando) {
+        this.confirmarAlterar(form);
+      } else {
+        this.confirmarSalvar(form);
+      }
+   }else {
+    this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
+  }
 
   }
 
@@ -149,6 +157,7 @@ export class Modlocal1Component implements OnInit {
   }
 
   adicionarModLocal1(form: FormControl) {
+    this.modLocal1Salvar.cdEmpresa.cdEmpresa = this.cdEmp;
     this.modLocal1Service.adicionar(this.modLocal1Salvar)
       .then(() => {
         this.toasty.success("Unidade de Avaliação cadastrada com sucesso!");

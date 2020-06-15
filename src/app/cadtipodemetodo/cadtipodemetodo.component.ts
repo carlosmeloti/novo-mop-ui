@@ -21,7 +21,7 @@ export class CadtipodemetodoComponent {
   filtro = new CadtipodemetodoFiltro();
   nmFrequencia: string;
   cdEmpresa: number;
-
+  cdEmp:any;
   tipodemetodoSalvar = new Cadtipodemetodo();
   empresas = [];
   @ViewChild('tabela') grid;
@@ -73,6 +73,7 @@ export class CadtipodemetodoComponent {
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         this.pesquisar2(this.empresaSelecionada.cdEmpresa);
         this.tipodemetodoSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+        this.cdEmp = this.tipodemetodoSalvar.cdEmpresa.cdEmpresa;
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -86,7 +87,7 @@ export class CadtipodemetodoComponent {
   pesquisar() {
 
     const filtro: CadtipodemetodoFiltro = {
-      cdEmpresa: this.tipodemetodoSalvar.cdEmpresa.cdEmpresa,
+      cdEmpresa: this.cdEmp,
       }
     this.cadtipodemetodoService.pesquisar(filtro)
       .then(tipometodo => this.cadtipodemetodo = tipometodo)
@@ -99,12 +100,16 @@ export class CadtipodemetodoComponent {
   }
 
   confirmarExclusao(tipodemetodo: any) {
-    this.confirmation.confirm({
-      message: 'Tem certeza que deseja excluir?',
-      accept: () => {
-        this.excluir(tipodemetodo);
+    if(tipodemetodo.cdEmpresa.cdEmpresa != 1){
+      this.confirmation.confirm({
+        message: 'Tem certeza que deseja excluir?',
+        accept: () => {
+          this.excluir(tipodemetodo);
+        }
+      })
+    }else {
+        this.toasty.warning('Você não pode excluir dados da Empresa Exemplo!');
       }
-    });
   }
 
   excluir(tipometodo: any) {
@@ -124,11 +129,14 @@ export class CadtipodemetodoComponent {
   }
 
   salvar(form: FormControl) {
-
-    if (this.editando) {
-      this.confirmarAlterar(form);
-    } else {
-      this.confirmarSalvar(form);
+    if(this.tipodemetodoSalvar.cdEmpresa.cdEmpresa != 1){
+      if (this.editando) {
+        this.confirmarAlterar(form);
+      } else {
+        this.confirmarSalvar(form);
+      }
+    }else {
+      this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
     }
 
   }
@@ -153,6 +161,7 @@ export class CadtipodemetodoComponent {
   }
 
   adicionarTipoDeMetodo(form: FormControl) {
+   this.tipodemetodoSalvar.cdEmpresa.cdEmpresa = this.cdEmp;
     this.cadtipodemetodoService.adicionar(this.tipodemetodoSalvar)
       .then(() => {
         this.toasty.success("Tipo de metodo cadastrado com sucesso!");

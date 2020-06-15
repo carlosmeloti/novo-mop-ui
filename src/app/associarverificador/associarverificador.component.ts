@@ -180,9 +180,6 @@ export class AssociarverificadorComponent implements OnInit {
 
   pesquisarLocal2() {
 
-    const filtro3: Filtro3 = {
-      cdLocal1: this.cdLocal1,
-    }
     this.carregarLocal2();
   }
 

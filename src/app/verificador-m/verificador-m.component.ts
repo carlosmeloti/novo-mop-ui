@@ -19,7 +19,7 @@ import { MenuService } from '../menu/menu.service';
 })
 export class VerificadorMComponent implements OnInit {
 
-
+showSpinner = false;
 
   verificadorm = [];
   cadtipodeverificador = [];
@@ -60,6 +60,7 @@ export class VerificadorMComponent implements OnInit {
   }
 
   pesquisar() {
+    
     return this.menuService.carregarEmpresaSelecionada()
     .then(empresaSelecionada => {
       this.empresaSelecionada.cdEmpresa = empresaSelecionada;
@@ -84,6 +85,7 @@ export class VerificadorMComponent implements OnInit {
 
   //Metodo para carregar valores
   carregarVerificadorM(codigo: number) {
+    
     this.verificadorMService.buscarPorCodigo(codigo)
       .then(verificador => {
         this.verificadorMSalvar = verificador;

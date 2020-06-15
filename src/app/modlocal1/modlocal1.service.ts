@@ -6,6 +6,7 @@ import { Modlocal1 } from 'src/app/core/model';
 
 export class Modlocal1Filtro{
   nmlocal1 : string;
+  cdEmpresa:any;
   page = 0;
   size = 5;
 }

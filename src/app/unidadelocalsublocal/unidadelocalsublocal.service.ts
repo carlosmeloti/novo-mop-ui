@@ -15,6 +15,7 @@ export class Modlocal3Filtro {
 }
 
 export class Filtro3{
+  cdEmpresa:any;
    cdLocal1: any;
 }
 
@@ -74,7 +75,14 @@ export class UnidadelocalsublocalService {
       });
   }
 
-  
+  excluir(cdLocal3: number): Promise<void> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    return this.http.delete(`${this.modLocal3URL}/${cdLocal3}`, { headers })
+      .toPromise()
+      .then(() => null);
+  }
 
   pesquisarSubLocal(filtro2: subLocalFiltro): Promise<any> {
 

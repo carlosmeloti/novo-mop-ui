@@ -18,18 +18,14 @@ import { MenuService } from '../menu/menu.service';
   styleUrls: ['./cadamostragem.component.css']
 })
 export class CadamostragemComponent {
-tatalRegistros = 0;
+  tatalRegistros = 0;
   filtro = new CadamostragemFiltro();
   nmAmostragem: string;
   cdEmpresa: number;
-  input(){
-
-    this.cdEmpresa = this.menuempresaSalvar.cdEmpresa;
-  } 
+  cdEmp: any;
   amostragemSalvar = new Cadamostragem();
   menuempresaSalvar = new MenuEmpresa();
   cadamostragem = [];
-
   empresas = [];
   empresaSelecionada2 = [];
 
@@ -53,6 +49,7 @@ tatalRegistros = 0;
   ngOnInit() {
     this.carregarEmpresaSelecionada();
     this.carregarEmpresas();
+
     const codigoAmostragem = this.route.snapshot.params['codigo'];
 
 
@@ -67,6 +64,7 @@ tatalRegistros = 0;
         this.empresaSelecionada.cdEmpresa = empresaSelecionada;
         this.pesquisar2(this.empresaSelecionada.cdEmpresa);
         this.amostragemSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
+        this.cdEmp = this.amostragemSalvar.cdEmpresa.cdEmpresa;
         console.log(this.empresaSelecionada.cdEmpresa)
       })
       .catch(erro => this.errorHandler.handle(erro));
@@ -74,16 +72,16 @@ tatalRegistros = 0;
 
   pesquisar2(cdEmpresa) {
     this.cadamostragemService.pesquisar2(cdEmpresa)
-      .then(empresaSelecionada =>  this.cadamostragem  = empresaSelecionada);
+      .then(empresaSelecionada => this.cadamostragem = empresaSelecionada);
   }
-     
+
   get editando() {
     return Boolean(this.amostragemSalvar.cdAmostragem)
   }
 
- 
-    
- 
+
+
+
 
   //Metodo para carregar valores
   carregarAmostragem(cdAmostragem: number) {
@@ -95,22 +93,14 @@ tatalRegistros = 0;
   }
 
   pesquisar() {
-
-    const filtro: CadamostragemFiltro = {
-      cdEmpresa: this.amostragemSalvar.cdEmpresa.cdEmpresa,
+      
+      const filtro: CadamostragemFiltro = {
+        cdEmpresa: this.cdEmp,
       }
-    this.cadamostragemService.pesquisar(filtro)
-      .then(amostragem => this.cadamostragem = amostragem)
-      .catch(erro => this.errorHandler.handle(erro));
-   
-
-    //this.cadamostragemService.pesquisar(this.filtro)
-     // .then(resultado => {
-      //  this.tatalRegistros = resultado.total;
-      //  this.cadamostragem = resultado.cadamostragem;
-
-      //})
-      //.catch(erro => this.errorHandler.handle(erro));
+      this.cadamostragemService.pesquisar(filtro)
+        .then(amostragem => this.cadamostragem = amostragem)
+        .catch(erro => this.errorHandler.handle(erro));
+  
   }
   aoMudarPagina(event: LazyLoadEvent) {
     const page = event.first / event.rows;
@@ -118,11 +108,11 @@ tatalRegistros = 0;
   }
 
   confirmarExclusao(amostragem: any) {
-    if(amostragem.cdEmpresa.cdEmpresa != 1){
+    if (amostragem.cdEmpresa.cdEmpresa != 1) {
       this.confirmation.confirm({
         message: 'Tem certeza que deseja excluir?',
         accept: () => {
-           this.excluir(amostragem);
+          this.excluir(amostragem);
         }
       })
     } else {
@@ -147,8 +137,8 @@ tatalRegistros = 0;
   }
 
   salvar(form: FormControl) {
-  
-    if(this.amostragemSalvar.cdEmpresa.cdEmpresa != 1){
+
+    if (this.amostragemSalvar.cdEmpresa.cdEmpresa != 1) {
       if (this.editando) {
         this.confirmarAlterar(form);
       } else {
@@ -157,7 +147,7 @@ tatalRegistros = 0;
     } else {
       this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
     }
-    
+
 
   }
 
@@ -181,6 +171,7 @@ tatalRegistros = 0;
   }
 
   adicionarAmostragem(form: FormControl) {
+    this.amostragemSalvar.cdEmpresa.cdEmpresa = this.cdEmp;
     this.cadamostragemService.adicionar(this.amostragemSalvar)
       .then(() => {
         this.toasty.success("Amostragem cadastrada com sucesso!");
@@ -202,13 +193,13 @@ tatalRegistros = 0;
       .catch(erro => this.errorHandler.handle(erro));
   }
 
- /* carregarEmpresas() {
-    return this.cadEmpresaService.listarTodas()
-      .then(empresas => {
-        this.empresas = empresas.map(c => ({ label: c.cdEmpresa + " - " + c.cdEmpresa.nmEmpresa, value: c.cdEmpresa }));
-      })
-      .catch(erro => this.errorHandler.handle(erro));
- } */
+  /* carregarEmpresas() {
+     return this.cadEmpresaService.listarTodas()
+       .then(empresas => {
+         this.empresas = empresas.map(c => ({ label: c.cdEmpresa + " - " + c.cdEmpresa.nmEmpresa, value: c.cdEmpresa }));
+       })
+       .catch(erro => this.errorHandler.handle(erro));
+  } */
 
   carregarEmpresas() {
     return this.cadEmpresaService.listarTodas()

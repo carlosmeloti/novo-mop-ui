@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, ResponseContentType } from '@angular/http';
 
 export class FormFiltro {
   cdTemplate: any;
@@ -9,23 +9,23 @@ export class FormFiltro {
 export class AppformulariocoletaService {
 
  
-  formURL = "http://localhost:8081/modverificadoresmonitoramentotemplate/teste?cdTemplate=1";
+  formURL = "http://localhost:8081/modverificadoresmonitoramentotemplate/relatorio";
 
   constructor(private http: Http) { }
 
-  pesquisar(filtro: FormFiltro): Promise<any> {
+  relatorio(filtro: FormFiltro): Promise<any> {
 
     const params = new URLSearchParams;
     const headers = new Headers;
     headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
 
-    if (filtro.cdTemplate) {
+    
       params.set('cdTemplate', filtro.cdTemplate);
-    }
-
-    return this.http.get(`${this.formURL}`, { headers, search: filtro })
+   
+    return this.http.get(`${this.formURL}?cdTemplate=${filtro.cdTemplate}`, 
+    { responseType: ResponseContentType.Blob })
       .toPromise()
-      .then(response => response.json().content)
+      .then(response => response.blob())
 
   };
 

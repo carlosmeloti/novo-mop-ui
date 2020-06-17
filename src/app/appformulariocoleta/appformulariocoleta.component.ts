@@ -41,21 +41,23 @@ export class AppformulariocoletaComponent {
   }
 
   gerar() {
-
-    console.log(this.cdTemplate)
     const filtro: FormFiltro = {
-      cdTemplate: this.appMonitoramentoSalvar.cdTemplate.cdTemplate
-      
+      cdTemplate: this.cdTemplate
     }
-    this.appformularioService.pesquisar(filtro)
-      .then(appformulario => this.appformulario = appformulario);
+    this.appformularioService.relatorio(filtro)
+      .then(relatorio => {
+        const url = window.URL.createObjectURL(relatorio);
+
+        window.open(url);
+      });
   }
- 
+
+  
 
   carregarAppMonitoramento() {
     return this.appmonitoramentoService.listarTodas()
       .then(appmonitoramentomonitoramento => {
-        this.AppMonitoramento = appmonitoramentomonitoramento.map(c => ({ label: c.cdTemplate.cdTemplate + " - " + c.nmMonitoramento, value: c.cdMonitoramento }));
+        this.AppMonitoramento = appmonitoramentomonitoramento.map(c => ({ label: c.cdMonitoramento + " - " + c.nmMonitoramento, value: c.cdMonitoramento }));
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

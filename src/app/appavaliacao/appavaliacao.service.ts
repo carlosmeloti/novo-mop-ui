@@ -6,10 +6,9 @@ import { AppAvaliacao } from '../core/model';
 
 
 export class AppAvaliacaoFiltro {
-
+  cdEmpresa: any;
   cdMonitoramento: number;
   nmMonitoramento: string;
-
 }
 
 
@@ -43,6 +42,7 @@ export class AppavaliacaoService {
     if (filtro.nmMonitoramento) {
       params.set('cdMonitoramento', filtro.nmMonitoramento);
     }
+     params.set('cdEmpresa', filtro.cdEmpresa);
 
     return this.http.get(`${this.appavaliacaoURL}`, { headers, search: filtro })
       .toPromise()

@@ -10,7 +10,7 @@
         <div class="ui-g-4">
           <label style="display: block">Monitoramento: </label>
           <p-dropdown [options]="appmonitoramento" name="appmonitoramento" placeholder="Selecione"
-            [style]="{'width':'320px'}" [(ngModel)]="cdMonitoramento"></p-dropdown>
+            [style]="{'width':'320px'}" [(ngModel)]="appavaliacaoSalvar.cdMonitoramento.cdMonitoramento"></p-dropdown>
 
         </div>
         <div class="ui-g-8 ">
@@ -18,21 +18,8 @@
           <button type="button" style="width: 200px" (click)="pesquisarMon()" pButton
             label="Escolher Monitoramento"></button>
         </div>
-
-
-        <div class="ui-g-1 ui-fluid">
-
-          <label style="display: block">Código: </label>
-          <input type="text" name="codigo" [readonly]="true" [(ngModel)]="appavaliacaoSalvar.cdAvalacao" pInputText
-            style="width: 75px" />
-        </div>
-        <div class="ui-g-1 ui-fluid">
-
-          <label style="display: block">Monitora. </label>
-          <input type="text" name="codigo" [(ngModel)]="appavaliacaoSalvar.cdMonitoramento.cdMonitoramento" pInputText
-            style="width: 75px" />
-        </div>
-        <div class="ui-g-6 ui-fluid">
+                
+        <div class="ui-g-8 ui-fluid">
           <label style="display: block">Avaliação: </label>
           <input type="text" name="nmAvaliacao" [(ngModel)]="appavaliacaoSalvar.nmAvaliacao" pInputText />
         </div>
@@ -46,16 +33,7 @@
           <p-calendar name="dtFim" [(ngModel)]="appavaliacaoSalvar.dtFim" dateFormat="dd.mm.yy" [showIcon]="true">
           </p-calendar>
         </div>
-        <div class="ui-g-3 ui-fluid">
-          <label>Empresa</label>
-          <!--<p-dropdown name="empresa" [options]="empresas" [autoWidth]="false"  [(ngModel)]="amostragemSalvar.cdEmpresa.cdEmpresa" required></p-dropdown>-->
-
-          <p-selectButton name="empresa" [options]="empresas" [(ngModel)]="appavaliacaoSalvar.cdEmpresa.cdEmpresa">
-          </p-selectButton>
-        </div>
-
-
-
+      
         <div class="ui-g-2 ui-fluid">
           <br>
           <button pButton type="submit" label="Salvar" class="ui-button-raised ui-button-success"
@@ -84,23 +62,23 @@
               <th>Avaliação</th>
               <th>Início</th>
               <th>Fim</th>
-              <th style=" width: 140px"></th>
+              <th style=" width: 110px"></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-appavaliacao>
             <tr>
-              <th>{{appavaliacao.cdAvaliacao}}</th>
-              <th>{{appavaliacao.cdMonitoramento.cdMonitoramento}}</th>
-              <th>{{appavaliacao.nmAvaliacao}}</th>
-              <th>{{appavaliacao.dtInicio}}</th>
-              <th>{{appavaliacao.dtFim}}</th>
+              <td>{{appavaliacao.cdAvaliacao}}</td>
+              <td>{{appavaliacao.cdMonitoramento.nmMonitoramento}}</td>
+              <td>{{appavaliacao.nmAvaliacao}}</td>
+              <td>{{appavaliacao.dtInicio}}</td>
+              <td>{{appavaliacao.dtFim}}</td>
               <!--<th style="text-align: left">{{material.nmMaterial}}</th>-->
-              <th>
+              <td>
                 <a pButton icon="pi pi-pencil" pTooltip="Editar Material" tooltipPosition="top"
                   [routerLink]="['/appavaliacao', appavaliacao.cdAvaliacao]"></a>
                 <button pButton icon="pi pi-trash" style="margin-left: 10px" pTooltip="Excluir Avaliação"
-                  tooltipPosition="top" (click)="confirmarExclusao(appavaliacao)"></button>
-              </th>
+                class="ui-button-danger" tooltipPosition="top" (click)="confirmarExclusao(appavaliacao)"></button>
+              </td>
             </tr>
           </ng-template>
         </p-table>

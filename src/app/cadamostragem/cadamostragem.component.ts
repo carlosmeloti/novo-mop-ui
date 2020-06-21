@@ -49,10 +49,7 @@ export class CadamostragemComponent {
   ngOnInit() {
     this.carregarEmpresaSelecionada();
     this.carregarEmpresas();
-
     const codigoAmostragem = this.route.snapshot.params['codigo'];
-
-
     if (codigoAmostragem) {
       this.carregarAmostragem(codigoAmostragem);
     }
@@ -78,9 +75,6 @@ export class CadamostragemComponent {
   get editando() {
     return Boolean(this.amostragemSalvar.cdAmostragem)
   }
-
-
-
 
 
   //Metodo para carregar valores

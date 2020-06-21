@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { AppAvaliacao } from '../core/model';
 
-
-
-
 export class AppAvaliacaoFiltro {
   cdEmpresa: any;
   cdMonitoramento: number;
   nmMonitoramento: string;
 }
+
+
 
 
 @Injectable()

@@ -65,7 +65,6 @@ import { UnidadelocalsublocalComponent } from './unidadelocalsublocal/unidadeloc
 import { CadniveldeavaliacaoService } from './cadniveldeavaliacao/cadniveldeavaliacao.service';
 import { ErrorHandlerService } from './core/error-handler.service';
 import { VerificadorMService } from './verificador-m/verificador-m.service';
-
 import { Modlocal1Component } from './modlocal1/modlocal1.component';
 import { Modlocal1Service } from './modlocal1/modlocal1.service';
 import { Modlocal2Component } from './modlocal2/modlocal2.component';
@@ -95,6 +94,7 @@ import { TodosOsVerificadoresComponent } from './todos-os-verificadores/todos-os
 import { AppmonitoramentoverificadorComponent } from './appmonitoramentoverificador/appmonitoramentoverificador.component';
 import { AppmonitoramentoverificadorService } from './appmonitoramentoverificador/appmonitoramentoverificador.service';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { AppcoletadedadosService } from './appcoletadedados/appcoletadedados.service';
 import {FieldsetModule} from 'primeng/fieldset';
 
 
@@ -247,6 +247,7 @@ const routes: Routes = [
     ErrorHandlerService,
     AppmonitoramentoverificadorService,
     AppformulariocoletaService,
+    AppcoletadedadosService,
 
   ],
   bootstrap: [AppComponent]

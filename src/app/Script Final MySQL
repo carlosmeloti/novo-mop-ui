@@ -2,6 +2,7 @@ Drop database if exists mopapi;
 CREATE database mopapi;
 USE mopapi;
 SET @@auto_increment_increment=1;
+SET max_sp_recursion_depth=255;
 
 -- CadEmpresa -------------------------
 
@@ -4742,4 +4743,54 @@ ON d18_monitoramento
 FOR EACH ROW
 BEGIN
   CALL insereverificadormonitoramento();
+END$
+
+DELIMITER $$
+  CREATE PROCEDURE mopapi.insereverificadorcoleta ()
+  BEGIN
+  DECLARE cdempresa INT DEFAULT 0;
+  DECLARE cdverificador INT DEFAULT 0;
+  DECLARE cdtipoverificador INT DEFAULT 0;
+  DECLARE cdMonitoramento INT DEFAULT 0;
+  DECLARE cdAvaliacao INT DEFAULT 0;
+  DECLARE existe_mais_linhas INT DEFAULT 0;
+  DECLARE cursorinsereverificadorcoleta CURSOR FOR  
+  select vt.r17_cdempresa, vt.r17_cdverimod,
+ vt.r17_cdtipoverificador,
+ m.d18_cdmonitoramento, a.d19_cdavaliacao
+ from d19_avaliacao a 
+ join d18_monitoramento m on 
+ a.d19_cdmonitoramento = m.d18_cdmonitoramento
+ join  r17_verificador_template_m vt on
+ m.d18_cdtemplate = vt.r17_cdtemplate
+ where a.d19_cdavaliacao = (select MAX(d19_cdavaliacao) from d19_avaliacao);
+ 
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET existe_mais_linhas=1;
+  select MAX(d19_cdavaliacao) into cdAvaliacao from d19_avaliacao;
+  OPEN cursorinsereverificadorcoleta;
+  meuLoop: LOOP
+  FETCH cursorinsereverificadorcoleta INTO 
+  cdempresa, cdverificador,cdtipoverificador, cdMonitoramento,cdAvaliacao;
+  IF existe_mais_linhas = 1 THEN
+  LEAVE meuLoop;
+  END IF;
+  
+ INSERT INTO `mopapi`.`p21_coleta`
+(`p21_cdempresa`,
+`p21_id_Verificador_m`,
+`p21_cdtipoverificador`,
+`p21_cdmonitoramento`,
+`p21_cdavaliacao`)
+ VALUES(cdempresa, cdverificador,cdtipoverificador, cdMonitoramento,cdAvaliacao);
+  END LOOP meuLoop;
+  END $$
+  DELIMITER ;
+
+DROP TRIGGER IF EXISTS Tgr_p21_coleta_populaverificadores;
+DELIMITER $
+CREATE TRIGGER Tgr_p21_coleta_populaverificadores AFTER INSERT
+ON d19_avaliacao
+FOR EACH ROW
+BEGIN
+  CALL insereverificadorcoleta();
 END$

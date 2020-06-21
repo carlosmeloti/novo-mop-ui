@@ -2,9 +2,10 @@
   <p-card  [style]="{width: 'px'}" styleClass="ui-card-shadow">
     <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
     <div class="ui-g">
-        <div class="ui-g-12">
-          <h2>Coleta de Dados</h2>
-        </div>
+      <div class="ui-g-12">
+        <h2>Coleta de Dados {{ editando ? ' - Editando - ' : '' }}</h2>
+      </div>
+        
         <div class="ui-g-4 ui-fluid">
           <label style="display: block">Escolha um modelo de Monitoramento: </label>
           <p-dropdown [options]="monitoramentos" name="monitoramentos" [(ngModel)]="appColetaDeDadosSalvar.cdMonitoramento.cdMonitoramento" placeholder="Selecione"
@@ -19,47 +20,65 @@
         <div class="ui-g-4 ui-fluid">
           <label style="display: block">Avaliação: </label>
           <p-dropdown [options]="avaliacoes" name="avaliacoes" placeholder="Selecione" 
+          [(ngModel)]="appColetaDeDadosSalvar.cdAvaliacao.cdAvaliacao"
           [style]="{'width':'370px'}" ></p-dropdown>
         </div>
         <div class="ui-g-8 ui-fluid">
           <br />
-          <button type="button" style="width: 200px" pButton label="Listar Verificadores" (click)="pesquisarPorMonitoramento()">
+          <button type="button" style="width: 200px" pButton label="Listar Verificadores" (click)="pesquisarPorAvaliacao()">
           </button>
         </div>
+        <div class="ui-g-8 ui-fluid">
+          <label style="display: block">Observação do Verificador nesta coleta: </label>
+          <input type="text" name="txObservacao" pInputText [(ngModel)]="appColetaDeDadosSalvar.txObservacao" />
+        </div>
+        <div class="ui-g-2 ui-fluid">
+          <label style="display: block">Nº. Observações: </label>
+          <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrObservacoes" />
+        </div>
+        <div class="ui-g-2 ui-fluid">
+          <label style="display: block">Não conformidades: </label>
+          <input type="text" name="nrNaoConformidades" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrNaoConformidades" />
+        </div>
 
-        <div class="ui-g-6">
+        <div class="ui-g-2 ui-fluid">
           <br />
-          <button pButton type="submit" label="Definir" class="ui-button-raised ui-button-success" [style]="{'width':'100px'}"></button>
+          <button pButton type="submit" label="Salvar" class="ui-button-raised ui-button-success"
+          [disabled]="!appColetaDeDadosSalvar.cdColetaDeDaDos" [style]="{'width':'100px'}"></button>
+        </div>
+        <div *ngIf="editando" class="ui-g-2 ui-fluid ">
+          <br />
+          <h3><strong><a routerLink="/appcoletadedados">Sair da edição</a></strong></h3>
+
         </div>
  
         <div class="ui-g">
           <div class="ui-g-12">
-              <p-table [value]="verificadordoMonitoramentoTabela" [paginator]="true" [rows]="5" [responsive]="true"
+              <p-table [value]="verificadores" [paginator]="true" [rows]="5" [responsive]="true"
                   [totalRecords]="totalRecords">
     
                   <ng-template pTemplate="header">
                       <tr>
-                          <th style="width: 70px">COD</th>
-                          <th style="width: 100px">Cod Verificador</th>
-                          <th style="width: 150px">Alfanumérico</th>
-                          <th style="width: 150px">Sigla</th>
-                          <th style="margin-left: 10px">Descrição</th>
-                          <th style=" width: 140px"></th>
+                          <th style="width: 150px">Empresa</th>
+                          <th>Verificador</th>
+                          <th style="width: 150px">Nº. Observações</th>
+                          <th style="width: 150px">Não conformidades</th>
+                          <th style=" width: 110px"></th>
                       </tr>
                   </ng-template>
-                  <ng-template pTemplate="body" let-verificadordoMonitoramento>
+                  <ng-template pTemplate="body" let-verificador>
                       <tr>
-                          <th>{{verificadordoMonitoramento.cdVeriMod}}</th>
-                          <th>{{verificadordoMonitoramento.cdVerificador.codigo}}</th>
-                          <th>{{verificadordoMonitoramento.cdVerificador.codalfa}}</th>
-                          <th>{{verificadordoMonitoramento.cdVerificador.cadNivelDeAvaliacao.sigla}}</th>
-                          <th style="text-align: left">{{verificadordoMonitoramento.cdVerificador.nmverificador}}</th>
-                          <th>
-    
+                          <td>{{verificador.cdEmpresa.nmEmpresa}}</td>
+                          <td>{{verificador.id_Verificador_m.nmverificador}}</td>
+                          <td>{{verificador.nrObservacoes}}</td>
+                          <td>{{verificador.nrNaoConformidades}}</td>
+                          <td>
+                            <a pButton icon="pi pi-pencil" pTooltip="Editar Coleta de Dados" tooltipPosition="top"
+                            [routerLink]="['/appcoletadedados', verificador.cdColetaDeDaDos]"></a>
                               <button pButton icon="pi pi-trash" style="margin-left: 10px"
                                   pTooltip="Excluir Este Verificador" tooltipPosition="top" class="ui-button-danger"
                                   (click)="confirmarExclusao(verificadordomodelo)"></button>
-                          </th>
+                          </td>
     
                       </tr>
                   </ng-template>

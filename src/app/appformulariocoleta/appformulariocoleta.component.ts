@@ -57,7 +57,7 @@ export class AppformulariocoletaComponent {
   carregarAppMonitoramento() {
     return this.appmonitoramentoService.listarTodas()
       .then(appmonitoramentomonitoramento => {
-        this.AppMonitoramento = appmonitoramentomonitoramento.map(c => ({ label: c.cdMonitoramento + " - " + c.nmMonitoramento, value: c.cdMonitoramento }));
+        this.AppMonitoramento = appmonitoramentomonitoramento.map(c => ({ label: c.cdMonitoramento + " - " + c.nmMonitoramento, value: c.cdTemplate.cdTemplate }));
       })
       .catch(erro => this.errorHandler.handle(erro));
   }

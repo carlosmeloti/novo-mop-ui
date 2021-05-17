@@ -30,7 +30,7 @@ export class AppcoletadedadosComponent implements OnInit {
   cdAva: any;
   constructor(
     private router: Router,
-    private appcoletadedadosService: AppcoletadedadosService, 
+    private appcoletadedadosService: AppcoletadedadosService,
     private appmonitoramentoService: AppmonitoramentoService,
     private menuService: MenuService,
     private appAvaliacaoService: AppavaliacaoService,
@@ -46,7 +46,7 @@ export class AppcoletadedadosComponent implements OnInit {
     this.carregarMonitoramentos();
     this.pesquisarPorAvaliacao()
     const codigoAppColetaDeDado = this.route.snapshot.params['codigo'];
-   
+
     if (codigoAppColetaDeDado) {
       this.carregarAppColetaDeDado(codigoAppColetaDeDado);
     }
@@ -71,7 +71,7 @@ export class AppcoletadedadosComponent implements OnInit {
         this.appColetaDeDadosSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
         this.cdEmp = this.appColetaDeDadosSalvar.cdEmpresa.cdEmpresa;
         console.log(this.empresaSelecionada.cdEmpresa)
-       
+
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -87,7 +87,7 @@ export class AppcoletadedadosComponent implements OnInit {
       .then(verificadores => this.verificadores = verificadores)
       .catch(erro => this.errorHandler.handle(erro));
 
-      
+
 
 }
 
@@ -101,12 +101,12 @@ export class AppcoletadedadosComponent implements OnInit {
   }
 
   pesquisarAvaliacoesPorMonitoramento() {
-  
+
     const filtro: AppAvaliacaoFiltro = {
       cdEmpresa: this.cdEmp,
       cdMonitoramento:  this.appColetaDeDadosSalvar.cdMonitoramento.cdMonitoramento,
       nmMonitoramento: this.appColetaDeDadosSalvar.cdMonitoramento.nmMonitoramento
-    
+
     }
     this.apavaliacaoService.pesquisarMon(filtro)
       .then(appavaliacao => this.avaliacoes = appavaliacao.map(c => ({ label: c.cdAvaliacao + " - " + c.nmAvaliacao, value: c.cdAvaliacao })));
@@ -131,7 +131,7 @@ export class AppcoletadedadosComponent implements OnInit {
     } else {
       this.toasty.warning('Você não pode salvar dados na Empresa Exemplo!');
     }
-    
+
   }
 
   confirmarAlterar(appcoletadedados: any) {
@@ -148,13 +148,14 @@ export class AppcoletadedadosComponent implements OnInit {
       .then(appAvaliacao => {
         this.appColetaDeDadosSalvar = appAvaliacao;
         this.toasty.success('Coleta salva com sucesso!');
-      //  this.sairDaEdicao();
-      this.pesquisarPorAvaliacao();
-        this.cdAva = this.cdAva;
-        console.log("this.cdAva: " + this.cdAva)
+        this.pesquisarPorAvaliacao();
+        this.router.navigate(['/appcoletadedados']);
+          this.cdAva = this.cdAva;
+              console.log("this.cdAva: " + this.cdAva)
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
+
 
   sairDaEdicao() {
     this.router.navigate(['/appcoletadedados']);

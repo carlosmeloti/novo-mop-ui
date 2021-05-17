@@ -18,7 +18,7 @@ export class AppcoletadedadosService {
 
   constructor(private http: Http) { }
 
-  
+
   pesquisarPorAvaliacao(filtro: AvaliacaoFiltro): Promise<any> {
 
     const params = new URLSearchParams;
@@ -27,7 +27,7 @@ export class AppcoletadedadosService {
 
     params.set('cdEmpresa', filtro.cdEmpresa);
     params.set('cdAvaliacao', filtro.cdAvaliacao);
-   
+
     return this.http.get(`${this.coletadedadosurl}`, { headers, search: filtro })
     .toPromise()
     .then(response => response.json().content)
@@ -58,11 +58,12 @@ export class AppcoletadedadosService {
       .toPromise()
       .then(response => {
         const cadamostragemAlterada = response.json() as AppColetaDeDados;
+        return cadamostragemAlterada;
 
-
-        return cadamostragemAlterada;AppColetaDeDados
       });
   }
 
-  
+
+
+
 }

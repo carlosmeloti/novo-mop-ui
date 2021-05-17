@@ -143,13 +143,15 @@ const routes: Routes = [
   { path: 'appavaliacao/:codigo', component:AppavaliacaoComponent},
   { path: 'appformulariocoleta', component:AppformulariocoletaComponent},
   { path: 'appformulariocoleta/:codigo', component:AppformulariocoletaComponent},
+
   { path: 'appcoletadedados', component:AppcoletadedadosComponent},
   { path: 'appcoletadedados/:codigo', component:AppcoletadedadosComponent},
+
   { path: 'addverificadoresmodelo', component:AddverificadormodeloComponent},
   { path: 'addverificadoresmodelo/:codigo', component:AddverificadormodeloComponent},
   { path: 'appmonitoramentoverificador', component: AppmonitoramentoverificadorComponent},
   { path: 'relatorios', component:TodosOsVerificadoresComponent},
-  
+
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
 ]
 

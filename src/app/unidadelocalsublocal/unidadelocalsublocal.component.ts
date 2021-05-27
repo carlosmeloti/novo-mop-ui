@@ -107,9 +107,11 @@ export class UnidadelocalsublocalComponent implements OnInit {
       this.empresaSelecionada.cdEmpresa = empresaSelecionada;
       const filtro: filtroAvaliacao = {
         cdEmpresa: this.empresaSelecionada.cdEmpresa,
-        cdLocal1: this.cdLocal1,
+        cdLocal1: this.modLocal3Salvar.cdLocal1.cdLocal1//this.cdLocal1,
 
       }
+
+      console.log(filtro);
       this.modLocal2Service.listarPorLocal1Filtro(filtro) 
       .then(modlocal2 => {
         this.modlocal2 = modlocal2.map(c => ({ label: c.cdLocal2 + " - " + c.nmLocal2, value: c.cdLocal2 }));

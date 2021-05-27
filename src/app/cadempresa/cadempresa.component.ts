@@ -56,6 +56,7 @@ export class CadempresaComponent implements OnInit {
   pesquisar(page = 0) {
 
     this.filtro.page = page;
+    
 
     this.cadempresaService.pesquisar(this.filtro)
       .then(resultado => {
@@ -114,7 +115,7 @@ export class CadempresaComponent implements OnInit {
 
   confirmarSalvar(empresa: any) {
     this.confirmation.confirm({
-      message: 'Tem certeza que deseja salvar? - Os dados para a nova empresa serão carregados!',
+      message: 'Tem certeza que deseja salvar? - Os dados para a nova empresa serão carregados! - Esta operação poderá demorar alguns minutos',
       accept: () => {
         this.adicionarEmpresa(empresa);
       }

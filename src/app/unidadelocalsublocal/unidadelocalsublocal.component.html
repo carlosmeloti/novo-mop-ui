@@ -6,7 +6,7 @@
           <h2>Unidade, Local e Sublocal {{ editando ? ' - Editando - ' : '' }}</h2>
         </div>
         <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
-          <label>Unidade de Avaliação</label>
+          <label>Unidade de Avaliação: <strong><a routerLink="/modlocal1">Editar</a></strong></label>
           <p-dropdown name="modlocal1" [options]="modlocal1" placeholder="Selecione" [autoWidth]="false"
             [(ngModel)]="modLocal3Salvar.cdLocal1.cdLocal1" [showClear]="true" required></p-dropdown>
         </div>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="ui-g-6 ui-fluid" style="padding-top:10px ">
-          <label style="display: block">Local de Avaliação: </label>
+          <label style="display: block">Local de Avaliação: <strong><a routerLink="/modlocal2">Editar</a></strong></label>
 
           <p-dropdown name="modlocal2" [options]="modlocal2" placeholder="Selecione" [autoWidth]="false"
             [(ngModel)]="modLocal3Salvar.cdLocal2.cdLocal2" [showClear]="true" required></p-dropdown>

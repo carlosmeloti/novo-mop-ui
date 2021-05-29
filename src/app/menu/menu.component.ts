@@ -89,7 +89,7 @@ export class MenuComponent implements OnInit {
               /*{
                 label: 'Associar Verificador',
                 routerLink: '/associarverificador'
-              },*/
+              },
               {
                 label: 'Unidade de Avaliação',
                 routerLink: '/modlocal1'
@@ -97,13 +97,13 @@ export class MenuComponent implements OnInit {
               {
                 label: 'Local de Avaliação',
                 routerLink: '/modlocal2'
-              },
+              },*/
               {
-                label: 'Sublocal',
+                label: 'Unidade, Local e Sublocal' ,
                 routerLink: '/unidadelocalsublocal'
               },
               {
-                label: 'Nível Hierárquivo ( Assunto, etapa, Item e subitem)',
+                label: 'Nível Hierárquivo (Assunto, etapa, Item e subitem)',
                 routerLink: '/modnivel4'
               },
               {separator: true},

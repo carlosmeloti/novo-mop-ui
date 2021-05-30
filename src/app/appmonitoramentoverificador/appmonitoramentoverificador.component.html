@@ -3,12 +3,12 @@
     <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
       <div class="ui-g">
         <div class="ui-g-12">
-          <h2>Verificadore do Monitoramento</h2>
+          <h2>Verificadores do Monitoramento</h2>
         </div>
         <div class="ui-g-4 ui-fluid">
           <label style="display: block">Escolha um modelo de Monitoramento: </label>
           <p-dropdown [options]="monitoramentos" name="monitoramentos" placeholder="Selecione"
-             [style]="{'width':'370px'}" [(ngModel)]="appMonitoramentoVerificadorSalvar.cdMonitoramento.cdMonitoramento"></p-dropdown>
+             [style]="{'width':'370px'}" [(ngModel)]="appMonitoramentoVerificadorSalvar.cdMonitoramento"></p-dropdown>
         </div>
         <div class="ui-g-8 ui-fluid">
           <br />
@@ -36,10 +36,10 @@
               <ng-template pTemplate="body" let-verificadordoMonitoramento>
                   <tr>
                       <td>{{verificadordoMonitoramento.cdVeriMod}}</td>
-                      <td>{{verificadordoMonitoramento.cdVerificador.codigo}}</td>
-                      <td>{{verificadordoMonitoramento.cdVerificador.codalfa}}</td>
-                      <td>{{verificadordoMonitoramento.cdVerificador.cadNivelDeAvaliacao.sigla}}</td>
-                      <td style="text-align: left">{{verificadordoMonitoramento.cdVerificador.nmverificador}}</td>
+                      <td>{{verificadordoMonitoramento.codigo}}</td>
+                      <td>{{verificadordoMonitoramento.codalfa}}</td>
+                      <td>{{verificadordoMonitoramento.cadNivelDeAvaliacao.sigla}}</td>
+                      <td style="text-align: left">{{verificadordoMonitoramento.nmverificador}}</td>
                       <td>
 
                           <button pButton icon="pi pi-trash" style="margin-left: 10px"

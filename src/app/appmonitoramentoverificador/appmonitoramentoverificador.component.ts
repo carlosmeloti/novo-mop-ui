@@ -47,7 +47,7 @@ export class AppmonitoramentoverificadorComponent {
   pesquisarPorMonitoramento() {
       
     const filtro: VerificadoresMonitoramentoFiltro = {
-      cdMonitoramento: this.appMonitoramentoVerificadorSalvar.cdMonitoramento.cdMonitoramento
+      cdMonitoramento: this.appMonitoramentoVerificadorSalvar.cdMonitoramento
     }
     this.appMonitoramentoVerificadorService.pesquisarPorMonitoramento(filtro)
       .then(verificadordoMonitoramentoTabela => this.verificadordoMonitoramentoTabela = verificadordoMonitoramentoTabela);

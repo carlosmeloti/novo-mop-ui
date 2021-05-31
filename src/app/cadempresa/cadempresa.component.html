@@ -37,6 +37,9 @@
 
 
           <div class="ui-g-2 ui-fluid">
+            <div class="loader-empresa" *ngIf="salvarEmAndamento">
+              <p-progressSpinner [style]="{top: '50%', left: '50%'}"  strokeWidth="8" fill="#EEEEEE" animationDuration=".6s" class="ui-progress-spinner-color"></p-progressSpinner>
+            </div>
               <br />
               <button pButton type="submit" label="Salvar" class="ui-button-raised ui-button-success" [disabled]="!empresasSalvar.nmEmpresa"></button>
             </div>
@@ -86,10 +89,10 @@
                       <td style="text-align: left">{{empresa.pessoContato}}</td>
                       <td style="text-align: left">{{empresa.cnpjEmpresa}}</td>
                       <td>
-  
+
                           <a pButton icon="pi pi-pencil" pTooltip="Editar Empresa" tooltipPosition="top" [routerLink]="['/cadempresa', empresa.cdEmpresa]"></a>
                           <button pButton icon="pi pi-trash" style="margin-left: 10px" class="ui-button-danger" pTooltip="Excluir Empresa" tooltipPosition="top" (click)="confirmarExclusao(empresa)"></button>
-  
+
                       </td>
                   </tr>
                 </ng-template>

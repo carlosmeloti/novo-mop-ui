@@ -18,7 +18,7 @@ export class CadempresaComponent implements OnInit {
   tatalRegistros = 0;
   filtro = new CadempresaFiltro();
   nmEmpresa: string;
-
+  salvarEmAndamento: boolean = false; // Para iniciar o reload, deve-se inciar com uma variavel
   empresas = [];
   empresasSalvar = new Cadempresa();
   @ViewChild('tabela') grid;
@@ -56,7 +56,7 @@ export class CadempresaComponent implements OnInit {
   pesquisar(page = 0) {
 
     this.filtro.page = page;
-    
+
 
     this.cadempresaService.pesquisar(this.filtro)
       .then(resultado => {
@@ -110,7 +110,7 @@ export class CadempresaComponent implements OnInit {
     } else {
       this.toasty.warning('Você não pode excluir a Empresa Exemplo!');
     }
-    
+
   }
 
   confirmarSalvar(empresa: any) {
@@ -118,6 +118,7 @@ export class CadempresaComponent implements OnInit {
       message: 'Tem certeza que deseja salvar? - Os dados para a nova empresa serão carregados! - Esta operação poderá demorar alguns minutos',
       accept: () => {
         this.adicionarEmpresa(empresa);
+        this.salvarEmAndamento = true; //Ao salvar o reload e iniciado <p-progressSpinner>
       }
     });
   }

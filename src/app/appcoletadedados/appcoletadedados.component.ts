@@ -44,7 +44,6 @@ export class AppcoletadedadosComponent implements OnInit {
   ngOnInit() {
     this.carregarEmpresaSelecionada();
     this.carregarMonitoramentos();
-    this.pesquisarPorAvaliacao()
     const codigoAppColetaDeDado = this.route.snapshot.params['codigo'];
 
     if (codigoAppColetaDeDado) {
@@ -71,6 +70,7 @@ export class AppcoletadedadosComponent implements OnInit {
         this.appColetaDeDadosSalvar.cdEmpresa.cdEmpresa = this.empresaSelecionada.cdEmpresa;
         this.cdEmp = this.appColetaDeDadosSalvar.cdEmpresa.cdEmpresa;
         console.log(this.empresaSelecionada.cdEmpresa)
+        this.pesquisarPorAvaliacao()
 
       })
       .catch(erro => this.errorHandler.handle(erro));
@@ -79,6 +79,7 @@ export class AppcoletadedadosComponent implements OnInit {
   pesquisarPorAvaliacao() {
     this.cdAva = this.appColetaDeDadosSalvar.cdAvaliacao.cdAvaliacao;
     console.log("this.cdAva p: " + this.cdAva)
+    console.log("this.cdEmp e: " + this.cdEmp)
     const filtro: AvaliacaoFiltro = {
       cdAvaliacao: this.cdAva,
       cdEmpresa: this.cdEmp

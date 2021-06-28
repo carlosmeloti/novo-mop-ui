@@ -139,7 +139,12 @@ export class AppavaliacaoComponent {
     if (this.editando) {
       this.confirmarAlterar(form);
     } else {
-      this.confirmarSalvar(form);
+      if(this.cdMon != null){
+        this.confirmarSalvar(form);
+      }else{
+        this.toasty.error('Antes de salvar, favor carregar o monitoramento selecionado.')
+      }
+      
     }
 
   }

@@ -11,14 +11,12 @@
           <label style="display: block">Monitoramento: </label>
           <p-dropdown [options]="appmonitoramento" name="appmonitoramento" placeholder="Selecione"
             [style]="{'width':'320px'}" [(ngModel)]="appavaliacaoSalvar.cdMonitoramento.cdMonitoramento"></p-dropdown>
-
         </div>
-        <div class="ui-g-8 ">
+        <div class="ui-g-8 "> 
           <br />
           <button type="button" style="width: 200px" (click)="pesquisarMon()" pButton
-            label="Listar avaliações"></button>
-        </div>
-                
+            label="Carregar Monitoramento"></button>
+        </div>                
         <div class="ui-g-8 ui-fluid">
           <label style="display: block">Avaliação: </label>
           <input type="text" name="nmAvaliacao" [(ngModel)]="appavaliacaoSalvar.nmAvaliacao" pInputText />

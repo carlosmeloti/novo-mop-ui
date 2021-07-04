@@ -1,6 +1,6 @@
 <div class="container">
   <p-card  [style]="{width: 'px'}" styleClass="ui-card-shadow">
-    <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+    <form #f="ngForm" autocomplete="off"  (ngSubmit)="salvar(f)">
     <div class="ui-g">
       <div class="ui-g-12">
         <h2>Coleta de Dados {{ editando ? ' - Editando - ' : '' }}</h2>
@@ -44,7 +44,7 @@
 
         <div class="ui-g">
           <div class="ui-g-12 ui-md-12 ui-lg-12">
-                <p-table [value]="verificadores" [paginator]="true" [rows]="5" [responsive]="true">
+                <p-table [value]="verificadores"  [rows]="5" >
                         <ng-template pTemplate="header" >
                               <tr>
 
@@ -53,30 +53,29 @@
                                 <th colspan="4">Verificador</th>
                                 <th>Nº. Observações</th>
                                 <th>Não conformidades</th>
-                                <th *ngIf="editando"></th>
+                                <th></th>
 
                               </tr>
-                          </ng-template>
+                          </ng-template >
                           <ng-template pTemplate="body" let-verificador>
-                              <tr >
+                              <tr>
                                 <td >{{verificador.cdEmpresa.nmEmpresa}}</td>
                                   <td colspan="4">{{verificador.id_Verificador_m.nmverificador}}</td>
-                                  <td pEditableColumn pEditableColumn [routerLink]="['/appcoletadedados', verificador.cdColetaDeDaDos]">
+                                  <td pEditableColumn>
                                      <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                          <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrObservacoes" />
+                                          <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrObservacoes" [disabled]="!editando"/>
                                         </ng-template>
                                           <ng-template pTemplate="output">
                                                {{verificador.nrObservacoes}}
                                              </ng-template>
                                      </p-cellEditor>
-
                                   </td>
 
-                                  <td pEditableColumn [routerLink]="['/appcoletadedados', verificador.cdColetaDeDaDos]">
+                                  <td pEditableColumn>
                                       <p-cellEditor >
                                           <ng-template pTemplate="input">
-                                            <input type="text" name="nrNaoConformidades" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrNaoConformidades" />
+                                            <input type="text" name="nrNaoConformidades" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrNaoConformidades" [disabled]="!editando" />
                                          </ng-template>
                                             <ng-template pTemplate="output">
                                               {{verificador.nrNaoConformidades}}
@@ -84,12 +83,12 @@
                                      </p-cellEditor>
                                   </td>
 
-                                  <td *ngIf="editando">
-
-
-
+                                  <td>
+                                    <div *ngIf="!editando">
+                                      <button pButton  pTooltip="Editar" pInitEditableRow  icon="pi pi-pencil" class="ui-button-primary " tooltipPosition="top" [routerLink]="['/appcoletadedados', verificador.cdColetaDeDaDos]" style="margin-right: 10px;"></button>
+                                    </div>
                                     <div *ngIf="editando">
-                                      <button pButton  pTooltip="Salvar"  icon="pi pi-check" class="ui-button-primary" tooltipPosition="top" [routerLink]="['/appcoletadedados', verificador.cdColetaDeDaDos]" style="margin-right: 10px;"></button>
+                                      <button pButton  pTooltip="Salvar" type="submit" icon="pi pi-check" class="ui-button-success" tooltipPosition="top" style="margin-right: 10px;"></button>
                                       <button [routerLink]="['/appcoletadedados']" pTooltip="Sair" pButton type="button" pCancelEditableRow icon="pi pi-times"
                                        class="ui-button-danger"></button>
                                     </div>

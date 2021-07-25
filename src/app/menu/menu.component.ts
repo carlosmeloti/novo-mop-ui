@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.carregarEmpresas();
     this.carregarEmpresaSelecionada();
-    
+
     this.items = [
       {
           label: 'Cadastro Geral',
@@ -137,11 +137,11 @@ export class MenuComponent implements OnInit {
             {
               label: 'Avaliação',
               routerLink: '/appavaliacao'
-            }, 
+            },
             {separator: true},
             {
               label: 'Formulário de Coleta de Dados',
-              routerLink: '/appformulariocoleta'            
+              routerLink: '/appformulariocoleta'
             },
             {
               label: 'Coleta de Dados',
@@ -149,12 +149,13 @@ export class MenuComponent implements OnInit {
             }
         ]
       },
-     /* {
+     {
           label: 'Relatório',
           icon: 'pi pi-chart-bar',
           items: [
             {label: 'Relatório sitético de avaliação'},
-            {label: 'Relatório analítico de avaliação'},
+            {label: 'Relatório analítico de avaliação',
+             routerLink: 'relatorios/relatorio-analitico'},
             {label: 'Relatório sintético de evolução sobre avaliação dos verificadores'},
             {label: 'Relatório analítico de evolução sobre avaliação dos verificadores'}
         ]
@@ -166,7 +167,7 @@ export class MenuComponent implements OnInit {
             {label: 'Como utilizar o MOP'},
             {label: 'Sobre...'}
         ]
-      },*/
+      },
       {
           label: 'Início', icon: 'pi pi-fw pi-times',
           routerLink:'/inicio'
@@ -193,22 +194,22 @@ export class MenuComponent implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
- 
+
   carregarEmpresaSelecionada() {
     return this.menuService.carregarEmpresaSelecionadaNome()
       .then(empresaSelecionada => {
         this.empresaSelecionadaExibicao.nmempresa = empresaSelecionada;
-        
+
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  
+
 
   refresh(): void {
     window.location.reload();
   }
 
- 
+
 
 }

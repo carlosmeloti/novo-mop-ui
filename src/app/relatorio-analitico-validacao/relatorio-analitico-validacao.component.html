@@ -1,0 +1,28 @@
+<div class="ui-g">
+    <div class="container">
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+             <h1>Relatorio Analítico de Validação</h1>
+        </div>
+
+        <p-fieldset legend="Relatorio Analítico de Validação" class="ui-g-12 ui-md-12 ui-lg-12">
+           <div class="ui-fluid ui-g-12 ui-md-12 ">
+                <label>Monitoramento:</label>
+                <p-dropdown [options]="monitoramento"name="monitoramento" [(ngModel)]="value" placeholder="Monitoramento"  filter="true" [autoWidth]="false"></p-dropdown>
+           </div>
+
+           <div class="ui-fluid ui-g-12 ui-md-12 ">
+                <label>Avaliação:</label>
+                <p-dropdown [options]="monitoramento"name="monitoramento" [(ngModel)]="value" placeholder="Avaliação"  filter="true" [autoWidth]="false"></p-dropdown>
+           </div>
+        </p-fieldset>
+
+         <p-fieldset legend="Ordem de Impressão" class="ui-g-12 ui-md-12 ui-lg-12">
+           <p-radioButton name="groupname" value="val1" label="Hierárquica" [(ngModel)]="selectedValue" class="ui-g-12 ui-md-12 ui-lg-12"></p-radioButton>
+           <p-radioButton name="groupname" value="val1" label="Por verificador" [(ngModel)]="selectedValue" class="ui-g-12 ui-md-12 ui-lg-12"></p-radioButton>
+           <p-radioButton name="groupname" value="val1" label="Por categoria de avaliação" [(ngModel)]="selectedValue" class="ui-g-12 ui-md-12 ui-lg-12"></p-radioButton>
+           <p-radioButton name="groupname" value="val1" label="Por unidade, local e sublocal de avaliação" [(ngModel)]="selectedValue" class="ui-g-12 ui-md-12 ui-lg-12"></p-radioButton>
+
+        </p-fieldset>
+
+    </div>
+</div>

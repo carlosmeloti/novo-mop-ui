@@ -96,6 +96,8 @@ import { AppmonitoramentoverificadorService } from './appmonitoramentoverificado
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { AppcoletadedadosService } from './appcoletadedados/appcoletadedados.service';
 import {FieldsetModule} from 'primeng/fieldset';
+import { RelatorioAnaliticoValidacaoComponent } from './relatorio-analitico-validacao/relatorio-analitico-validacao.component';
+import { RelatorioService } from './relatorio-analitico-validacao/relatorio.service';
 
 
 const routes: Routes = [
@@ -151,6 +153,8 @@ const routes: Routes = [
   { path: 'addverificadoresmodelo/:codigo', component:AddverificadormodeloComponent},
   { path: 'appmonitoramentoverificador', component: AppmonitoramentoverificadorComponent},
   { path: 'relatorios', component:TodosOsVerificadoresComponent},
+  { path: 'relatorios/relatorio-analitico', component:RelatorioAnaliticoValidacaoComponent},
+
 
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
 ]
@@ -187,7 +191,8 @@ const routes: Routes = [
     MenuempresaComponent,
     AddverificadormodeloComponent,
     AppmonitoramentoverificadorComponent,
-    TodosOsVerificadoresComponent
+    TodosOsVerificadoresComponent,
+    RelatorioAnaliticoValidacaoComponent
 
 
   ],
@@ -250,6 +255,7 @@ const routes: Routes = [
     AppmonitoramentoverificadorService,
     AppformulariocoletaService,
     AppcoletadedadosService,
+    RelatorioService
 
   ],
   bootstrap: [AppComponent]

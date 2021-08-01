@@ -51,8 +51,11 @@
 
                                 <th>Empresa</th>
                                 <th colspan="4">Verificador</th>
-                                <th>Nº. Observações</th>
+                                <th>Conformidades</th>
                                 <th>Não conformidades</th>
+                                <th>Nº. Observações</th>
+                                <th>Grau conform.</th>
+                                <th>Resultado</th>
                                 <th></th>
 
                               </tr>
@@ -60,19 +63,18 @@
                           <ng-template pTemplate="body" let-verificador>
                               <tr>
                                 <td >{{verificador.cdEmpresa.nmEmpresa}}</td>
-                                  <td colspan="4">{{verificador.id_Verificador_m.nmverificador}}</td>
-                                  <td pEditableColumn>
+                                <td colspan="4">{{verificador.id_Verificador_m.nmverificador}}</td>
+                                <td pEditableColumn>
                                      <p-cellEditor>
                                         <ng-template pTemplate="input">
-                                          <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrObservacoes" [disabled]="!editando"/>
+                                          <input type="text" name="nrConformidades" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrConformidades" [disabled]="!editando"/>
                                         </ng-template>
                                           <ng-template pTemplate="output">
-                                               {{verificador.nrObservacoes}}
+                                              {{verificador.nrConformidades}}
                                              </ng-template>
                                      </p-cellEditor>
                                   </td>
-
-                                  <td pEditableColumn>
+                                  <td pEditableColumn >
                                       <p-cellEditor >
                                           <ng-template pTemplate="input">
                                             <input type="text" name="nrNaoConformidades" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrNaoConformidades" [disabled]="!editando" />
@@ -83,6 +85,37 @@
                                      </p-cellEditor>
                                   </td>
 
+                                  <td pEditableColumn>
+                                    <p-cellEditor>
+                                       <ng-template pTemplate="input">
+                                         <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrObservacoes" [disabled]="!editando"/>
+                                       </ng-template>
+                                         <ng-template pTemplate="output">
+                                              {{verificador.nrObservacoes}}
+                                            </ng-template>
+                                    </p-cellEditor>
+                                 </td>
+
+                                 <td pEditableColumn>
+                                  <p-cellEditor>
+                                     <ng-template pTemplate="input">
+                                       <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.graco" [disabled]="!editando"/>
+                                     </ng-template>
+                                       <ng-template pTemplate="output">
+                                            {{verificador.graco}}
+                                          </ng-template>
+                                  </p-cellEditor>
+                                 </td>
+                                 <td pEditableColumn>
+                                  <p-cellEditor>
+                                     <ng-template pTemplate="input">
+                                       <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.resultado" [disabled]="!editando"/>
+                                     </ng-template>
+                                       <ng-template pTemplate="output">
+                                            {{verificador.resultado}}
+                                          </ng-template>
+                                  </p-cellEditor>
+                                 </td>
                                   <td>
                                     <div *ngIf="!editando">
                                       <button pButton  pTooltip="Editar" pInitEditableRow  icon="pi pi-pencil" class="ui-button-primary " tooltipPosition="top" [routerLink]="['/appcoletadedados', verificador.cdColetaDeDaDos]" style="margin-right: 10px;"></button>

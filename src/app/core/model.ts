@@ -226,7 +226,10 @@ export class AppColetaDeDados{
   cdMonitoramento = new AppMonitoramento();
   cdAvaliacao = new AppAvaliacao();
   nrObservacoes: number;
+  nrConformidades: number;
   nrNaoConformidades: number;
+  graco:number;
+  resultado:string;
   txObservacao: string;
 }
 

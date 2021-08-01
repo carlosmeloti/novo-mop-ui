@@ -63,6 +63,15 @@ export class AppcoletadedadosService {
       });
   }
 
+  excluir(cdColetaDeDaDos: number): Promise<void> {
+    const headers = new Headers;
+    headers.append('Authorization', 'Basic YWRtaW46YWRtaW4=');
+
+    return this.http.delete(`${this.coletadedadosurl}/${cdColetaDeDaDos}`, { headers})
+      .toPromise()
+       .then(() => null);
+  }
+
 
 
 

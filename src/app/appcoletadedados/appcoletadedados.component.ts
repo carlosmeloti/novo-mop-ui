@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppmonitoramentoService } from '../appmonitoramento/appmonitoramento.service';
 import { ToastyService } from 'ng2-toasty';
 import { ConfirmationService } from 'primeng/api';
@@ -28,6 +28,8 @@ export class AppcoletadedadosComponent implements OnInit {
   cdEmp: any;
   cdMon: any;
   cdAva: any;
+  @ViewChild('tabela') grid;
+
   constructor(
     private router: Router,
     private appcoletadedadosService: AppcoletadedadosService,
@@ -155,6 +157,29 @@ export class AppcoletadedadosComponent implements OnInit {
               console.log("this.cdAva: " + this.cdAva)
       })
       .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  exluirDados(verificadores:any){
+      this.appAvaliacaoService.excluir(verificadores.cdColetaDeDaDos)
+        .then(() => {
+          if(this.grid.first === 0) {
+            this.pesquisarPorAvaliacao();
+          } else {
+            this.grid.first = 0;
+            this.pesquisarPorAvaliacao();
+          }
+          this.toasty.success('Aplicação excluída com sucesso!');
+        })
+        .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  confirmarExclusao(verificadores: any) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.exluirDados(verificadores);
+      }
+    });
   }
 
 

@@ -85,41 +85,27 @@
                                      </p-cellEditor>
                                   </td>
 
-                                  <td pEditableColumn>
-                                    <p-cellEditor>
-                                       <ng-template pTemplate="input">
-                                         <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.nrObservacoes" [disabled]="!editando"/>
-                                       </ng-template>
-                                         <ng-template pTemplate="output">
-                                              {{verificador.nrObservacoes}}
-                                            </ng-template>
-                                    </p-cellEditor>
+                                  <td>
+                                   {{verificador.nrObservacoes}}
                                  </td>
 
-                                 <td pEditableColumn>
-                                  <p-cellEditor>
-                                     <ng-template pTemplate="input">
-                                       <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.graco" [disabled]="!editando"/>
-                                     </ng-template>
-                                       <ng-template pTemplate="output">
-                                            {{verificador.graco}}
-                                          </ng-template>
-                                  </p-cellEditor>
+                                 <td>
+                                    {{verificador.graco}}
                                  </td>
-                                 <td pEditableColumn>
-                                  <p-cellEditor>
-                                     <ng-template pTemplate="input">
-                                       <input type="text" name="nrObservacoes" pInputText [(ngModel)]="appColetaDeDadosSalvar.resultado" [disabled]="!editando"/>
-                                     </ng-template>
-                                       <ng-template pTemplate="output">
-                                            {{verificador.resultado}}
-                                          </ng-template>
-                                  </p-cellEditor>
+                                 <td>
+                                   {{verificador.resultado}}
                                  </td>
                                   <td>
                                     <div *ngIf="!editando">
                                       <button pButton  pTooltip="Editar" pInitEditableRow  icon="pi pi-pencil" class="ui-button-primary " tooltipPosition="top" [routerLink]="['/appcoletadedados', verificador.cdColetaDeDaDos]" style="margin-right: 10px;"></button>
+<<<<<<< HEAD
                                     </div>
+=======
+                                      <!-- <button pButton icon="pi pi-trash" style="margin-right: 10px;" pTooltip="remover" class="ui-button-danger" tooltipPosition="top"
+                                        (click)="confirmarExclusao(verificadores)"></button>
+                                    -->
+                                  </div>
+>>>>>>> 420ab08e93c046f5f6fdf3a30ee46c988ab1d3d1
                                     <div *ngIf="editando">
                                       <button pButton  pTooltip="Salvar" type="submit" icon="pi pi-check" class="ui-button-success" tooltipPosition="top" style="margin-right: 10px;"></button>
                                       <button [routerLink]="['/appcoletadedados']" pTooltip="Sair" pButton type="button" pCancelEditableRow icon="pi pi-times"
@@ -135,6 +121,7 @@
 
     </div>
     </form>
+
 
 
 

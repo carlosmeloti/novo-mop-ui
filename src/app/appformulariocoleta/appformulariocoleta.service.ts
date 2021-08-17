@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, ResponseContentType } from '@angular/http';
 
 export class FormFiltro {
-  cdTemplate: any;
+  cdTemplate: any
 }
 
 @Injectable()
@@ -22,7 +22,7 @@ export class AppformulariocoletaService {
     
       params.set('cdTemplate', filtro.cdTemplate);
    
-    return this.http.get(`${this.formURL}?cdTemplate=${filtro.cdTemplate}`, 
+    return this.http.get(`${this.formURL}?cdTemplate=${filtro.cdTemplate}&ordCatAva=false&ordHierarquica=false`, 
     { responseType: ResponseContentType.Blob })
       .toPromise()
       .then(response => response.blob())

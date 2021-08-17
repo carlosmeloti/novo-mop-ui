@@ -1,4 +1,4 @@
-<div class="containerColeta">
+<div class="container">
   <p-card  [style]="{width: 'px'}" styleClass="ui-card-shadow">
     <form #f="ngForm" autocomplete="off"  (ngSubmit)="salvar(f)">
     <div class="ui-g">
@@ -44,7 +44,7 @@
 
         <div class="ui-g">
           <div class="ui-g-12 ui-md-12 ui-lg-12">
-                <p-table [value]="verificadores"  [rows]="5" #tabela>
+                <p-table [value]="verificadores"  [rows]="5" >
                         <ng-template pTemplate="header" >
                               <tr>
 
@@ -119,10 +119,7 @@
                                   <td>
                                     <div *ngIf="!editando">
                                       <button pButton  pTooltip="Editar" pInitEditableRow  icon="pi pi-pencil" class="ui-button-primary " tooltipPosition="top" [routerLink]="['/appcoletadedados', verificador.cdColetaDeDaDos]" style="margin-right: 10px;"></button>
-                                      <button pButton icon="pi pi-trash" style="margin-right: 10px;" pTooltip="remover" class="ui-button-danger" tooltipPosition="top"
-                                        (click)="confirmarExclusao(verificadores)"></button>
                                     </div>
-
                                     <div *ngIf="editando">
                                       <button pButton  pTooltip="Salvar" type="submit" icon="pi pi-check" class="ui-button-success" tooltipPosition="top" style="margin-right: 10px;"></button>
                                       <button [routerLink]="['/appcoletadedados']" pTooltip="Sair" pButton type="button" pCancelEditableRow icon="pi pi-times"
@@ -143,7 +140,3 @@
 
   </p-card>
 </div>
-
-
-
-

@@ -129,11 +129,11 @@ export class MenuComponent implements OnInit {
               label: 'Geração de Monitoramento a partir de Modelo',
               routerLink: '/appmonitoramento'
             },
-            {separator: true},
+            {separator: true},/*
             {
               label: 'Monitoramento',
               routerLink: '/appmonitoramentoverificador'
-            },
+            },*/
             {
               label: 'Avaliação',
               routerLink: '/appavaliacao'
@@ -153,13 +153,13 @@ export class MenuComponent implements OnInit {
           label: 'Relatório',
           icon: 'pi pi-chart-bar',
           items: [
-            {label: 'Relatório sitético de avaliação'},
+           // {label: 'Relatório sitético de avaliação'},
             {label: 'Relatório analítico de avaliação',
-             routerLink: 'relatorios/relatorio-analitico'},
-            {label: 'Relatório sintético de evolução sobre avaliação dos verificadores'},
-            {label: 'Relatório analítico de evolução sobre avaliação dos verificadores'}
+             routerLink: 'relatorios/relatorio-analitico'}
+            /*{label: 'Relatório sintético de evolução sobre avaliação dos verificadores'},
+            {label: 'Relatório analítico de evolução sobre avaliação dos verificadores'}*/
         ]
-      },
+      }, 
       {
         label: 'Ajuda',
         icon: 'pi pi-fw pi-question',
